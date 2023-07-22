@@ -46,7 +46,7 @@
             font-size: 15px;
             outline: none;
         }
-        .input-item:placeholder {
+        .input-item::placeholder {
             text-transform: uppercase;
         }
         .btn {
@@ -72,8 +72,12 @@
         <div class="login-wrapper">
             <div class="header">Login</div>
             <div class="form-wrapper">
-                <input type="text" name="username" placeholder="username" class="input-item">
-                <input type="password" name="password" placeholder="password" class="input-item">
+                <label>
+                    <input type="text" name="username" placeholder="username" class="input-item">
+                </label>
+                <label>
+                    <input type="password" name="password" placeholder="password" class="input-item">
+                </label>
                 <div class="btn">Login</div>
             </div>
             <div class="msg">

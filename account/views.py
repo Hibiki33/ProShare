@@ -1,5 +1,5 @@
 from .models import *
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def login_view(request):
@@ -18,7 +18,7 @@ def login_page(request):
 
         # TODO: This method may be unsafe
         if UserInfo.objects.filter(user_name=login_name, user_password=login_password).count() != 0:
-            return render(request, 'main.html')
+            return redirect('main/')
         else:
             return render(request, 'login.html', {'message': 'user_name or password is wrong!'})
 
@@ -47,7 +47,7 @@ def register_page(request):
         if UserInfo.objects.filter(user_name=user_name).count() != 0:
             return render(request, 'register.html', {'message': 'user_name is already exist!'})
 
-    return render(request, 'main.html')
+    return redirect('main/')
 
 
 

@@ -53,7 +53,9 @@
             text-align: center;
             padding: 10px;
             width: 100%;
-            margin-top: 40px;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
             background-image: linear-gradient(to right, #a6c1ee, #fbc2eb);
             color: #fff;
         }
@@ -72,20 +74,29 @@
         <div class="login-wrapper">
             <div class="header">Login</div>
             <div class="form-wrapper">
-                <label>
-                    <input type="text" name="username" placeholder="username" class="input-item">
-                </label>
-                <label>
-                    <input type="password" name="password" placeholder="password" class="input-item">
-                </label>
-                <div class="btn">Login</div>
+                <form action="" method="POST">
+                    <label>
+                        <input type="text" name="username" placeholder="username" class="input-item">
+                    </label>
+                    <label>
+                        <input type="password" name="password" placeholder="password" class="input-item">
+                    </label>
+                    <button type="submit" class="btn">Login</button>
+                </form>
             </div>
             <div class="msg">
                 Don't have account?
-                <a href="#">Sign up</a>
+                <a href="../register">Sign up</a>
             </div>
         </div>
     </div>
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
 </body>
 </html>
 

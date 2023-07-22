@@ -1,5 +1,13 @@
 from .models import *
 from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import uuid
+
+
+def get_uuid(length=8):
+    return str(uuid.uuid4()).replace('-', '')[:length]
 
 
 def login_view(request):
@@ -10,17 +18,21 @@ def login_page(request):
     if request.method == 'GET':
         return render(request, 'login.html')
     elif request.method == 'POST':
-        login_name = request.POST.get('user_name')
-        login_password = request.POST.get('user_password')
+        login_name = request.POST.get('username')
+        login_password = request.POST.get('password')
 
         if login_name is None or login_password is None:
-            return render(request, 'login.html', {'message': 'user_name or password is empty!'})
+            # return render(request, 'login.html', {'message': 'user_name or password is empty!'})
+            messages.error(request, 'user_name or password is empty!')
+            return HttpResponseRedirect('/account/login/')
 
         # TODO: This method may be unsafe
         if UserInfo.objects.filter(user_name=login_name, user_password=login_password).count() != 0:
-            return redirect('main/')
+            return redirect('../../')
         else:
-            return render(request, 'login.html', {'message': 'user_name or password is wrong!'})
+            # return render(request, 'login.html', {'message': 'user_name or password is wrong!'})
+            messages.error(request, 'user_name or password is wrong!')
+            return HttpResponseRedirect('/account/login/')
 
     return render(request, '404.html')
 
@@ -33,22 +45,37 @@ def register_page(request):
     if request.method == 'GET':
         return render(request, 'register.html')
     elif request.method == 'POST':
-        user_id = request.POST.get('user_id')
+        user_id = get_uuid()
         user_name = request.POST.get('user_name')
         user_password = request.POST.get('user_password')
-        user_mail = request.POST.get('user_mail')
-        user_phone = request.POST.get('user_phone')
+        user_confirm_password = request.POST.get('user_confirm_password')
+        user_mail = request.POST.get('email')
+        user_phone = request.POST.get('tel')
+
+        if user_password != user_confirm_password:
+            # return render(request, 'register.html', {'message': 'password and confirm_password is not same!'})
+            messages.error(request, 'password and confirm_password is not same!')
+            return HttpResponseRedirect('/account/register/')
 
         if user_id is None or user_name is None or user_password is None:
-            return render(request, 'register.html', {'message': 'user_id, user_name and user_password is necessary!'})
+            # return render(request, 'register.html', {'message': 'name and password is necessary!'})
+            messages.error(request, 'name and password is necessary!')
+            return HttpResponseRedirect('/account/register/')
 
-        if UserInfo.objects.filter(user_id=user_id).count() != 0:
-            return render(request, 'register.html', {'message': 'user_id is already exist!'})
         if UserInfo.objects.filter(user_name=user_name).count() != 0:
-            return render(request, 'register.html', {'message': 'user_name is already exist!'})
+            # return render(request, 'register.html', {'message': 'user_name is already exist!'})
+            messages.error(request, 'user_name is already exist!')
+            return HttpResponseRedirect('/account/register/')
 
-    return redirect('main/')
+        UserInfo.objects.create(user_id=user_id,
+                                user_name=user_name,
+                                user_password=user_password,
+                                user_mail=user_mail,
+                                user_phone=user_phone)
+        return redirect('../../')
+
+    return render(request, '404.html')
 
 
-
-
+def main_view(request):
+    return render(request, 'home.html')

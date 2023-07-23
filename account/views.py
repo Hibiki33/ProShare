@@ -1,9 +1,10 @@
-from .models import *
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.contrib.auth import authenticate, login, logout, get_user_model
 import uuid
+
+User = get_user_model()
 
 
 def get_uuid(length=8):
@@ -18,20 +19,35 @@ def login_page(request):
     if request.method == 'GET':
         return render(request, 'login.html')
     elif request.method == 'POST':
-        login_name = request.POST.get('username', '')
-        login_password = request.POST.get('password', '')
-        print(login_name, login_password)
-        if not login_name or not login_password:
+        # login_name = request.POST.get('username', '')
+        # login_password = request.POST.get('password', '')
+        # print(login_name, login_password)
+
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+
+        if not username or not password:
             # return render(request, 'abort_login.html', {'message': 'user_name or password is empty!'})
-            messages.error(request, 'user_name or password is empty!')
+            messages.error(request, 'Username or Password is empty!')
             return HttpResponseRedirect('/account/login/')
 
-        # TODO: This method may be unsafe
-        if UserInfo.objects.filter(user_name=login_name, user_password=login_password).count() != 0:
-            return redirect('../../')
+        # success: return a user object
+        # false: return None
+        user = authenticate(request, username=username, password=password)
+
+        # if User.objects.filter(user_name=login_name, user_password=login_password).count() != 0:
+        #     return redirect('../../')
+        # else:
+        #     # return render(request, 'abort_login.html', {'message': 'user_name or password is wrong!'})
+        #     messages.error(request, 'user_name or password is wrong!')
+        #     return HttpResponseRedirect('/account/login/')
+
+        if user and user.is_active:
+            login(request, user)
+            request.session['username'] = username
+            return HttpResponseRedirect('/')
         else:
-            # return render(request, 'abort_login.html', {'message': 'user_name or password is wrong!'})
-            messages.error(request, 'user_name or password is wrong!')
+            messages.error(request, 'Username or Password is wrong!')
             return HttpResponseRedirect('/account/login/')
 
     return render(request, '404.html')
@@ -45,38 +61,41 @@ def register_page(request):
     if request.method == 'GET':
         return render(request, 'register.html')
     elif request.method == 'POST':
-        user_id = get_uuid()
-        user_name = request.POST.get('username', '')
-        user_password = request.POST.get('password', '')
-        user_confirm_password = request.POST.get('confirm_password', '')
-        user_mail = request.POST.get('email', '')
-        user_phone = request.POST.get('tel', '')
-        user_quote = ''
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        confirm_password = request.POST.get('confirm_password', '')
+        email = request.POST.get('email', '')
 
-        if user_password != user_confirm_password:
+        if password != confirm_password:
             # return render(request, 'abort_register.html', {'message': 'password and confirm_password is not same!'})
             messages.error(request, 'password and confirm_password is not same!')
             return HttpResponseRedirect('/account/register/')
 
-        if not user_name or not user_password:
+        if not username or not password or not email:
             # return render(request, 'abort_register.html', {'message': 'name and password is necessary!'})
-            messages.error(request, 'name and password is necessary!')
+            messages.error(request, 'name, password and email is necessary!')
             return HttpResponseRedirect('/account/register/')
 
-        if UserInfo.objects.filter(user_name=user_name).count() != 0:
-            # return render(request, 'abort_register.html', {'message': 'user_name is already exist!'})
-            messages.error(request, 'user_name is already exist!')
+        # if User.objects.filter(user_name=user_name).count() != 0:
+        #     # return render(request, 'abort_register.html', {'message': 'user_name is already exist!'})
+        #     messages.error(request, 'user_name is already exist!')
+        #     return HttpResponseRedirect('/account/register/')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'username already exists!')
             return HttpResponseRedirect('/account/register/')
 
-        UserInfo.objects.create(user_id=int(user_id, 16),
-                                user_name=user_name,
-                                user_password=user_password,
-                                user_mail=user_mail,
-                                user_phone=user_phone,
-                                user_quote=user_quote)
-        return redirect('../../')
+        User.objects.create(username=username,
+                            password=password,
+                            email=email)
+        return HttpResponseRedirect('/account/')
 
     return render(request, '404.html')
+
+
+def logout_page(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
 
 def change_pwd_view(request):

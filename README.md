@@ -4,7 +4,7 @@ Python Course comprehensive assignment.
 
 A problem sharing platform based on django and html.
 
-## necessity
+## Necessity
 
 Python 3.10
 
@@ -34,7 +34,7 @@ Then you can run the server:
 python manage.py runserver
 ```
 
-## command
+## Command
 
 Run server:
 

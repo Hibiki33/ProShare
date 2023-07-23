@@ -17,22 +17,36 @@ pip install pymysql
 
 MySql 8.0
 
-Please install correspponding mysql server on your server and set the root password to 123456 or change it in ProShare/settings.py.
+Please install corresponding mysql server on your server and set the root password to 123456 or change it in ProShare/settings.py.
 Then you need to create a database.
+
 Run "mysql" in your shell and run:
+
 ```shell
 CREATE DATABASE proshare;
 ```
 After that, exit mysql shell and run:
+
 ```shell
 python manage.py makemigrations account
 python manage.py migrate
 ```
-To set up the database properly.
+
+to set up the database properly.
+
 Then you can run the server:
+
 ```shell
 python manage.py runserver
 ```
+
+If encounter some server error, delete the database using:
+
+```shell
+drop database proshare;
+```
+
+and create a new one.
 
 ## Command
 

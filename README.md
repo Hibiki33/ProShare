@@ -1,4 +1,4 @@
-# wfynb
+# ProShare
 
 Python Course comprehensive assignment. 
 

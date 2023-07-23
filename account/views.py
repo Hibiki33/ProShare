@@ -81,7 +81,7 @@ def change_pwd_view(request):
     return render(request, 'change_password.html')
 
 def edit_view(request):
-    return render(request, 'homeEdit.html')
+    return render(request, 'home_edit.html')
 
 
 def main_view(request):

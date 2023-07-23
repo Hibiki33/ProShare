@@ -11,7 +11,7 @@ def get_uuid(length=8):
 
 
 def login_view(request):
-    return render(request, 'login.html')
+    return render(request, 'newlogin.html')
 
 
 def login_page(request):
@@ -38,12 +38,12 @@ def login_page(request):
 
 
 def register_view(request):
-    return render(request, 'register.html')
+    return render(request, 'newregister.html')
 
 
 def register_page(request):
     if request.method == 'GET':
-        return render(request, 'register.html')
+        return render(request, 'newregister.html')
     elif request.method == 'POST':
         user_id = get_uuid()
         user_name = request.POST.get('username', '')

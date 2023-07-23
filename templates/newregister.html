@@ -45,8 +45,42 @@
     </nav>
 </header>
 
-<body class="has-animations">
-
+<body  class="has-animations">
+    <div class="container align--center vertical--full-height">
+        <div class="pt4">
+            <h3 class="bold pt1 pb1">Sign up</h3>
+            <div class="">
+                <form action="" method="POST">
+                    <label>
+                        <input type="text" name="username" placeholder="username" class="form-control">
+                    </label>
+                    <label>
+                        <input type="password" name="password" placeholder="password" class="form-control">
+                    </label>
+                    <label>
+                        <input type="password" name="confirm_password" placeholder="confirm password" class="form-control">
+                    </label>
+                    <label>
+                        <input type="text" name="email" placeholder="email" class="form-control">
+                    </label>
+                    <label>
+                        <input type="text" name="tel" placeholder="tel" class="form-control">
+                    </label>
+                    <div class="pt2"></div>
+                    <div style="text-align: center">
+                        <button type="submit" class="btn btn--outline">Sign up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
 </body>
 </html>
 

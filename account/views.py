@@ -11,18 +11,18 @@ def get_uuid(length=8):
 
 
 def login_view(request):
-    return render(request, 'newlogin.html')
+    return render(request, 'login.html')
 
 
 def login_page(request):
     if request.method == 'GET':
-        return render(request, 'newlogin.html')
+        return render(request, 'login.html')
     elif request.method == 'POST':
         login_name = request.POST.get('username', '')
         login_password = request.POST.get('password', '')
         print(login_name, login_password)
         if not login_name or not login_password:
-            # return render(request, 'login.html', {'message': 'user_name or password is empty!'})
+            # return render(request, 'abort_login.html', {'message': 'user_name or password is empty!'})
             messages.error(request, 'user_name or password is empty!')
             return HttpResponseRedirect('/account/login/')
 
@@ -30,7 +30,7 @@ def login_page(request):
         if UserInfo.objects.filter(user_name=login_name, user_password=login_password).count() != 0:
             return redirect('../../')
         else:
-            # return render(request, 'login.html', {'message': 'user_name or password is wrong!'})
+            # return render(request, 'abort_login.html', {'message': 'user_name or password is wrong!'})
             messages.error(request, 'user_name or password is wrong!')
             return HttpResponseRedirect('/account/login/')
 
@@ -38,12 +38,12 @@ def login_page(request):
 
 
 def register_view(request):
-    return render(request, 'newregister.html')
+    return render(request, 'register.html')
 
 
 def register_page(request):
     if request.method == 'GET':
-        return render(request, 'newregister.html')
+        return render(request, 'register.html')
     elif request.method == 'POST':
         user_id = get_uuid()
         user_name = request.POST.get('username', '')
@@ -53,17 +53,17 @@ def register_page(request):
         user_phone = request.POST.get('tel', '')
 
         if user_password != user_confirm_password:
-            # return render(request, 'register.html', {'message': 'password and confirm_password is not same!'})
+            # return render(request, 'abort_register.html', {'message': 'password and confirm_password is not same!'})
             messages.error(request, 'password and confirm_password is not same!')
             return HttpResponseRedirect('/account/register/')
 
         if not user_name or not user_password:
-            # return render(request, 'register.html', {'message': 'name and password is necessary!'})
+            # return render(request, 'abort_register.html', {'message': 'name and password is necessary!'})
             messages.error(request, 'name and password is necessary!')
             return HttpResponseRedirect('/account/register/')
 
         if UserInfo.objects.filter(user_name=user_name).count() != 0:
-            # return render(request, 'register.html', {'message': 'user_name is already exist!'})
+            # return render(request, 'abort_register.html', {'message': 'user_name is already exist!'})
             messages.error(request, 'user_name is already exist!')
             return HttpResponseRedirect('/account/register/')
 
@@ -78,7 +78,7 @@ def register_page(request):
 
 
 def change_pwd_view(request):
-    return render(request, 'changePasswd.html')
+    return render(request, 'change_password.html')
 
 def edit_view(request):
     return render(request, 'homeEdit.html')

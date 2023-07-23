@@ -60,12 +60,14 @@ Then run the following command to apply the migration files:
 python manage.py migrate
 ```
 
+(If you encounter Unknown column 'xxx' in 'field list') Run this when you want to delete all the data in a table:
+
+```shell
+python manage.py migrate <app_name> zero
+```
+
 Create a superuser:
 
 ```shell
 python manage.py createsuperuser
 ```
-
-## Database
-
-The password of mysql should be set to '123456', or you can change it in settings.py.

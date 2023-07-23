@@ -51,6 +51,7 @@ def register_page(request):
         user_confirm_password = request.POST.get('confirm_password', '')
         user_mail = request.POST.get('email', '')
         user_phone = request.POST.get('tel', '')
+        user_quote = ''
 
         if user_password != user_confirm_password:
             # return render(request, 'abort_register.html', {'message': 'password and confirm_password is not same!'})
@@ -71,7 +72,8 @@ def register_page(request):
                                 user_name=user_name,
                                 user_password=user_password,
                                 user_mail=user_mail,
-                                user_phone=user_phone)
+                                user_phone=user_phone,
+                                user_quote=user_quote)
         return redirect('../../')
 
     return render(request, '404.html')
@@ -79,6 +81,7 @@ def register_page(request):
 
 def change_pwd_view(request):
     return render(request, 'change_password.html')
+
 
 def edit_view(request):
     return render(request, 'home_edit.html')

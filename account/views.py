@@ -80,6 +80,9 @@ def register_page(request):
 def change_pwd_view(request):
     return render(request, 'changePasswd.html')
 
+def edit_view(request):
+    return render(request, 'homeEdit.html')
+
 
 def main_view(request):
     return render(request, 'home.html')

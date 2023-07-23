@@ -16,7 +16,7 @@ def login_view(request):
 
 def login_page(request):
     if request.method == 'GET':
-        return render(request, 'login.html')
+        return render(request, 'newlogin.html')
     elif request.method == 'POST':
         login_name = request.POST.get('username', '')
         login_password = request.POST.get('password', '')
@@ -67,7 +67,7 @@ def register_page(request):
             messages.error(request, 'user_name is already exist!')
             return HttpResponseRedirect('/account/register/')
 
-        UserInfo.objects.create(user_id=user_id,
+        UserInfo.objects.create(user_id=int(user_id, 16),
                                 user_name=user_name,
                                 user_password=user_password,
                                 user_mail=user_mail,

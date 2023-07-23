@@ -77,5 +77,9 @@ def register_page(request):
     return render(request, '404.html')
 
 
+def change_pwd_view(request):
+    return render(request, 'changePasswd.html')
+
+
 def main_view(request):
     return render(request, 'home.html')

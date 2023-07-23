@@ -45,41 +45,36 @@
     </nav>
 </header>
 
-<body class="has-animations">
-    <div class="container pt1 pb1">
-
-        <div class="grid-row">
-            <div class="grid-column mt3 mb2">
-                <div class="border--bottom pb2 mb2">
-                    <h2>Shiki's Home</h2>
-                    <p>This is my Ge Xing Qian Ming.</p>
-                    <p class="bold text-light-gray">Groups:</p>
-                    <p class="bold text-light-gray">AAUB</p>
-                    <p class="bold text-light-gray">U149</p>
-                </div>
-                <p><a class="italic text--gray mb1" href="">Edit Profile</a></p>
-                <p><a class="italic text--gray bold mb1" href="./changepwd/">Change Password</a></p>
-            </div>
-            <div class="grid-column mt3 mb2">
-                
-            </div>
-        </div>
-        <div class="grid-row">
-            <div class="grid-column mt3 mb2">
-                
-            </div>
-            <div class="grid-column mt3 mb2">
-                <div class="border--bottom pb2 mb2">
-                    <h3>Usage Data</h2>
-                    <p>Total Asks: 0</p>
-                    <p>Total Answers: 0</p>
-                    <p>Correct Rate: 0%</p>
-                </div>
-                <p class="bold">Trophies:</p>
-                <p class="italic text--gray">You have no trophies yet.</p>
+<body  class="has-animations">
+    <div class="container align--center vertical--full-height">
+        <div class="pt4">
+            <h3 class="bold pt1 pb1">Change Password</h3>
+            <div class="">
+                <form action="" method="POST">
+                    <label>
+                        <input type="password" name="prev_password" placeholder="previous password" class="form-control">
+                    </label>
+                    <label>
+                        <input type="password" name="password" placeholder="password" class="form-control">
+                    </label>
+                    <label>
+                        <input type="password" name="confirm_password" placeholder="confirm password" class="form-control">
+                    </label>
+                    <div class="pt2"></div>
+                    <div style="text-align: center">
+                        <button type="submit" class="btn btn--outline">Confirm</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+{% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+    </script>
+{% endif %}
 </body>
 </html>
 

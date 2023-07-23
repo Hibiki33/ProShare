@@ -52,12 +52,15 @@
             <div class="grid-column mt3 mb2">
                 <form action="" method="POST">
                 <div class="border--bottom pb2 mb2">
-                    <h2>Shiki's Home</h2>
+                    <h2>{{ user.username }}'s Home</h2>
                     <label>
-                        <input type="text" name="username" placeholder="username" class="form-control" value="Shiki">
+                        <input type="text" name="quote" placeholder="personalized signature" class="form-control" value={{ user.quote }}>
                     </label>
                     <label>
-                        <input type="text" name="personal_sign" placeholder="personalized signature" class="form-control" value="This is my Ge Xing Qian Ming.">
+                        <input type="text" name="email" placeholder="email address" class="form-control" value={{ user.email }}>
+                    </label>
+                    <label>
+                        <input type="text" name="phone" placeholder="phone number" class="form-control" value={{ user.phone }}>
                     </label>
                     <p class="bold text-light-gray">Groups:</p>
                     <p class="bold text-light-gray">AAUB</p>

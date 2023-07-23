@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
@@ -11,8 +11,8 @@ def get_uuid(length=8):
     return str(uuid.uuid4()).replace('-', '')[:length]
 
 
-def login_view(request):
-    return render(request, 'login.html')
+# def login_view(request):
+#     return render(request, 'login.html')
 
 
 def login_page(request):
@@ -42,9 +42,10 @@ def login_page(request):
         #     messages.error(request, 'user_name or password is wrong!')
         #     return HttpResponseRedirect('/account/login/')
 
-        if user and user.is_active:
+        if user:
             login(request, user)
             request.session['username'] = username
+            request.session.set_expiry(0)
             return HttpResponseRedirect('/')
         else:
             messages.error(request, 'Username or Password is wrong!')
@@ -53,8 +54,8 @@ def login_page(request):
     return render(request, '404.html')
 
 
-def register_view(request):
-    return render(request, 'register.html')
+# def register_view(request):
+#     return render(request, 'register.html')
 
 
 def register_page(request):
@@ -85,9 +86,11 @@ def register_page(request):
             messages.error(request, 'username already exists!')
             return HttpResponseRedirect('/account/register/')
 
-        User.objects.create(username=username,
-                            password=password,
-                            email=email)
+        User.objects.create_user(username=username,
+                                 password=password,
+                                 email=email,
+                                 quote=' ',
+                                 phone=' ',)
         return HttpResponseRedirect('/account/')
 
     return render(request, '404.html')
@@ -98,13 +101,82 @@ def logout_page(request):
     return HttpResponseRedirect('/')
 
 
-def change_pwd_view(request):
-    return render(request, 'change_password.html')
+# def change_password_view(request):
+#     return render(request, 'change_password.html')
+
+
+def change_password_page(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return render(request, 'change_password.html')
+        else:
+            return HttpResponseRedirect('/account/login/')
+    elif request.method == 'POST':
+        old_password = request.POST.get('prev_password', '')
+        new_password = request.POST.get('password', '')
+        confirm_password = request.POST.get('confirm_password', '')
+
+        if not old_password or not new_password or not confirm_password:
+            messages.error(request, 'not finished!')
+            return HttpResponseRedirect('/account/change_password/')
+
+        if new_password != confirm_password:
+            messages.error(request, 'new_password and confirm_password is not same!')
+            return HttpResponseRedirect('/account/change_password/')
+
+        user = authenticate(request, username=request.user.username, password=old_password)
+
+        if user:
+            user.set_password(new_password)
+            user.save()
+            return HttpResponseRedirect('/account/login/')
+        else:
+            messages.error(request, 'previous password is wrong!')
+            return HttpResponseRedirect('/account/change_password/')
 
 
 def edit_view(request):
     return render(request, 'home_edit.html')
 
 
-def main_view(request):
-    return render(request, 'home.html')
+def edit_page(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return render(request, 'home_edit.html')
+        else:
+            return HttpResponseRedirect('/account/login/')
+    elif request.method == 'POST':
+        if request.user.is_authenticated:
+            quote = request.POST.get('quote', '')
+            email = request.POST.get('email', '')
+            phone = request.POST.get('phone', '')
+
+            request.user.set_quote(quote)
+            request.user.email = email
+            request.user.set_phone(phone)
+            request.user.save()
+            return HttpResponseRedirect('/account/')
+        else:
+            return HttpResponseRedirect('/account/login/')
+
+
+# def home_view(request):
+#     return render(request, 'home.html')
+
+
+def home_page(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return render(request, 'home.html', {
+                'username': request.user.username,
+                'email': request.user.email,
+                'phone': request.user.phone,
+                'quote': request.user.quote,
+            })
+        else:
+            return HttpResponseRedirect('/account/login/')
+    elif request.method == 'POST':
+        if request.user.is_authenticated:
+            pass
+        else:
+            return HttpResponseRedirect('/account/login/')

@@ -13,7 +13,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
 class UserManager(BaseUserManager):
-    def _create_user(self, username, password, email, **kwargs):
+    def _create_user(self, username, password, email, **extra_fields):
         if not username:
             raise ValueError('Username must be set!')
         if not password:
@@ -21,18 +21,18 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('Email must be set!')
 
-        user = self.model(username=username, email=email, **kwargs)
+        user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_user(self, username, password, **kwargs):
-        kwargs['is_superuser'] = False
-        return self._create_user(username, password, **kwargs)
+    def create_user(self, username, password, **extra_fields):
+        extra_fields['is_superuser'] = False
+        return self._create_user(username, password, **extra_fields)
 
-    def create_superuser(self, username, password, **kwargs):
-        kwargs['is_superuser'] = True
-        return self._create_user(username, password, **kwargs)
+    def create_superuser(self, username, password, **extra_fields):
+        extra_fields['is_superuser'] = True
+        return self._create_user(username, password, **extra_fields)
 
 
 class User(AbstractUser):

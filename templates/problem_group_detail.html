@@ -75,7 +75,7 @@
     <body class="has-animations">
 
         <div class="container--lg pt3 pb3">
-        <h2 class="text--gray pb1">{{ problem_info.Name }}</h2>
+        <h2 class="text--gray pb1">{{ problem_group_info.Name }}</h2>
         </div>
 
         <div class="container--lg pt1 pb1">
@@ -83,8 +83,9 @@
             <div class="grid-row grid-row--top">
                 <div class="grid-column span-9">
                     <div class="border--bottom">
-                        <h2>Description</h2>
+                        <h2>Problems</h2>
                     </div>
+                    {% for problem_info in problem_group_info %}
                     {% if problem_info.Type == 0 %}
                     <div class="divCss">
                         {{ problem_info.Description }}
@@ -118,6 +119,7 @@
                         </label>
                     </form>
                     {% endif %}
+                    {% endfor %}
                     <form action="" method="POST" class="pt1">
                         <div style="text-align: center">
                             <button type="submit" class="btn btn--outline">Submit</button>

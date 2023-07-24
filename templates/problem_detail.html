@@ -132,27 +132,35 @@
                     </div>
                     <p class="pt1">
                         <span class="text--gray bold">ID: </span>
-                        <span class="text--gray">114514</span>
+                        <span class="text--gray">{{ problem_info.ID }}</span>
                     </p>
                     <p class="pt1">
                         <span class="text--gray bold">Upload Date: </span>
-                        <span class="text--gray">2022/2/22</span>
+                        <span class="text--gray">{{ problem_info.Time }}</span>
                     </p>
                     <p class="pt1">
                         <span class="text--gray bold">Uploader: </span>
-                        <span class="text--gray">Red</span>
+                        <span class="text--gray">{{ problem_info.Uploader }}</span>
                     </p>
                     <p class="pt1">
                         <span class="text--gray bold">Type: </span>
+                        {% if problem_info.Type == 0 %}
                         <span class="text--gray">Single Choice</span>
+                        {% endif %}
+                        {% if problem_info.Type == 1 %}
+                        <span class="text--gray">Multiple Choice</span>
+                        {% endif %}
+                        {% if problem_info.Type == 2 %}
+                        <span class="text--gray">Fill in the blank</span>
+                        {% endif %}
                     </p>
                     <p class="pt1">
                         <span class="text--gray bold">Submit: </span>
-                        <span class="text--gray">100</span>
+                        <span class="text--gray">{{ problem_info.Submit }}</span>
                     </p>
                     <p class="pt1">
                         <span class="text--gray bold">Passed: </span>
-                        <span class="text--gray">101</span>
+                        <span class="text--gray">{{ problem_info.Passed }}</span>
                     </p>
                 </div>
             </div>

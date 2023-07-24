@@ -7,4 +7,4 @@ outputs/
 
 .DS_Store
 
-[0-9]{4}_*
+*_initial.py

@@ -19,6 +19,25 @@
         <!-- Web fonts -->
         <link href="/static/css/font1.css" rel="stylesheet">
 
+
+        <style>
+            .divCss{
+                margin-bottom: 10px;
+            }
+            .olCss{
+                padding-left: 20px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-left: 40px;
+            }
+            .inputClass {
+                float:left;
+                margin-left: -50px;
+            }
+            .liRight {
+                
+            }
+        </style>
     </head>
 
     <header class="fixed">
@@ -66,6 +85,27 @@
                     <div class="border--bottom">
                         <h2>Description</h2>
                     </div>
+                    {% if problem_info.Type == 0 %}
+                    <div class="divCss">
+                        {{ problem_info.Description }}
+                        <ol type="A" start="" class="olCss" >
+                        {% for option in problem_info.Options %}
+                            <input class="inputClass" type="radio" name="place" value={{ problem }} /><li class="liRight">{{ problem }}</li>
+                        {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+                    {% if problem_info.Type == 1 %}
+                    <div class="divCss">
+                        {{ problem_info.Description }}
+                        <ol type="A" start="" class="olCss" >
+                            {% for option in problem_info.Options %}
+                            <input class="inputClass" type="checkbox" name="place" value={{ problem }} /><li class="liRight">{{ problem }} </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    {% endif %}
+                    {% if problem_info.Type == 2 %}
                     <div>
                         <p class="pt1">This is a problem description.</p>
                     </div>
@@ -76,12 +116,16 @@
                         <label>
                             <input type="answer" name="answer" placeholder="Your Answer" class="form-control">
                         </label>
-                        <div class="pt2"></div>
+                    </form>
+                    {% endif %}
+                    <form action="" method="POST" class="pt1">
                         <div style="text-align: center">
                             <button type="submit" class="btn btn--outline">Submit</button>
                         </div>
                     </form>
                 </div>
+
+                
                 <div class="grid-column span-3">
                     <div class="border--bottom">
                         <h2>Statistics</h2>

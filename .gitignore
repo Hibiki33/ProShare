@@ -7,4 +7,7 @@ outputs/
 
 .DS_Store
 
-*_initial.py
+migration/*.py
+!migration/__init__.py
+
+media/*.*

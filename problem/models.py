@@ -1,6 +1,6 @@
 from django.db import models
 from utils.models import RichTextField, JSONField
-from account.models import UserInfo
+from account.models import User
 
 class Question(models.Model):
     # display ID
@@ -8,7 +8,7 @@ class Question(models.Model):
     title = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
     difficulty = models.TextField()
-    created_by = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     # 0: single choice, 1: multiple choice, 2: input
     type = models.IntegerField()
     description = RichTextField()
@@ -41,7 +41,7 @@ class Problem(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     # we can not use auto_now here
     last_update_time = models.DateTimeField(null=True)
-    created_by = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     # ms
     time_limit = models.IntegerField()
     # MB

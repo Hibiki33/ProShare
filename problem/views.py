@@ -7,6 +7,18 @@ from .models import *
 def main_view(request):
     return render(request, 'problems.html')
 
+def problem_lib_page(request):
+    if request.method == 'GET':
+        return render(request, 'problem_group_list.html')
+    elif request.method == 'POST':
+        pass
+
+def detail(request, id):
+    if request.method == 'GET':
+        return detail_view(request, id)
+    elif request.method == 'POST':
+        pass
+
 def detail_view(request, id):
     if Question.objects.filter(_id=id).exists():
         question = Question.objects.get(_id=id)

@@ -1,11 +1,15 @@
+from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from .models import *
 
 # Create your views here.
 
+
 def main_view(request):
     return render(request, 'problems.html')
+
 
 def problem_lib_page(request):
     if request.method == 'GET':
@@ -13,11 +17,13 @@ def problem_lib_page(request):
     elif request.method == 'POST':
         pass
 
+
 def detail(request, id):
     if request.method == 'GET':
         return detail_view(request, id)
     elif request.method == 'POST':
         pass
+
 
 def detail_view(request, id):
     if Question.objects.filter(_id=id).exists():
@@ -41,3 +47,19 @@ def detail_view(request, id):
         raise NotImplementedError
     else:
         raise ModuleNotFoundError
+
+
+def upload_problem_page(request):
+    if request.method == 'GET':
+        return render(request, 'upload_problem.html')
+    elif request.method == 'POST':
+        file_name = request.POST.get('file', '')
+        file = request.FILES.get('file', None)
+
+        if not file:
+            messages.error(request, 'No file uploaded!')
+            return HttpResponseRedirect('/problem/upload_problem/')
+
+        ProblemFile.objects.create(file_name=file_name,
+                                   file=file)
+        return HttpResponse('Upload Success!')

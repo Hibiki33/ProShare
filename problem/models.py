@@ -2,6 +2,7 @@ from django.db import models
 from utils.models import RichTextField, JSONField
 from account.models import User
 
+
 class Question(models.Model):
     # display ID
     _id = models.TextField()
@@ -18,7 +19,6 @@ class Question(models.Model):
         # db_table = "question"
         # ordering = ("create_time",)
     
-
 
 class Problem(models.Model):
     # display ID
@@ -76,3 +76,8 @@ class Problem(models.Model):
     def add_ac_number(self):
         self.accepted_number = models.F("accepted_number") + 1
         self.save(update_fields=["accepted_number"])
+
+
+class ProblemFile(models.Model):
+    file_name = models.CharField(max_length=128)
+    file = models.FileField()

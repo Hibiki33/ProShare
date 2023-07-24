@@ -15,9 +15,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Question',
+            name='problem',
             fields=[
-                ('question_id', models.AutoField(primary_key=True, serialize=False)),
+                ('problem_id', models.AutoField(primary_key=True, serialize=False)),
                 ('title', models.CharField(max_length=32)),
                 ('content', models.TextField()),
                 ('std_ans', models.BooleanField(default=False)),

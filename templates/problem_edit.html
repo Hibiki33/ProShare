@@ -34,8 +34,19 @@
                 float:left;
                 margin-left: -50px;
             }
-            .liRight {
-                
+            .form-wfy {
+                background-image: none;
+                border: 1px solid transparent;
+                border-radius: 7px;
+                color: #262b3a;
+                display: inline-block;
+                font-family: Montserrat, Avenir, "Avenir Next", Trebuchet, Verdana, sans-serif;
+                font-size: 1rem;
+                line-height: 1.6rem;
+                max-width: 100%;
+                padding: .65rem .8rem .55rem;
+                width: auto;
+                -moz-osx-font-smoothing: grayscale
             }
         </style>
     </head>
@@ -74,94 +85,63 @@
 
     <body class="has-animations">
 
+        {% comment %} <script>
+            function createNode() {
+                var element = document.createElement("input");
+                element.setAttribute("type", "text");
+                element.setAttribute("class", "inputClass");
+                element.setAttribute("name", "choice");
+                element.setAttribute("placeholder", "choice");
+                element.setAttribute("id", "choice");
+                document.getElementById("edit_div").appendChild(element);
+            }
+            function deleteNode() {
+                var element = document.getElementById("choice");
+                element.parentNode.removeChild(element);
+            }
+        </script> {% endcomment %}
+
         <div class="container--lg pt3 pb3">
         <h2 class="text--gray pb1">{{ problem_info.Name }}</h2>
         </div>
 
-        <div class="container--lg pt1 pb1">
+        <div class="container pt1 pb1">
 
-            <div class="grid-row grid-row--top">
-                <div class="grid-column span-9">
+            <div class="">
+                <div class="">
                     <div class="border--bottom">
                         <h2>Description</h2>
                     </div>
-                    {% if problem_info.Type == 0 %}
-                    <div class="divCss">
-                        {{ problem_info.Description }}
-                        <ol type="A" start="" class="olCss" >
-                        {% for option in problem_info.Options %}
-                            <input class="inputClass" type="radio" name="place" value={{ option }} /><li class="liRight">{{ option }}</li>
-                        {% endfor %}
-                        </ol>
-                    </div>
-                    {% endif %}
-                    {% if problem_info.Type == 1 %}
-                    <div class="divCss">
-                        {{ problem_info.Description }}
-                        <ol type="A" start="" class="olCss" >
-                            {% for option in problem_info.Options %}
-                            <input class="inputClass" type="checkbox" name="place" value={{ option }} /><li class="liRight">{{ option }} </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                    {% endif %}
-                    {% if problem_info.Type == 2 %}
-                    <div>
-                        <p class="pt1">{{ problem_info.Description }}</p>
-                    </div>
-                    <div class="border--bottom pt4">
-                        <h2>Your Answer</h2>
-                    </div>
+                    <div id="edit_div"></div>
                     <form action="" method="POST" class="pt1">
                         <label>
-                            <input type="answer" name="answer" placeholder="Your Answer" class="form-control">
+                            <input type="question_title" name="question_title" placeholder="question title" class="form-control" />
                         </label>
-                    </form>
-                    {% endif %}
-                    <form action="" method="POST" class="pt1">
-                        <div style="text-align: center">
+                        <label>
+                            {% comment %} <input type="question_description" name="question_description" placeholder="question description" class="form-control" /> {% endcomment %}
+                            <div class="form-control bg--white" contenteditable="true"></div>
+                        </label>
+                        <p class="text--gray pt2 pb1 italic">(Choose the right answer)</p>
+                        <div class="grid--row">
+                            <input class="" type="radio" name="place" />
+                            <input type="choice" name="choice" placeholder="choice A" class="form-wfy" />
+                        </div>
+                        <div class="grid--row">
+                            <input class="" type="radio" name="place" />
+                            <input type="choice" name="choice" placeholder="choice B" class="form-wfy" />
+                        </div>
+                        <div class="grid--row">
+                            <input class="" type="radio" name="place" />
+                            <input type="choice" name="choice" placeholder="choice C" class="form-wfy" />
+                        </div>
+                        <div class="grid--row">
+                            <input class="" type="radio" name="place" />
+                            <input type="choice" name="choice" placeholder="choice D" class="form-wfy" />
+                        </div>
+                        <div class="pt3">
                             <button type="submit" class="btn btn--outline">Submit</button>
                         </div>
                     </form>
-                </div>
-
-                
-                <div class="grid-column span-3">
-                    <div class="border--bottom">
-                        <h2>Statistics</h2>
-                    </div>
-                    <p class="pt1">
-                        <span class="text--gray bold">ID: </span>
-                        <span class="text--gray">{{ problem_info.ID }}</span>
-                    </p>
-                    <p class="pt1">
-                        <span class="text--gray bold">Upload Date: </span>
-                        <span class="text--gray">{{ problem_info.Time }}</span>
-                    </p>
-                    <p class="pt1">
-                        <span class="text--gray bold">Uploader: </span>
-                        <span class="text--gray">{{ problem_info.Uploader }}</span>
-                    </p>
-                    <p class="pt1">
-                        <span class="text--gray bold">Type: </span>
-                        {% if problem_info.Type == 0 %}
-                        <span class="text--gray">Single Choice</span>
-                        {% endif %}
-                        {% if problem_info.Type == 1 %}
-                        <span class="text--gray">Multiple Choice</span>
-                        {% endif %}
-                        {% if problem_info.Type == 2 %}
-                        <span class="text--gray">Fill in the blank</span>
-                        {% endif %}
-                    </p>
-                    <p class="pt1">
-                        <span class="text--gray bold">Submit: </span>
-                        <span class="text--gray">{{ problem_info.Submit }}</span>
-                    </p>
-                    <p class="pt1">
-                        <span class="text--gray bold">Passed: </span>
-                        <span class="text--gray">{{ problem_info.Passed }}</span>
-                    </p>
                 </div>
             </div>
         </div>

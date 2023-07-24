@@ -64,30 +64,17 @@
             <div class="grid-row grid-row--top">
                 <div class="grid-column span-9">
                     <div class="border--bottom">
-                        <h2>Annoucements</h2>
+                        <h2>Search</h2>
                     </div>
-                    <table class="container--lg pt1 pb1">
-                        <tr><td><a class="grid-row link pt1 pb1" href="">
-                            <div class="grid-column span-8 bold text--darkest-gray">Annoucement</div>
-                            <div class="grid-column span-2 bold text--darkest-gray">Author</div>
-                            <div class="grid-column span-2 bold text--darkest-gray">Time</div>
-                        </a></td></tr>
-                        <tr><td><a class="grid-row link pt1 pb1" href="">
-                            <div class="grid-column span-8 text--darkest-gray">Hello Wrold!</div>
-                            <div class="grid-column span-2 italic text--darkest-gray">Admin</div>
-                            <div class="grid-column span-2 italic text--darkest-gray">2023/7/23</div>
-                        </a></td></tr>
-                        <tr><td><a class="grid-row link pt1 pb1" href="">
-                            <div class="grid-column span-8 text--darkest-gray">Hello Wrold!</div>
-                            <div class="grid-column span-2 italic text--darkest-gray">Admin</div>
-                            <div class="grid-column span-2 italic text--darkest-gray">2023/7/23</div>
-                        </a></td></tr>
-                        <tr><td><a class="grid-row link pt1 pb1" href="">
-                            <div class="grid-column span-8 text--darkest-gray">Hello Wrold!</div>
-                            <div class="grid-column span-2 italic text--darkest-gray">Admin</div>
-                            <div class="grid-column span-2 italic text--darkest-gray">2023/7/23</div>
-                        </a></td></tr>
-                    </table>
+                    <form action="" method="POST" class="pt1">
+                        <label>
+                            <input type="search_text" name="search_text" placeholder="Problem name" class="form-control">
+                        </label>
+                        <div class="pt2"></div>
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn--outline">Search</button>
+                        </div>
+                    </form>
                     <div class="border--bottom pt4">
                         <h2>problems</h2>
                     </div>
@@ -125,18 +112,6 @@
                     </div>
                     <p class="italic text--gray mb1 pt1">"Loneliness is deadly poison"</p>
                     <p class="bold">- Horo, Spice and Wolf</p>
-                    <div class="border--bottom pt4">
-                        <h2>problem Jumper</h2>
-                    </div>
-                    <form action="" method="POST" class="pt1">
-                        <label>
-                            <input type="problem_id" name="problem_id" placeholder="problem ID" class="form-control">
-                        </label>
-                        <div class="pt2"></div>
-                        <div style="text-align: center">
-                            <button type="submit" class="btn btn--outline">Jump</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

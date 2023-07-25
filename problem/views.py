@@ -40,7 +40,7 @@ def detail_view(request, id):
             "Submit": question.submission_number,
             "Passed": question.passed_number,
         }
-        return render(request, 'problem_detail.html', msg)
+        return render(request, 'problem_detail.html', {'problem_info': msg})
     elif Problem.objects.filter(_id=id).exists:
         problem = Problem.objects.get(_id=id)
         # TODO

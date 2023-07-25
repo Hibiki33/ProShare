@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
     path('', views.problem_lib_page),
-    path("<int:id>/", views.detail),
-
-    path('problem_upload/', views.problem_upload_page),
+    path("<int:id>/", views.problem_detail_page),
+    path('create/', views.problem_create_page),
+    path('upload/', views.problem_upload_page),
 ]

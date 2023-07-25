@@ -18,7 +18,7 @@ def problem_lib_page(request):
         pass
 
 
-def detail(request, id):
+def problem_detail_page(request, id):
     if request.method == 'GET':
         return detail_view(request, id)
     elif request.method == 'POST':
@@ -37,16 +37,34 @@ def detail_view(request, id):
             "Type": question.type,
             "Description": question.description,
             "Options": question.options,
-            "Submit": 10, # TODO
-            "Passed": 5, # TODO
+            "Submit": question.submission_number,
+            "Passed": question.passed_number,
         }
-        return render(request, 'question.html', msg)
+        return render(request, 'problem_detail.html', msg)
     elif Problem.objects.filter(_id=id).exists:
         problem = Problem.objects.get(_id=id)
         # TODO
         raise NotImplementedError
     else:
         raise ModuleNotFoundError
+
+
+def problem_create_page(request):
+    if request.method == 'GET':
+        return render(request, 'problem_create.html')
+    elif request.method == 'POST':
+        global cur_id
+        print(request.POST)
+        q = Question.objects.create(
+            description=request.POST.get('description', ''),
+            title=request.POST.get('question_title', ''),
+            difficulty="middle",
+            created_by=request.user,
+            type=request.POST.get('type', 1),
+            options=request.POST.get('choice', ''),
+            answer=request.POST.get('question_answer', ''),
+        )
+        return HttpResponseRedirect('/problem/'+ str(q._id) + '/')
 
 
 def problem_upload_page(request):

@@ -12,3 +12,6 @@ migration/*.py
 
 media/*.*
 0001_initial.py
+000*
+
+log

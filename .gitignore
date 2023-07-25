@@ -11,3 +11,4 @@ migration/*.py
 !migration/__init__.py
 
 media/*.*
+0001_initial.py

@@ -129,6 +129,7 @@
                             {% comment %} <input type="question_description" name="question_description" placeholder="question description" class="form-control" /> {% endcomment %}
                             <div class="form-control bg--white" contenteditable="true">Please enter question description here.</div>
                         </label>
+                        <label>
                         <div class="select mb1">
                             <select id="question-type"  onchange="showQuestionEditor()">
                                 <option selected="selected" value="single-choice">Single Answer</option>
@@ -136,6 +137,20 @@
                                 <option value="fill-blank">Fill the blank</option>
                             </select>
                         </div>
+                        </label>
+                        <p class="text--gray pt2 pb1 italic">(Choose the difficulty below.)</p>
+                        <label>
+                            <div class="select mb1">
+                                <select id="question-diff">
+                                    <option selected="selected" value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                    <option value="expert">Expert</option>
+                                    <option value="master">Master</option>
+                                    <option value="re_master">Re:Master</option>
+                                </select>
+                            </div>
+                            </label>
                         <div id="single-choice-editor" style="display: block;">
                             <p class="text--gray pt2 pb1 italic">(Choose the only right answer)</p>
                             <div class="grid--row">

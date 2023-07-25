@@ -5,7 +5,7 @@ from account.models import User
 
 class Question(models.Model):
     # display ID
-    _id = models.TextField()
+    _id = models.AutoField(primary_key=True)
     title = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
     difficulty = models.TextField()
@@ -14,10 +14,22 @@ class Question(models.Model):
     type = models.IntegerField()
     description = RichTextField()
     options = JSONField()
+    answer = models.TextField()
+
+    submission_number = models.BigIntegerField(default=0)
+    passed_number = models.BigIntegerField(default=0)
+
+    def add_submission_number(self):
+        self.submission_number = models.F("submission_number") + 1
+        self.save(update_fields=["submission_number"])
+
+    def add_ac_number(self):
+        self.passed_number = models.F("passed_number") + 1
+        self.save(update_fields=["passed_number"])
 
     # class Meta:
-        # db_table = "question"
-        # ordering = ("create_time",)
+    #     db_table = "question"
+    #     ordering = ("create_time",)
     
 
 class Problem(models.Model):

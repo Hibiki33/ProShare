@@ -112,7 +112,15 @@
                     <div class="border--bottom">
                         <h2>Description</h2>
                     </div>
-                    <div id="edit_div"></div>
+                    <form action="" method="POST" class="pt1">
+                        <div class="select mb1">
+                            <select id="upload-type"  onchange="showFileUploader()">
+                                <option selected="selected" value="edit-online">Edit online</option>
+                                <option value="upload-file">Upload file</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div id="edit--question--online" style="display: block;">
                     <form action="" method="POST" class="pt1">
                         <label>
                             <input type="question_title" name="question_title" placeholder="question title" class="form-control" value="New Question"/>
@@ -174,6 +182,35 @@
                             <button type="submit" class="btn btn--outline">Submit</button>
                         </div>
                     </form>
+                    </div>
+                    <div id="upload--question" style="display: none;">
+                    {% comment %} below is a div containing text introducing file restrictions WRITTEN BY COPILOT {% endcomment %}
+                    <div>
+                        <p class="text--gray pt2 pb1 italic">File restrictions:</p>
+                        <ol class="olCss">
+                            <li>File size should be less than 10MB.</li>
+                            <li>File type should be .txt or .md.</li>
+                            <li>File name should be in the format of "problem_name.txt" or "problem_name.md".</li>
+                        </ol>
+                        <p class="text--gray pt2 pb1 italic">Content restrictions:</p>
+                        <ol class="olCss">
+                            <li>File should contain a title line, a description line, and a question line.</li>
+                            <li>Title line should be in the format of "# problem_name".</li>
+                            <li>Description line should be in the format of "## problem_description".</li>
+                            <li>Question line should be in the format of "### problem_question".</li>
+                            <li>Question type should be in the format of "#### problem_type".</li>
+                            <li>Single choice question should be in the format of "##### single_choice".</li>
+                            <li>Multiple choice question should be in the format of "##### multiple_choice".</li>
+                            <li>Fill blank question should be in the format of "##### fill_blank".</li>
+                            <li>Choices should be in the format of "choice A", "choice B", "choice C", "choice D".</li>
+                            <li>Answer should be in the format of "answer".</li>
+                        </ol>
+                    </div>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" class="pt1 pb1">
+                        <button class="btn btn--outline">Upload</button>
+                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -199,6 +236,21 @@
                     singleChoiceEditor.style.display = "none";
                     multipleChoiceEditor.style.display = "none";
                     fillBlankEditor.style.display = "block";
+                }
+            }
+            function showFileUploader() {
+                var select = document.getElementById("upload-type");
+                var selectedValue = select.options[select.selectedIndex].value;
+
+                var editQuestionOnline = document.getElementById("edit--question--online");
+                var uploadQuestion = document.getElementById("upload--question");
+
+                if (selectedValue == "edit-online") {
+                    editQuestionOnline.style.display = "block";
+                    uploadQuestion.style.display = "none";
+                } else if (selectedValue == "upload-file") {
+                    editQuestionOnline.style.display = "none";
+                    uploadQuestion.style.display = "block";
                 }
             }
         </script>

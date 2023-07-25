@@ -49,16 +49,16 @@ def detail_view(request, id):
         raise ModuleNotFoundError
 
 
-def upload_problem_page(request):
+def problem_upload_page(request):
     if request.method == 'GET':
-        return render(request, 'upload_problem.html')
+        return render(request, 'problem_upload.html')
     elif request.method == 'POST':
         file_name = request.POST.get('file', '')
         file = request.FILES.get('file', None)
 
         if not file:
             messages.error(request, 'No file uploaded!')
-            return HttpResponseRedirect('/problem/upload_problem/')
+            return HttpResponseRedirect('/problem/problem_upload/')
 
         ProblemFile.objects.create(file_name=file_name,
                                    file=file)

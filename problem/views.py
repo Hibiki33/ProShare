@@ -37,8 +37,8 @@ def detail_view(request, id):
             "Type": question.type,
             "Description": question.description,
             "Options": question.options,
-            "Submit": question.submission_number,  # TODO
-            "Passed": question.passed_number,  # TODO
+            "Submit": question.submission_number,
+            "Passed": question.passed_number,
         }
         return render(request, 'problem_detail.html', msg)
     elif Problem.objects.filter(_id=id).exists:

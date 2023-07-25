@@ -62,4 +62,12 @@ def upload_problem_page(request):
 
         ProblemFile.objects.create(file_name=file_name,
                                    file=file)
+        handle_uploaded_file(file)
+
         return HttpResponse('Upload Success!')
+
+
+def handle_uploaded_file(f):
+    # TODO: 这里文件打开方式是b 自己处理一下
+    for line in f:
+        print(line)

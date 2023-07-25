@@ -4,6 +4,8 @@ from django.shortcuts import render
 
 from .models import *
 
+import logging
+
 # Create your views here.
 
 
@@ -40,6 +42,7 @@ def detail_view(request, id):
             "Submit": question.submission_number,
             "Passed": question.passed_number,
         }
+        logging.debug('problem detail: ', msg)
         return render(request, 'problem_detail.html', {'problem_info': msg})
     elif Problem.objects.filter(_id=id).exists:
         problem = Problem.objects.get(_id=id)
@@ -53,8 +56,7 @@ def problem_create_page(request):
     if request.method == 'GET':
         return render(request, 'problem_create.html')
     elif request.method == 'POST':
-        global cur_id
-        print(request.POST)
+        logging.debug('create problem request: ', request.POST)
         q = Question.objects.create(
             description=request.POST.get('description', ''),
             title=request.POST.get('question_title', ''),

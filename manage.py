@@ -2,9 +2,14 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import logging
 
 
 def main():
+    if not os.path.exists('log'):
+        os.mkdir('log')
+    logging.config.fileConfig('logging.conf')
+
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ProShare.settings')
     try:

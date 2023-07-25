@@ -127,11 +127,11 @@
                         </label>
                         <label>
                             {% comment %} <input type="question_description" name="question_description" placeholder="question description" class="form-control" /> {% endcomment %}
-                            <div class="form-control bg--white" contenteditable="true">Please enter question description here.</div>
+                            <div class="form-control bg--white" contenteditable="true" name="question_description">Please enter question description here.</div>
                         </label>
                         <label>
                         <div class="select mb1">
-                            <select id="question-type"  onchange="showQuestionEditor()">
+                            <select id="question-type"  onchange="showQuestionEditor()" name="question_type">
                                 <option selected="selected" value="single-choice">Single Answer</option>
                                 <option value="multiple-choice">Multiple Answer</option>
                                 <option value="fill-blank">Fill the blank</option>
@@ -141,7 +141,7 @@
                         <p class="text--gray pt2 pb1 italic">(Choose the difficulty below.)</p>
                         <label>
                             <div class="select mb1">
-                                <select id="question-diff">
+                                <select id="question-diff" name="question_diff">
                                     <option selected="selected" value="easy">Easy</option>
                                     <option value="medium">Medium</option>
                                     <option value="hard">Hard</option>
@@ -173,19 +173,19 @@
                         <div id="multiple-choice-editor" style="display: none;">
                             <p class="text--gray pt2 pb1 italic">(Choose all the right answers)</p>
                             <div class="grid--row">
-                                <input class="" type="checkbox" name="placeA" />
+                                <input class="" type="checkbox" name="place" value="A"/>
                                 <input type="choice" name="choice" placeholder="choice A" class="form-wfy" />
                             </div>
                             <div class="grid--row">
-                                <input class="" type="checkbox" name="placeB" />
+                                <input class="" type="checkbox" name="place" value="B"/>
                                 <input type="choice" name="choice" placeholder="choice B" class="form-wfy" />
                             </div>
                             <div class="grid--row">
-                                <input class="" type="checkbox" name="placeC" />
+                                <input class="" type="checkbox" name="place" value="C"/>
                                 <input type="choice" name="choice" placeholder="choice C" class="form-wfy" />
                             </div>
                             <div class="grid--row">
-                                <input class="" type="checkbox" name="placeD" />
+                                <input class="" type="checkbox" name="place" value="D"/>
                                 <input type="choice" name="choice" placeholder="choice D" class="form-wfy" />
                             </div>
                         </div>

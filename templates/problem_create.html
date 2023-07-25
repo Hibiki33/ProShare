@@ -112,7 +112,7 @@
                     <div class="border--bottom">
                         <h2>Description</h2>
                     </div>
-                    <form action="" method="POST" class="pt1">
+                    <form action="" method="POST" class="pt1"  id="userForm1">
                         <div class="select mb1">
                             <select id="upload-type"  onchange="showFileUploader()">
                                 <option selected="selected" value="edit-online">Edit online</option>
@@ -121,13 +121,13 @@
                         </div>
                     </form>
                     <div id="edit--question--online" style="display: block;">
-                    <form action="" method="POST" class="pt1">
+                    <form action="" method="POST" class="pt1" id="userForm2">
                         <label>
-                            <input type="question_title" name="question_title" placeholder="question title" class="form-control" value="New Question"/>
+                            <input id="question_title" type="question_title" name="question_title" placeholder="question title" class="form-control" value="New Question"/>
                         </label>
                         <label>
                             {% comment %} <input type="question_description" name="question_description" placeholder="question description" class="form-control" /> {% endcomment %}
-                            <div class="form-control bg--white" contenteditable="true" name="question_description">Please enter question description here.</div>
+                            <div id="question_description" class="form-control bg--white" contenteditable="true" name="question_description">Please enter question description here.</div>
                         </label>
                         <label>
                         <div class="select mb1">
@@ -155,46 +155,46 @@
                             <p class="text--gray pt2 pb1 italic">(Choose the only right answer)</p>
                             <div class="grid--row">
                                 <input class="" type="radio" name="place" value="A"/>
-                                <input type="choice" name="choice" placeholder="choice A" class="form-wfy" />
+                                <input type="choice" name="choice" id="choiceA1" placeholder="choice A" class="form-wfy" />
                             </div>
                             <div class="grid--row">
                                 <input class="" type="radio" name="place" value="B"/>
-                                <input type="choice" name="choice" placeholder="choice B" class="form-wfy" />
+                                <input type="choice" name="choice" id="choiceB1" placeholder="choice B" class="form-wfy" />
                             </div>
                             <div class="grid--row">
                                 <input class="" type="radio" name="place" value="C"/>
-                                <input type="choice" name="choice" placeholder="choice C" class="form-wfy" />
+                                <input type="choice" name="choice" id="choiceC1" placeholder="choice C" class="form-wfy" />
                             </div>
                             <div class="grid--row">
                                 <input class="" type="radio" name="place" value="D"/>
-                                <input type="choice" name="choice" placeholder="choice D" class="form-wfy" />
+                                <input type="choice" name="choice" id="choiceD1" placeholder="choice D" class="form-wfy" />
                             </div>
                         </div>
                         <div id="multiple-choice-editor" style="display: none;">
                             <p class="text--gray pt2 pb1 italic">(Choose all the right answers)</p>
                             <div class="grid--row">
                                 <input class="" type="checkbox" name="place" value="A"/>
-                                <input type="choice" name="choice" placeholder="choice A" class="form-wfy" />
+                                <input type="choice" name="choice" id="choiceA2" placeholder="choice A" class="form-wfy" />
                             </div>
                             <div class="grid--row">
                                 <input class="" type="checkbox" name="place" value="B"/>
-                                <input type="choice" name="choice" placeholder="choice B" class="form-wfy" />
+                                <input type="choice" name="choice" id="choiceB2" placeholder="choice B" class="form-wfy" />
                             </div>
                             <div class="grid--row">
                                 <input class="" type="checkbox" name="place" value="C"/>
-                                <input type="choice" name="choice" placeholder="choice C" class="form-wfy" />
+                                <input type="choice" name="choice" id="choiceC2" placeholder="choice C" class="form-wfy" />
                             </div>
                             <div class="grid--row">
                                 <input class="" type="checkbox" name="place" value="D"/>
-                                <input type="choice" name="choice" placeholder="choice D" class="form-wfy" />
+                                <input type="choice" name="choice" id="choiceD2" placeholder="choice D" class="form-wfy" />
                             </div>
                         </div>
                         <div id="fill-blank-editor" style="display: none;">
                             <p class="text--gray pt2 pb1 italic">(Input the right answer)</p>
-                            <input type="question_answer" name="question_answer" placeholder="The answer to the question." class="form-control"/>
+                            <input id="question_answer" type="question_answer" name="question_answer" placeholder="The answer to the question." class="form-control"/>
                         </div>
                         <div class="pt3">
-                            <button type="submit" class="btn btn--outline">Submit</button>
+                            <button type="button" class="btn btn--outline" onclick="submitForm()">Submit</button>
                         </div>
                     </form>
                     </div>
@@ -221,9 +221,9 @@
                             <li>Answer should be in the format of "answer".</li>
                         </ol>
                     </div>
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form action="" method="post" enctype="multipart/form-data" id="userForm3">
                         <input type="file" name="file" class="pt1 pb1">
-                        <button class="btn btn--outline">Upload</button>
+                        <button type="submit" class="btn btn--outline">Upload</button>
                     </form>
                     </div>
                 </div>
@@ -266,6 +266,50 @@
                 } else if (selectedValue == "upload-file") {
                     editQuestionOnline.style.display = "none";
                     uploadQuestion.style.display = "block";
+                }
+            }
+            function submitForm() {
+                var select = document.getElementById("question-type");
+                var selectedValue = select.options[select.selectedIndex].value;
+
+                var titleValue = document.getElementById('question_title').value;
+                var descriptionValue = document.getElementById('question_description').value;
+
+                if (selectedValue === "single-choice") {
+                    var inputA1Value = document.getElementById('choiceA1').value;
+                    var inputB1Value = document.getElementById('choiceB1').value;
+                    var inputC1Value = document.getElementById('choiceC1').value;
+                    var inputD1Value = document.getElementById('choiceD1').value;
+                    if (inputA1Value == '' || inputB1Value == '' || inputC1Value == '' ||
+                        inputD1Value == '' || titleValue == '' || descriptionValue == '') {
+                        alert('Please input all choices!');
+                    } else {
+                        document.getElementById('userForm1').submit();
+                        document.getElementById('userForm2').submit();
+                        document.getElementById('userForm3').submit();
+                    }
+                } else if (selectedValue === "multiple-choice") {
+                    var inputA2Value = document.getElementById('choiceA2').value;
+                    var inputB2Value = document.getElementById('choiceB2').value;
+                    var inputC2Value = document.getElementById('choiceC2').value;
+                    var inputD2Value = document.getElementById('choiceD2').value;
+                    if (inputA2Value == '' || inputB2Value == '' || inputC2Value == '' ||
+                        inputD2Value == '' || titleValue == '' || descriptionValue == '') {
+                        alert('Please input all choices!');
+                    } else {
+                        document.getElementById('userForm1').submit();
+                        document.getElementById('userForm2').submit();
+                        document.getElementById('userForm3').submit();
+                    }
+                } else if (selectedValue === "fill-blank") {
+                    var answerValue = document.getElementById('question_answer').value;
+                    if (answerValue == '' || titleValue == '' || descriptionValue == '') {
+                        alert('Please input answer!');
+                    } else {
+                        document.getElementById('userForm1').submit();
+                        document.getElementById('userForm2').submit();
+                        document.getElementById('userForm3').submit();
+                    }
                 }
             }
         </script>

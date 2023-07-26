@@ -61,16 +61,18 @@ def problem_create_page(request):
         logging.debug('create problem request: ')
         logging.info(request.POST)
 
-        q = Question.objects.create(
-            description=request.POST.get('description', ''),
-            title=request.POST.get('question_title', ''),
-            difficulty="middle",
-            created_by=request.user,
-            type=request.POST.get('type', 1),
-            options=request.POST.get('choice', ''),
-            answer=request.POST.get('question_answer', ''),
-        )
-        return HttpResponseRedirect('/problem/'+ str(q._id) + '/')
+        # q = Question.objects.create(
+        #     description=request.POST.get('description', ''),
+        #     title=request.POST.get('question_title', ''),
+        #     difficulty="middle",
+        #     created_by=request.user,
+        #     type=request.POST.get('type', 1),
+        #     options=request.POST.get('choice', ''),
+        #     answer=request.POST.get('question_answer', ''),
+        # )
+
+        # return HttpResponseRedirect('/problem/'+ str(q._id) + '/')
+        return HttpResponse('Create Success!')
 
 
 def problem_upload_page(request):

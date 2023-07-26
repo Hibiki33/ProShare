@@ -106,22 +106,22 @@
         </div>
 
         <div class="container pt1 pb1">
-
+            <form action="" method="POST" class="pt1"  id="userForm">
             <div class="">
                 <div class="">
                     <div class="border--bottom">
                         <h2>Description</h2>
                     </div>
-                    <form action="" method="POST" class="pt1"  id="userForm1">
+                    {% comment %} <form action="" method="POST" class="pt1"  id="userForm1"> {% endcomment %}
                         <div class="select mb1">
                             <select id="upload-type"  onchange="showFileUploader()">
                                 <option selected="selected" value="edit-online">Edit online</option>
                                 <option value="upload-file">Upload file</option>
                             </select>
                         </div>
-                    </form>
+                    {% comment %} </form> {% endcomment %}
                     <div id="edit--question--online" style="display: block;">
-                    <form action="" method="POST" class="pt1" id="userForm2">
+                    {% comment %} <form action="" method="POST" class="pt1" id="userForm2"> {% endcomment %}
                         <label>
                             <input id="question_title" type="question_title" name="question_title" placeholder="question title" class="form-control" value="New Question"/>
                         </label>
@@ -196,7 +196,7 @@
                         <div class="pt3">
                             <button type="button" class="btn btn--outline" onclick="submitForm()">Submit</button>
                         </div>
-                    </form>
+                    {% comment %} </form> {% endcomment %}
                     </div>
                     <div id="upload--question" style="display: none;">
                     {% comment %} below is a div containing text introducing file restrictions WRITTEN BY COPILOT {% endcomment %}
@@ -221,13 +221,14 @@
                             <li>Answer should be in the format of "answer".</li>
                         </ol>
                     </div>
-                    <form action="" method="post" enctype="multipart/form-data" id="userForm3">
+                    {% comment %} <form action="" method="post" enctype="multipart/form-data" id="userForm3"> {% endcomment %}
                         <input type="file" name="file" class="pt1 pb1">
                         <button type="submit" class="btn btn--outline">Upload</button>
-                    </form>
+                    {% comment %} </form> {% endcomment %}
                     </div>
                 </div>
             </div>
+            </form>
         </div>
 
         <script>
@@ -284,9 +285,7 @@
                         inputD1Value == '' || titleValue == '' || descriptionValue == '') {
                         alert('Please input all choices!');
                     } else {
-                        document.getElementById('userForm1').submit();
-                        document.getElementById('userForm2').submit();
-                        document.getElementById('userForm3').submit();
+                        document.getElementById('userForm').submit();
                     }
                 } else if (selectedValue === "multiple-choice") {
                     var inputA2Value = document.getElementById('choiceA2').value;
@@ -297,18 +296,14 @@
                         inputD2Value == '' || titleValue == '' || descriptionValue == '') {
                         alert('Please input all choices!');
                     } else {
-                        document.getElementById('userForm1').submit();
-                        document.getElementById('userForm2').submit();
-                        document.getElementById('userForm3').submit();
+                        document.getElementById('userForm').submit();
                     }
                 } else if (selectedValue === "fill-blank") {
                     var answerValue = document.getElementById('question_answer').value;
                     if (answerValue == '' || titleValue == '' || descriptionValue == '') {
                         alert('Please input answer!');
                     } else {
-                        document.getElementById('userForm1').submit();
-                        document.getElementById('userForm2').submit();
-                        document.getElementById('userForm3').submit();
+                        document.getElementById('userForm').submit();
                     }
                 }
             }

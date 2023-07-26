@@ -29,7 +29,7 @@ CREATE DATABASE proshare;
 After that, exit mysql shell and run:
 
 ```shell
-python manage.py makemigrations account
+python manage.py makemigrations
 python manage.py migrate
 ```
 

@@ -92,7 +92,10 @@
                         {{ problem_info.Description }}
                         <ol type="A" start="" class="olCss" >
                         {% for option in problem_info.Options %}
-                            <input class="inputClass" type="radio" name="place" value={{ problem }} /><li class="liRight">{{ problem }}</li>
+                            {% if problem_info.Answer == "" %}
+                                <input class="inputClass" type="radio" name="place" value={{ problem }} />
+                            {% endif %}
+                            <li class="liRight">{{ problem }}</li>
                         {% endfor %}
                         </ol>
                     </div>
@@ -102,7 +105,10 @@
                         {{ problem_info.Description }}
                         <ol type="A" start="" class="olCss" >
                             {% for option in problem_info.Options %}
-                            <input class="inputClass" type="checkbox" name="place" value={{ problem }} /><li class="liRight">{{ problem }} </li>
+                                {% if problem_info.Answer == "" %}
+                                    <input class="inputClass" type="checkbox" name="place" value={{ problem }} />
+                                {% endif %}
+                                <li class="liRight">{{ problem }} </li>
                             {% endfor %}
                         </ol>
                     </div>
@@ -111,6 +117,7 @@
                     <div>
                         <p class="pt1">{{ problem_info.Description }}</p>
                     </div>
+                    {% if problem_info.Answer == "" %}
                     <div class="border--bottom pt4">
                         <h2>Your Answer</h2>
                     </div>
@@ -119,6 +126,13 @@
                             <input type="answer" name="answer" placeholder="Your Answer" class="form-control">
                         </label>
                     </form>
+                    {% endif %}
+                    {% endif %}
+                    {% if problem_info.Answer %}
+                    <div class="">
+                        <h4>Answer:</h2>
+                        <p>{{ problem_info.Answer }}</p>
+                    </div>
                     {% endif %}
                     {% endfor %}
                     <form action="" method="POST" class="pt1">

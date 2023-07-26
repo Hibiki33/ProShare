@@ -6,6 +6,7 @@ from django.utils import timezone
 from .models import *
 import logging
 import os
+import json
 
 
 # def main_view(request):
@@ -66,7 +67,7 @@ def problem_create_page(request):
             difficulty="middle",
             created_by=request.user,
             type=request.POST.get('type', 1),
-            options=request.POST.get('choice', ''),
+            options=json.dumps(request.POST.getlist('choice', [])),
             answer=request.POST.get('question_answer', ''),
         )
         return HttpResponseRedirect('/problem/' + str(q._id) + '/')
@@ -119,7 +120,8 @@ def problem_upload_page(request):
             while line:
                 if line.startswith('Title'):
                     if status != 0:
-                        messages.error(request, 'Error at %d: Miss Title' % line_cnt)
+                        messages.error(
+                            request, 'Error at %d: Unexpected Title' % line_cnt)
                         return HttpResponseRedirect('./')
                     _, title = line.split(':')
                     title = title.strip()
@@ -128,7 +130,8 @@ def problem_upload_page(request):
 
                 elif line.startswith('Description'):
                     if status != 1:
-                        messages.error(request, 'Error at %d: Miss Description' % line_cnt)
+                        messages.error(
+                            request, 'Error at %d: Unexpected Description' % line_cnt)
                         return HttpResponseRedirect('./')
                     _, description = line.split(':')
                     description = description.strip()
@@ -137,31 +140,36 @@ def problem_upload_page(request):
 
                 elif line.startswith('Difficulty'):
                     if status != 2:
-                        messages.error(request, 'Error at %d: Miss Difficulty' % line_cnt)
+                        messages.error(
+                            request, 'Error at %d: Unexpected Difficulty' % line_cnt)
                         return HttpResponseRedirect('./')
                     _, difficulty = line.split(':')
                     difficulty = difficulty.strip()
                     if difficulty not in ['Easy', 'Middle', 'Hard']:
-                        messages.error(request, 'Error at %d: Invalid Difficulty'%line_cnt)
+                        messages.error(
+                            request, 'Error at %d: Invalid Difficulty' % line_cnt)
                         return HttpResponseRedirect('./')
                     problem['difficulty'] = difficulty
                     status = 3
 
                 elif line.startswith('Type'):
                     if status != 3:
-                        messages.error(request, 'Error at %d: Miss Type' % line_cnt)
+                        messages.error(
+                            request, 'Error at %d: Unexpected Type' % line_cnt)
                         return HttpResponseRedirect('./')
                     _, _type = line.split(':')
                     _type = _type.strip()
                     if type not in ['0', '1', '2']:
-                        messages.error(request, 'Error at %d: Invalid Type'%line_cnt)
+                        messages.error(
+                            request, 'Error at %d: Invalid Type' % line_cnt)
                         return HttpResponseRedirect('./')
                     problem['type'] = _type
 
                     if type == '0' or type == '1':
                         line = source.readline()
                         if not line.startswith('Options'):
-                            messages.error(request, 'Error at %d: Miss Options' % line_cnt)
+                            messages.error(
+                                request, 'Error at %d: Unexpected Options' % line_cnt)
                             return HttpResponseRedirect('./')
                         # TODO: 懒得处理 A. 这种了
                         options = list(line.split())
@@ -170,7 +178,8 @@ def problem_upload_page(request):
 
                 elif line.startswith('Answer'):
                     if status != 4:
-                        messages.error(request, 'Error at %d: Miss Answer' % line_cnt)
+                        messages.error(
+                            request, 'Error at %d: Unexpected Answer' % line_cnt)
                         return HttpResponseRedirect('./')
                     _, answer = line.split(':')
                     answer = answer.strip()
@@ -185,4 +194,3 @@ def problem_upload_page(request):
         # TODO: 把 problems 里的问题存到数据库里
 
         return HttpResponse('Upload Success!')
-

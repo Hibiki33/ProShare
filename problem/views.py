@@ -3,49 +3,21 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http.request import QueryDict
 from django.shortcuts import render
-from django.utils import timezone
 from .models import *
-import logging
+from .utils import list_msg, detail_msg
 import os
-import json
+import logging
 
 
 # def main_view(request):
 #     return render(request, 'problems.html')
 
 
-def problem_lib_page(request):
+def problem_main_page(request):
     if request.method == 'GET':
-        return render(request, 'problem_list.html')
+        return render(request, 'problem_list.html', {'problem_info_list': list_msg(request)})
     elif request.method == 'POST':
         pass
-
-
-def detail_msg(request, id):
-    if Question.objects.filter(_id=id).exists():
-        question = Question.objects.get(_id=id)
-        msg = {
-            "ID": question._id,
-            "Name": question.title,
-            "Time": question.create_time,
-            "Diff": question.difficulty,
-            "Uploader": question.created_by,
-            "Type": question.type,
-            "Description": question.description,
-            "Options": question.options,
-            "Submit": question.submission_number,
-            "Passed": question.passed_number,
-        }
-        logging.debug('problem detail: ')
-        logging.info(msg)
-
-        return msg
-    elif Problem.objects.filter(_id=id).exists:
-        problem = Problem.objects.get(_id=id)
-        # TODO
-        raise NotImplementedError
-    else:
-        raise FileNotFoundError
 
 
 def problem_detail_page(request, id):

@@ -15,6 +15,6 @@ media/*.*
 000*
 
 log
-log*
+logging.conf
 
 !.gitkeep

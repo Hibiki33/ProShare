@@ -78,6 +78,9 @@ def problem_detail_page(request, id):
                     question.add_ac_number()
                 else:
                     verdict = 'Wrong Answer'
+            else:
+                verdict = 'System Error'
+                return render(request, '404.html')
             msg['Verdict'] = verdict
             return render(request, 'problem_result.html', {'problem_info': msg})
         elif Problem.objects.filter(_id=id).exists:

@@ -79,7 +79,7 @@
         </div>
 
         <div class="container--lg pt1 pb1">
-
+            <form action="" method="POST" class="pt1">
             <div class="grid-row grid-row--top">
                 <div class="grid-column span-9">
                     <div class="border--bottom">
@@ -90,7 +90,7 @@
                         {{ problem_info.Description }}
                         <ol type="A" start="" class="olCss" >
                         {% for option in problem_info.Options %}
-                            <input class="inputClass" type="radio" name="place" value={{ option }} /><li class="liRight">{{ option }}</li>
+                            <input class="inputClass" type="radio" name="choice" value={{ option }} /><li class="liRight">{{ option }}</li>
                         {% endfor %}
                         </ol>
                     </div>
@@ -100,7 +100,7 @@
                         {{ problem_info.Description }}
                         <ol type="A" start="" class="olCss" >
                             {% for option in problem_info.Options %}
-                            <input class="inputClass" type="checkbox" name="place" value={{ option }} /><li class="liRight">{{ option }} </li>
+                            <input class="inputClass" type="checkbox" name="choice" value={{ option }} /><li class="liRight">{{ option }} </li>
                             {% endfor %}
                         </ol>
                     </div>
@@ -112,17 +112,13 @@
                     <div class="border--bottom pt4">
                         <h2>Your Answer</h2>
                     </div>
-                    <form action="" method="POST" class="pt1">
-                        <label>
-                            <input type="answer" name="answer" placeholder="Your Answer" class="form-control">
-                        </label>
-                    </form>
+                    <label>
+                        <input type="answer" name="answer" placeholder="Your Answer" class="form-control">
+                    </label>
                     {% endif %}
-                    <form action="" method="POST" class="pt1">
-                        <div style="text-align: center">
-                            <button type="submit" class="btn btn--outline">Submit</button>
-                        </div>
-                    </form>
+                    <div style="text-align: center">
+                        <button type="submit" class="btn btn--outline">Submit</button>
+                    </div>
                 </div>
 
                 
@@ -164,6 +160,7 @@
                     </p>
                 </div>
             </div>
+            </form>
         </div>
         
         <main>

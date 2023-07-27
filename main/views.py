@@ -6,4 +6,4 @@ def main_view(request):
     # return render(request, 'abort_main.html')
 
 def test_view(request):
-    return render(request, 'problem_create.html')
+    return render(request, 'group_list.html')

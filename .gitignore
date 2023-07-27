@@ -15,3 +15,5 @@ media/*.*
 000*
 
 log
+
+!.gitkeep

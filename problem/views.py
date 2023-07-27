@@ -59,7 +59,7 @@ def problem_detail_page(request, id):
             verdict = 'System Error'
             question = Question.objects.get(_id=id)
             question.add_submission_number()
-            msg = detail_msg(request, id)
+            msg = {}
             if question.type == 'single-choice' or question.type == 'multiple-choice':
                 choice = post.getlist('choice')
                 msg['Answer'] = ' '.join(choice)
@@ -82,6 +82,7 @@ def problem_detail_page(request, id):
                 verdict = 'System Error'
                 return render(request, '404.html')
             msg['Verdict'] = verdict
+            msg.update(detail_msg(request, id))
             return render(request, 'problem_result.html', {'problem_info': msg})
         elif Problem.objects.filter(_id=id).exists:
             problem = Problem.objects.get(_id=id)

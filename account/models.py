@@ -37,7 +37,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     phone = models.CharField(max_length=11, null=True, blank=True)
-    quote = models.CharField(max_length=128, null=True, blank=True)
+    quote = models.TextField(max_length=128, null=True, blank=True)
 
     def set_quote(self, quote):
         self.quote = quote

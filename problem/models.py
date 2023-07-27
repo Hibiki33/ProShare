@@ -19,6 +19,8 @@ class Question(models.Model):
     submission_number = models.BigIntegerField(default=0)
     passed_number = models.BigIntegerField(default=0)
 
+    tags = models.ManyToManyField("QuestionTag")
+
     def add_submission_number(self):
         self.submission_number = models.F("submission_number") + 1
         self.save(update_fields=["submission_number"])
@@ -31,9 +33,26 @@ class Question(models.Model):
         self.correct_options = [self.options[ord(i) - ord('A')] for i in place]
         self.save(update_fields=["correct_options"])
 
+    def add_tag(self, tag):
+        self.tags.add(tag)
+        self.save(update_fields=["tags"])
+        tag.add_question(self)
+
+
     # class Meta:
     #     db_table = "question"
     #     ordering = ("create_time",)
+
+class QuestionTag(models.Model):
+    name = models.CharField(max_length=128)
+    questions = models.ManyToManyField(Question)
+
+    def add_question(self, question):
+        self.questions.add(question)
+        self.save(update_fields=["questions"])
+
+    # class Meta:
+    #     db_table = "question_tag"
     
 
 class Problem(models.Model):

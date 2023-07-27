@@ -1,6 +1,7 @@
 from ProShare.settings import MEDIA_ROOT
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http.request import QueryDict
 from django.shortcuts import render
 from django.utils import timezone
 from .models import *
@@ -58,16 +59,16 @@ def problem_create_page(request):
     if request.method == 'GET':
         return render(request, 'problem_create.html')
     elif request.method == 'POST':
-        post: dict = request.POST
+        post: QueryDict = request.POST
         logging.debug('create problem request: ')
         logging.info(post)
         q = Question.objects.create(
-            description=post.get('description', 'description'),
+            description=post.get('question_description', 'NULL'),
             title=post.get('question_title', ''),
             difficulty=post.get('question_diff', 1),
             created_by=request.user,
             type=post.get('question_type', 1),
-            options=post.get('choice', ''),
+            options=list(filter(None, post.getlist('choice', ['']))),
             answer=post.get('question_answer', ''),
         )
         return HttpResponseRedirect('/problem/' + str(q._id) + '/')

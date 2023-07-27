@@ -19,6 +19,23 @@
         <!-- Web fonts -->
         <link href="/static/css/font1.css" rel="stylesheet">
 
+        <style>
+            .form-wfy2 {
+                background-image: none;
+                border: 1px solid transparent;
+                border-radius: 7px;
+                color: #262b3a;
+                display: inline-block;
+                font-family: Montserrat, Avenir, "Avenir Next", Trebuchet, Verdana, sans-serif;
+                font-size: 1rem;
+                line-height: 1.6rem;
+                max-width: 100%;
+                padding: .65rem .8rem .55rem;
+                width: 80%;
+                -moz-osx-font-smoothing: grayscale
+            }
+        </style>
+
     </head>
 
     <header class="fixed">
@@ -60,16 +77,19 @@
         <h2 class="text--gray pb1 border--bottom">Group Search</h2>
         
         <form role="search" class="col pb2" action="" method="get">
+            <div class="grid-row">
+            <div class="grid-column span-10">
             <label>
                 <input type="search" placeholder="Group Name" name="search_info" class="form-control">
             </label>
-            <div class="pt2"></div>
-            <div style="text-align: center;">
+            </div>
+            <div style="text-align: center;" class="grid-column span-2">
                 <button class="btn" style="color:indigo;float:none;" type="submit">search</button>
+            </div>
             </div>
         </form>
         <form name="select" action="" method="post">
-            <table class="container border--top pt1 pb1">
+            <table class="container--lg border--top pt1 pb1">
                 <tr><td>
                 <div class="grid-row border--bottom pt1 pb1">
                     <h4 class="grid-column span-9 bold text--darkest-gray">Group Name</h4>
@@ -79,8 +99,8 @@
                 {% for result in search_result %}
                 <tr><td><div class="grid-row border--bottom pt1 pb1">
                     <div class="grid-column span-9 bold text--darkest-gray">{{ result.name }}</div>
-                    {% if result.notInGroup %}
-                    <button class="grid-column bold text--darkest-gray btn" type="submit" name="selected_group" value="{{ sr.name }}">Join</button>
+                    {% if result.not_in_group %}
+                    <button class="grid-column bold text--darkest-gray btn" type="submit" name="selected_group" value="{{ result.name }}">Join</button>
                     {% endif %}
                 </div></td></tr>
                 {% endfor %}

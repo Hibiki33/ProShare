@@ -177,12 +177,16 @@ def home_page(request):
                 'email': request.user.email,
                 'phone': request.user.phone,
                 'quote': request.user.quote,
+                'groups': request.user.groups.all(),
             })
         else:
             return HttpResponseRedirect('/account/login/')
     elif request.method == 'POST':
         if request.user.is_authenticated:
-            pass
+            group_name = request.POST.get('exit')
+            group = Group.objects.get(name=group_name)
+            group.user_set.remove(request.user)
+            return HttpResponseRedirect('/account/')
         else:
             return HttpResponseRedirect('/account/login/')
 
@@ -194,16 +198,26 @@ def group_search_page(request):
         if not search_info:
             return render(request, 'group_search.html', locals())
 
-        search_result = Group.objects.filter(name__contains=search_info)
+        _search_result = Group.objects.filter(name__contains=search_info)
+
+        search_result = []
+        for i in _search_result:
+            item = {'name': i.name,
+                    'not_in_group': request.user.groups.filter(name=i.name).count() == 0}
+
+            search_result.append(item)
+
         return render(request, 'group_search.html', locals())
 
     elif request.method == 'POST':
         selected_group_name = request.POST.get('selected_group')
 
         selected_group = Group.objects.get(name=selected_group_name)
+
         selected_group.user_set.add(request.user)
 
-        return HttpResponseRedirect('/account/group/search/')
+        request.method = 'GET'
+        return group_search_page(request)
 
 
 

@@ -55,20 +55,31 @@
     <div class="container pt3 pb1">
 
         <div class="grid-row">
-            <div class="grid-column mt3 mb2 span-8">
-                <div class="pb2 mb2">
+            <div class="grid-column mt3 mb1 span-8">
+                <div class="">
                     <h2 class="border--bottom pb1">
                         {{ username }}'s Home
                     </h2>
-                    <p>{{ quote }}</p>
-                    <p>E-MAIL: {{ email }}</p>
-                    <p>TEL: {{ phone }}</p>
+                    <p class="pt1">{{ quote }}</p>
+                    <p class="pt1">E-MAIL: {{ email }}</p>
+                    <p class="pt1">TEL: {{ phone }}</p>
                     <br>
-                    <p class="bold text-light-gray">Groups:</p>
-                    <p class="bold text-light-gray">AAUB</p>
-                    <p class="bold text-light-gray">U149</p>
                 </div>
                 <p><a class="btn" style="color:black;" href="./edit">Edit Profile</a></p>
+                <div class="pt2 mb2">
+                    <h3 class="bold text-light-gray pt1 border--top">Groups:</h3>
+                    <form action="" method="POST">
+                    {% for group in groups %}
+                        <div class="grid-row pt1">
+                            <a class="italic text--gray grid-column span-2">{{ group }}</a>
+                            <button type="submit" name="exit" value="{{ group.name }}" class="btn btn--default btn--sm grid-column span-1">
+                                Exit
+                            </button>
+                        </div>
+                    {% endfor %}
+                    </form>
+                </div>
+                
                 <br><br>
                 <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./change_password/">Change Password</a></p>
                 <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./logout/">Logout</a></p>

@@ -101,7 +101,7 @@
             }
         </script> {% endcomment %}
 
-        <div class="container--lg pt3 pb3">
+        <div class="container--lg pt1 pb3">
         <h2 class="text--gray pb1">{{ problem_info.Name }}</h2>
         </div>
 
@@ -109,14 +109,14 @@
             <form action="" method="POST" class="pt1"  id="userForm">
             <div class="">
                 <div class="">
-                    <div class="border--bottom">
-                        <h2>Description</h2>
+                    <div class="">
+                        <h2>Create Problem</h2>
                     </div>
                     {% comment %} <form action="" method="POST" class="pt1"  id="userForm1"> {% endcomment %}
                         <div class="select mb1">
                             <select id="upload-type"  onchange="showFileUploader()">
-                                <option selected="selected" value="edit-online">Edit online</option>
-                                <option value="upload-file">Upload file</option>
+                                <option selected="selected" value="edit-online">Create with Online editor</option>
+                                <option value="upload-file">Upload problem file</option>
                             </select>
                         </div>
                     {% comment %} </form> {% endcomment %}
@@ -130,7 +130,8 @@
                             {% comment %} <div id="question_description" class="form-control bg--white" contenteditable="true" name="question_description">Please enter question description here.</div> {% endcomment %}
                         </label>
                         <label>
-                        <div class="select mb1">
+                        <p class="text--gray pt2 pb1 italic">(Select the problem type from below.)</p>
+                        <div class="select mb1 pt1">
                             <select id="question-type"  onchange="showQuestionEditor()" name="question_type">
                                 <option selected="selected" value="single-choice">Single Answer</option>
                                 <option value="multiple-choice">Multiple Answer</option>
@@ -138,7 +139,7 @@
                             </select>
                         </div>
                         </label>
-                        <p class="text--gray pt2 pb1 italic">(Choose the difficulty below.)</p>
+                        <p class="text--gray pt2 pb1 italic">(Select the difficulty.)</p>
                         <label>
                             <div class="select mb1">
                                 <select id="question-diff" name="question_diff">

@@ -76,10 +76,12 @@
                     <h4 class="grid-column span-3 bold text--darkest-gray">Click To Join</h4>
                 </div></td>
                 </tr>
-                {% for sr in search_result %}
+                {% for result in search_result %}
                 <tr><td><div class="grid-row border--bottom pt1 pb1">
-                    <div class="grid-column span-9 bold text--darkest-gray">{{ sr.name }}</div>
+                    <div class="grid-column span-9 bold text--darkest-gray">{{ result.name }}</div>
+                    {% if result.notInGroup %}
                     <button class="grid-column bold text--darkest-gray btn" type="submit" name="selected_group" value="{{ sr.name }}">Join</button>
+                    {% endif %}
                 </div></td></tr>
                 {% endfor %}
             </table>

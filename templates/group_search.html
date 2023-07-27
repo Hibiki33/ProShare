@@ -57,38 +57,33 @@
         <div class="pt4"></div>
 
         <div class="container pt3 pb3">
-        <h2 class="text--gray pb1 border--bottom">{{ group_info.Name }}</h2>
-        </div>
-
-        {% comment %} <div class="container">
-            <div class="grid-row">
-                <div class="grid-column">
-                    <a><input class="form-control" placeholder="Enter your search message"></a>
-                </div>
-                <div class="grid-column">
-                    <a class="btn btn--outline" href="">Search</a>
-                </div>
+        <h2 class="text--gray pb1 border--bottom">Group Search</h2>
+        
+        <form role="search" class="col pb2" action="" method="get">
+            <label>
+                <input type="search" placeholder="Group Name" name="search_info" class="form-control">
+            </label>
+            <div class="pt2"></div>
+            <div style="text-align: center;">
+                <button class="btn" style="color:indigo;float:none;" type="submit">search</button>
             </div>
-        </div> {% endcomment %}
-
-        <div class="pt1"></div>
-
-        <table class="container border--top pt1 pb1">
-            <tr><td>
-            <a class="grid-row border--bottom link pt1 pb1" href="/polls">
-                <h4 class="grid-column span-3 bold text--darkest-gray">User Name</h4>
-                <h4 class="grid-column span-3 bold text--darkest-gray">E-Mail</h4>
-                <h4 class="grid-column span-3 bold text--darkest-gray">Privilege</h4>
-            </a></td>
-            </tr>
-            {% for user in group_info.Users %}
-            <tr><td><a class="grid-row border--bottom link pt1 pb1" href="/polls">
-                <div class="grid-column span-3 bold text--darkest-gray">{{ user.Name }}</div>
-                <div class="grid-column span-3 bold text--darkest-gray">{{ user.Email }}</div>
-                <div class="grid-column span-3 bold text--darkest-gray">{{ user.Privilege }}</div>
-            </a></td></tr>
-            {% endfor %}
-        </table>
-
+        </form>
+        <form name="select" action="" method="post">
+            <table class="container border--top pt1 pb1">
+                <tr><td>
+                <div class="grid-row border--bottom pt1 pb1">
+                    <h4 class="grid-column span-9 bold text--darkest-gray">Group Name</h4>
+                    <h4 class="grid-column span-3 bold text--darkest-gray">Click To Join</h4>
+                </div></td>
+                </tr>
+                {% for sr in search_result %}
+                <tr><td><div class="grid-row border--bottom pt1 pb1">
+                    <div class="grid-column span-9 bold text--darkest-gray">{{ sr.name }}</div>
+                    <button class="grid-column bold text--darkest-gray btn" type="submit" name="selected_group" value="{{ sr.name }}">Join</button>
+                </div></td></tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
     </body>
 </html>

@@ -38,7 +38,7 @@
                 
             }
             .greenColor {
-                color: 	#7CFC00;
+                color: 	#24ce15;
             }
         </style>
     </head>
@@ -115,12 +115,13 @@
                     {% endif %}
                     {% if problem_info.Answer == problem_info.Correct %}
                     <div class="pt1">
-                        <div class="pt1">Your answer is </div>
-                        <div class="pt1 greenColor">CORRECT!</div>
+                        <a class="pt1">Your answer is </a>
+                        <a class="pt1 greenColor bold">CORRECT!</a>
                     </div>
                     {% else %}
                     <div class="pt1">
-                        <p class="pt1">Your answer is: "{{ problem_info.Answer }}"</p>
+                        <a class="pt1">Your answer is: </a>
+                        <a class="pt1">{{ problem_info.Answer }}</a>
                     </div>
                     <div class="pt1">
                         <p class="pt1">Correct answer is: "{{ problem_info.Correct }}"</p>

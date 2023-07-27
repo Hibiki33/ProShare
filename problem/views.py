@@ -58,19 +58,19 @@ def problem_create_page(request):
     if request.method == 'GET':
         return render(request, 'problem_create.html')
     elif request.method == 'POST':
+        post: dict = request.POST
         logging.debug('create problem request: ')
-        logging.info(request.POST)
-
+        logging.info(post)
         q = Question.objects.create(
-            description=request.POST.get('description', ''),
-            title=request.POST.get('question_title', ''),
-            difficulty="middle",
+            description=post.get('description', 'description'),
+            title=post.get('question_title', ''),
+            difficulty=post.get('question_diff', 1),
             created_by=request.user,
-            type=request.POST.get('type', 1),
-            options=request.POST.get('choice', ''),
-            answer=request.POST.get('question_answer', ''),
+            type=post.get('question_type', 1),
+            options=post.get('choice', ''),
+            answer=post.get('question_answer', ''),
         )
-        return HttpResponseRedirect('/problem/'+ str(q._id) + '/')
+        return HttpResponseRedirect('/problem/' + str(q._id) + '/')
 
 
 def problem_upload_page(request):

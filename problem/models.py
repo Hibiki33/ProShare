@@ -10,8 +10,7 @@ class Question(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     difficulty = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    # 0: single choice, 1: multiple choice, 2: input
-    type = models.IntegerField()
+    type = models.TextField()
     description = RichTextField()
     options = JSONField()
     answer = models.TextField()

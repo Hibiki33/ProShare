@@ -69,7 +69,15 @@
                 <div class="pt2 mb2">
                     <h3 class="bold text-light-gray pt1 border--top">Groups:</h3>
                     {% for group in groups %}
-                        <p class="italic text--gray">{{ group }}</p>
+                        <p>
+                            <a class="italic text--gray">{{ group }}</a>
+                            {% comment %} an exit group button {% endcomment %}
+                            <form action="./exit_group/" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="group" value="{{ group }}">
+                                <input type="submit" value="Exit" class="btn btn--small">
+                            </form>
+                        </p>
                     {% endfor %}
                 </div>
                 

@@ -84,42 +84,43 @@
             <div class="grid-row grid-row--top border--bottom pb1">
                 <div class="grid-column span-9">
                     <div class="">
-                        <h3>{{ problem_info.Title }}</h3>
+                        <h3>{{ problem_info.Name }}</h3>
+                    </div>
+                    <div class="pb1">
+                        <p class="pt1">{{ problem_info.Description }}</p>
                     </div>
                     {% if problem_info.Type == "single-choice" %}
                     <div class="divCss">
-                        {{ problem_info.Description }}
                         <ol type="A" start="" class="olCss" >
                         {% for option in problem_info.Options %}
+                            <div class="grid-row">
                             {% if problem_info.Answer == "" %}
-                                <input class="inputClass" type="radio" name="place" value={{ problem }} />
+                            <input class="grid-column-left span-1" type="radio" name="choice" value={{ option }} />
                             {% endif %}
-                            <li class="liRight">{{ problem }}</li>
+                            <div class="grid-column-left span-1"></div>
+                            <li class="grid-column-left span-10">{{ option }}</li>
+                            </div>
                         {% endfor %}
                         </ol>
                     </div>
                     {% endif %}
                     {% if problem_info.Type == "multiple-choice" %}
                     <div class="divCss">
-                        {{ problem_info.Description }}
                         <ol type="A" start="" class="olCss" >
                             {% for option in problem_info.Options %}
+                                <div class="grid-row">
                                 {% if problem_info.Answer == "" %}
-                                    <input class="inputClass" type="checkbox" name="place" value={{ problem }} />
+                                <input class="grid-column-left span-1" type="checkbox" name="choice" value={{ option }} />
                                 {% endif %}
-                                <li class="liRight">{{ problem }} </li>
+                                <div class="grid-column-left span-1"></div>
+                                <li class="grid-column-left span-10">{{ option }}</li>
+                                </div>
                             {% endfor %}
                         </ol>
                     </div>
                     {% endif %}
                     {% if problem_info.Type == "fill-blank" %}
-                    <div>
-                        <p class="pt1">{{ problem_info.Description }}</p>
-                    </div>
                     {% if problem_info.Answer == "" %}
-                    <div class="border--bottom pt4">
-                        <h2>Your Answer</h2>
-                    </div>
                     <form action="" method="POST" class="pt1">
                         <label>
                             <input type="answer" name="answer" placeholder="Your Answer" class="form-control">
@@ -129,7 +130,7 @@
                     {% endif %}
                     {% if problem_info.Answer %}
                     <div class="">
-                        <h4>Answer:</h2>
+                        <h4>Answer:</h4>
                         <p>{{ problem_info.Answer }}</p>
                     </div>
                     {% endif %}

@@ -60,25 +60,24 @@
                     <h2 class="border--bottom pb1">
                         {{ username }}'s Home
                     </h2>
-                    <p>{{ quote }}</p>
-                    <p>E-MAIL: {{ email }}</p>
-                    <p>TEL: {{ phone }}</p>
+                    <p class="pt1">{{ quote }}</p>
+                    <p class="pt1">E-MAIL: {{ email }}</p>
+                    <p class="pt1">TEL: {{ phone }}</p>
                     <br>
                 </div>
                 <p><a class="btn" style="color:black;" href="./edit">Edit Profile</a></p>
                 <div class="pt2 mb2">
                     <h3 class="bold text-light-gray pt1 border--top">Groups:</h3>
+                    <form action="" method="POST">
                     {% for group in groups %}
-                        <p>
-                            <a class="italic text--gray">{{ group }}</a>
-                            {% comment %} an exit group button {% endcomment %}
-                            <form action="./exit_group/" method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="group" value="{{ group }}">
-                                <input type="submit" value="Exit" class="btn btn--small">
-                            </form>
+                        <p class="grid-row pt1">
+                            <a class="italic text--gray grid-column span-2">{{ group }}</a>
+                            <button type="submit" name="exit" value={{ group.name }} class="btn btn--default btn--sm grid-column span-1">
+                                Exit
+                            </button>
                         </p>
                     {% endfor %}
+                    </form>
                 </div>
                 
                 <br><br>

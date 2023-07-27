@@ -37,6 +37,9 @@
             .liRight {
                 
             }
+            .greenColor {
+                color: 	#7CFC00;
+            }
         </style>
     </head>
 
@@ -112,7 +115,8 @@
                     {% endif %}
                     {% if problem_info.Answer == problem_info.Correct %}
                     <div class="pt1">
-                        <p class="pt1">Your answer is correct!</p>
+                        <div class="pt1">Your answer is </div>
+                        <div class="pt1 greenColor">CORRECT!</div>
                     </div>
                     {% else %}
                     <div class="pt1">

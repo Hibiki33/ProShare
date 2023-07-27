@@ -14,6 +14,7 @@ And necessary packages:
 pip install django
 pip install pymysql
 pip install logging
+pip install django-guardian
 ```
 
 MySql 8.0

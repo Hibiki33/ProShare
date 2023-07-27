@@ -75,13 +75,12 @@
     <body class="has-animations">
 
         <div class="container--lg pt3 pb3">
-        <h2 class="text--gray pb1">{{ problem_group_info.Name }}</h2>
+        <h3 class="text--gray pb1">Question Result</h3>
         </div>
 
         <div class="container--lg pt1 pb1">
-            
-            {% for problem_info in problem_group_info %}
-            <div class="grid-row grid-row--top border--bottom pb1">
+            <form action="" method="POST" class="pt1">
+            <div class="grid-row grid-row--top">
                 <div class="grid-column span-9">
                     <div class="">
                         <h3>{{ problem_info.Name }}</h3>
@@ -90,13 +89,10 @@
                         <p class="pt1">{{ problem_info.Description }}</p>
                     </div>
                     {% if problem_info.Type == "single-choice" %}
-                    <div class="divCss">
-                        <ol type="A" start="" class="olCss" >
+                    <div class="">
+                        <ol type="A" start="" class="" >
                         {% for option in problem_info.Options %}
                             <div class="grid-row">
-                            {% if problem_info.Answer == "" %}
-                            <input class="grid-column-left span-1" type="radio" name="choice" value={{ option }} />
-                            {% endif %}
                             <div class="grid-column-left span-1"></div>
                             <li class="grid-column-left span-10">{{ option }}</li>
                             </div>
@@ -105,35 +101,32 @@
                     </div>
                     {% endif %}
                     {% if problem_info.Type == "multiple-choice" %}
-                    <div class="divCss">
-                        <ol type="A" start="" class="olCss" >
+                    <div class="">
+                        <ol type="A" start="" class="" >
                             {% for option in problem_info.Options %}
-                                <div class="grid-row">
-                                {% if problem_info.Answer == "" %}
-                                <input class="grid-column-left span-1" type="checkbox" name="choice" value={{ option }} />
-                                {% endif %}
-                                <div class="grid-column-left span-1"></div>
-                                <li class="grid-column-left span-10">{{ option }}</li>
-                                </div>
+                            <div class="grid-row">
+                            <div class="grid-column-left span-1"></div>
+                            <li class="grid-column-left span-10">{{ option }}</li>
+                            </div>
                             {% endfor %}
                         </ol>
                     </div>
                     {% endif %}
-                    {% if problem_info.Type == "fill-blank" %}
-                    {% if problem_info.Answer == "" %}
-                    <form action="" method="POST" class="pt1">
-                        <label>
-                            <input type="answer" name="answer" placeholder="Your Answer" class="form-control">
-                        </label>
-                    </form>
-                    {% endif %}
-                    {% endif %}
-                    {% if problem_info.Answer %}
-                    <div class="">
-                        <h4>Answer:</h4>
-                        <p>{{ problem_info.Answer }}</p>
+                    {% if problem_info.Answer == problem_info.Correct %}
+                    <div class="pt1">
+                        <p class="pt1">Your answer is correct!</p>
+                    </div>
+                    {% else %}
+                    <div class="pt1">
+                        <p class="pt1">Your answer is: {{ problem_info.Answer }}</p>
+                    </div>
+                    <div class="pt1">
+                        <p class="pt1">Correct answer is: {{ problem_info.Correct }}</p>
                     </div>
                     {% endif %}
+                    <div style="text-align: center">
+                        <button type="submit" class="btn btn--outline">Confirm</button>
+                    </div>
                 </div>
 
                 
@@ -142,8 +135,16 @@
                         <h2>Statistics</h2>
                     </div>
                     <p class="pt1">
-                        <span class="text--gray bold">Difficulty: </span>
-                        <span class="text--gray">{{ problem_info.Difficulty }}</span>
+                        <span class="text--gray bold">ID: </span>
+                        <span class="text--gray">{{ problem_info.ID }}</span>
+                    </p>
+                    <p class="pt1">
+                        <span class="text--gray bold">Upload Date: </span>
+                        <span class="text--gray">{{ problem_info.Time }}</span>
+                    </p>
+                    <p class="pt1">
+                        <span class="text--gray bold">Uploader: </span>
+                        <span class="text--gray">{{ problem_info.Uploader }}</span>
                     </p>
                     <p class="pt1">
                         <span class="text--gray bold">Type: </span>
@@ -157,13 +158,16 @@
                         <span class="text--gray">Fill in the blank</span>
                         {% endif %}
                     </p>
+                    <p class="pt1">
+                        <span class="text--gray bold">Submit: </span>
+                        <span class="text--gray">{{ problem_info.Submit }}</span>
+                    </p>
+                    <p class="pt1">
+                        <span class="text--gray bold">Passed: </span>
+                        <span class="text--gray">{{ problem_info.Passed }}</span>
+                    </p>
                 </div>
             </div>
-            {% endfor %}
-            <form action="" method="POST" class="pt1">
-                <div style="text-align: center">
-                    <button type="submit" class="btn btn--outline">Confirm</button>
-                </div>
             </form>
         </div>
         

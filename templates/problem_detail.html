@@ -75,43 +75,47 @@
     <body class="has-animations">
 
         <div class="container--lg pt3 pb3">
-        <h2 class="text--gray pb1">{{ problem_info.Name }}</h2>
+        <h3 class="text--gray pb1">Question Preview</h3>
         </div>
 
         <div class="container--lg pt1 pb1">
             <form action="" method="POST" class="pt1">
             <div class="grid-row grid-row--top">
                 <div class="grid-column span-9">
-                    <div class="border--bottom">
-                        <h2>Description</h2>
+                    <div class="">
+                        <h3>{{ problem_info.Name }}</h3>
+                    </div>
+                    <div class="pb1">
+                        <p class="pt1">{{ problem_info.Description }}</p>
                     </div>
                     {% if problem_info.Type == "single-choice" %}
-                    <div class="divCss">
-                        {{ problem_info.Description }}
-                        <ol type="A" start="" class="olCss" >
+                    <div class="">
+                        <ol type="A" start="" class="" >
                         {% for option in problem_info.Options %}
-                            <input class="inputClass" type="radio" name="choice" value={{ option }} /><li class="liRight">{{ option }}</li>
+                            <div class="grid-row">
+                            <input class="grid-column-left span-1" type="radio" name="choice" value={{ option }} />
+                            <div class="grid-column-left span-1"></div>
+                            <li class="grid-column-left span-10">{{ option }}</li>
+                            </div>
                         {% endfor %}
                         </ol>
                     </div>
                     {% endif %}
                     {% if problem_info.Type == "multiple-choice" %}
-                    <div class="divCss">
-                        {{ problem_info.Description }}
-                        <ol type="A" start="" class="olCss" >
+                    <div class="">
+                        <ol type="A" start="" class="" >
                             {% for option in problem_info.Options %}
-                            <input class="inputClass" type="checkbox" name="choice" value={{ option }} /><li class="liRight">{{ option }} </li>
+                            <div class="grid-row">
+                            <input class="grid-column-left span-1" type="checkbox" name="choice" value={{ option }} />
+                            <div class="grid-column-left span-1"></div>
+                            <li class="grid-column-left span-10">{{ option }}</li>
+                            </div>
                             {% endfor %}
                         </ol>
                     </div>
                     {% endif %}
                     {% if problem_info.Type == "fill-blank" %}
-                    <div>
-                        <p class="pt1">{{ problem_info.Description }}</p>
-                    </div>
-                    <div class="border--bottom pt4">
-                        <h2>Your Answer</h2>
-                    </div>
+                    
                     <label>
                         <input type="answer" name="answer" placeholder="Your Answer" class="form-control">
                     </label>

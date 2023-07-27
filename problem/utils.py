@@ -27,6 +27,9 @@ def list_msg(request, page=1, order='time', difficulty='all', type='all', upload
                 "Name": question.title,
                 "Time": question.create_time,
                 "Diff": question.difficulty,
+                "Tag1": question.tags[0].name,
+                "Tag2": question.tags[1].name,
+                "Tag3": question.tags[2].name,
             })
         logging.debug('problem_info_list: ')
         logging.info(msg)

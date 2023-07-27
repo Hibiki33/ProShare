@@ -194,7 +194,15 @@ def group_search_page(request):
         if not search_info:
             return render(request, 'group_search.html', locals())
 
-        search_result = Group.objects.filter(name__contains=search_info)
+        _search_result = Group.objects.filter(name__contains=search_info)
+
+        search_result = []
+        for i in _search_result:
+            item = {'name': i.name,
+                    'not_in_group': request.user.groups.filter(name=i.name).count() == 0}
+
+            search_result.append(item)
+
         return render(request, 'group_search.html', locals())
 
     elif request.method == 'POST':
@@ -203,7 +211,7 @@ def group_search_page(request):
         selected_group = Group.objects.get(name=selected_group_name)
         selected_group.user_set.add(request.user)
 
-        return HttpResponseRedirect('/account/group/search/')
+        return render(request, 'group_search.html', locals())
 
 
 

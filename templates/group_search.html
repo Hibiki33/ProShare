@@ -79,7 +79,7 @@
                 {% for result in search_result %}
                 <tr><td><div class="grid-row border--bottom pt1 pb1">
                     <div class="grid-column span-9 bold text--darkest-gray">{{ result.name }}</div>
-                    {% if result.notInGroup %}
+                    {% if result.not_in_group %}
                     <button class="grid-column bold text--darkest-gray btn" type="submit" name="selected_group" value="{{ sr.name }}">Join</button>
                     {% endif %}
                 </div></td></tr>

@@ -55,8 +55,8 @@
     <div class="container pt3 pb1">
 
         <div class="grid-row">
-            <div class="grid-column mt3 mb2 span-8">
-                <div class="pb2 mb2">
+            <div class="grid-column mt3 mb1 span-8">
+                <div class="">
                     <h2 class="border--bottom pb1">
                         {{ username }}'s Home
                     </h2>
@@ -64,12 +64,15 @@
                     <p>E-MAIL: {{ email }}</p>
                     <p>TEL: {{ phone }}</p>
                     <br>
-                    <p class="bold text-light-gray">Groups:</p>
+                </div>
+                <p><a class="btn" style="color:black;" href="./edit">Edit Profile</a></p>
+                <div class="pt2 mb2">
+                    <h3 class="bold text-light-gray pt1 border--top">Groups:</h3>
                     {% for group in groups %}
                         <p class="italic text--gray">{{ group }}</p>
                     {% endfor %}
                 </div>
-                <p><a class="btn" style="color:black;" href="./edit">Edit Profile</a></p>
+                
                 <br><br>
                 <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./change_password/">Change Password</a></p>
                 <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./logout/">Logout</a></p>

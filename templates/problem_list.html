@@ -75,20 +75,18 @@
 
         <table class="container border--top pt1 pb1">
             <tr><td>
-            <a class="grid-row border--bottom link pt1 pb1" href="/polls">
+            <a class="grid-row border--bottom link" href="/polls">
                 <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
-                <h4 class="grid-column span-3 bold text--darkest-gray">Type</h4>
                 <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
             </a></td>
             </tr>
             {% for problem_info in problem_info_list %}
-            <tr><td><a class="grid-row border--bottom link pt1 pb1" href="/problem/{{ problem_info.ID }}">
+            <tr><td><a class="grid-row border--bottom link" href="/problem/{{ problem_info.ID }}">
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
                 <div class="grid-column span-3 bold text--darkest-gray">{{ problem_info.Name }}</div>
-                <div class="grid-column span-3 bold text--darkest-gray">{{ problem_info.Type }}</div>
-                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Difficulty }}</div>
+                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
                 <a class="grid-column span-1 bold text--darkest-gray" href="">{{ problem_info.Tag1 }}</a>
                 <a class="grid-column span-1 bold text--darkest-gray" href="">{{ problem_info.Tag2 }}</a>
                 <a class="grid-column span-1 bold text--darkest-gray" href="">{{ problem_info.Tag3 }}</a>

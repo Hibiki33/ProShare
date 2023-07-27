@@ -13,6 +13,7 @@ class Question(models.Model):
     type = models.TextField()
     description = RichTextField()
     options = JSONField()
+    correct_options = JSONField(default=list)
     answer = models.TextField()
 
     submission_number = models.BigIntegerField(default=0)
@@ -25,6 +26,10 @@ class Question(models.Model):
     def add_ac_number(self):
         self.passed_number = models.F("passed_number") + 1
         self.save(update_fields=["passed_number"])
+
+    def set_correct_options(self, place):
+        self.correct_options = [self.options[ord(i) - ord('A')] for i in place]
+        self.save(update_fields=["correct_options"])
 
     # class Meta:
     #     db_table = "question"

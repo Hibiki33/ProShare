@@ -28,8 +28,30 @@ def problem_detail_page(request, id):
         post: QueryDict = request.POST
         logging.debug('problem submit request: ')
         logging.info(post)
-
-
+        if Question.objects.filter(_id=id).exists():
+            verdict = 'System Error'
+            question = Question.objects.get(_id=id)
+            question.add_submission_number()
+            if question.type == 'single-choice' or question.type == 'multiple-choice':
+                if set(post.getlist('choice')) == set(question.correct_options):
+                    verdict = 'Accepted'
+                    question.add_ac_number()
+                else:
+                    verdict = 'Wrong Answer'
+            elif question.type == 'fill-blank':
+                if post.get('answer') == question.answer:
+                    verdict = 'Accepted'
+                    question.add_ac_number()
+                else:
+                    verdict = 'Wrong Answer'
+            # return render(request, 'problem_submit.html', {'verdict': verdict})
+            return HttpResponse(verdict)
+        elif Problem.objects.filter(_id=id).exists:
+            problem = Problem.objects.get(_id=id)
+            # TODO
+            raise NotImplementedError
+        else:
+            raise FileNotFoundError
 
 
 def detail_view(request, id):
@@ -56,7 +78,7 @@ def detail_view(request, id):
         # TODO
         raise NotImplementedError
     else:
-        raise ModuleNotFoundError
+        raise FileNotFoundError
 
 
 def problem_create_page(request):
@@ -75,6 +97,7 @@ def problem_create_page(request):
             options=list(filter(None, post.getlist('options', ['']))),
             answer=post.get('question_answer', ''),
         )
+        q.set_correct_options(post.getlist('place', []))
         return HttpResponseRedirect('/problem/' + str(q._id) + '/')
 
 

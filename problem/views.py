@@ -25,7 +25,11 @@ def problem_detail_page(request, id):
     if request.method == 'GET':
         return detail_view(request, id)
     elif request.method == 'POST':
-        pass
+        post: QueryDict = request.POST
+        logging.debug('problem submit request: ')
+        logging.info(post)
+
+
 
 
 def detail_view(request, id):

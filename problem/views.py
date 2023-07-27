@@ -21,40 +21,7 @@ def problem_lib_page(request):
         pass
 
 
-def problem_detail_page(request, id):
-    if request.method == 'GET':
-        return detail_view(request, id)
-    elif request.method == 'POST':
-        post: QueryDict = request.POST
-        logging.debug('problem submit request: ')
-        logging.info(post)
-        if Question.objects.filter(_id=id).exists():
-            verdict = 'System Error'
-            question = Question.objects.get(_id=id)
-            question.add_submission_number()
-            if question.type == 'single-choice' or question.type == 'multiple-choice':
-                if set(post.getlist('choice')) == set(question.correct_options):
-                    verdict = 'Accepted'
-                    question.add_ac_number()
-                else:
-                    verdict = 'Wrong Answer'
-            elif question.type == 'fill-blank':
-                if post.get('answer') == question.answer:
-                    verdict = 'Accepted'
-                    question.add_ac_number()
-                else:
-                    verdict = 'Wrong Answer'
-            # return render(request, 'problem_submit.html', {'verdict': verdict})
-            return HttpResponse(verdict)
-        elif Problem.objects.filter(_id=id).exists:
-            problem = Problem.objects.get(_id=id)
-            # TODO
-            raise NotImplementedError
-        else:
-            raise FileNotFoundError
-
-
-def detail_view(request, id):
+def detail_msg(request, id):
     if Question.objects.filter(_id=id).exists():
         question = Question.objects.get(_id=id)
         msg = {
@@ -72,13 +39,53 @@ def detail_view(request, id):
         logging.debug('problem detail: ')
         logging.info(msg)
 
-        return render(request, 'problem_detail.html', {'problem_info': msg})
+        return msg
     elif Problem.objects.filter(_id=id).exists:
         problem = Problem.objects.get(_id=id)
         # TODO
         raise NotImplementedError
     else:
         raise FileNotFoundError
+
+
+def problem_detail_page(request, id):
+    if request.method == 'GET':
+        return render(request, 'problem_detail.html', {'problem_info': detail_msg(request, id)})
+    elif request.method == 'POST':
+        post: QueryDict = request.POST
+        logging.debug('problem submit request: ')
+        logging.info(post)
+        if Question.objects.filter(_id=id).exists():
+            verdict = 'System Error'
+            question = Question.objects.get(_id=id)
+            question.add_submission_number()
+            msg = detail_msg(request, id)
+            if question.type == 'single-choice' or question.type == 'multiple-choice':
+                choice = post.getlist('choice')
+                msg['Answer'] = ' '.join(choice)
+                msg['Correct'] = ' '.join(question.correct_options)
+                if set(choice) == set(question.correct_options):
+                    verdict = 'Accepted'
+                    question.add_ac_number()
+                else:
+                    verdict = 'Wrong Answer'
+            elif question.type == 'fill-blank':
+                answer = post.get('answer')
+                msg['Answer'] = answer
+                msg['Correct'] = question.answer
+                if answer == question.answer:
+                    verdict = 'Accepted'
+                    question.add_ac_number()
+                else:
+                    verdict = 'Wrong Answer'
+            msg['Verdict'] = verdict
+            return render(request, 'problem_result.html', {'problem_info': msg})
+        elif Problem.objects.filter(_id=id).exists:
+            problem = Problem.objects.get(_id=id)
+            # TODO
+            raise NotImplementedError
+        else:
+            raise FileNotFoundError
 
 
 def problem_create_page(request):

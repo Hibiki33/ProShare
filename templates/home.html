@@ -70,12 +70,12 @@
                     <h3 class="bold text-light-gray pt1 border--top">Groups:</h3>
                     <form action="" method="POST">
                     {% for group in groups %}
-                        <p class="grid-row pt1">
+                        <div class="grid-row pt1">
                             <a class="italic text--gray grid-column span-2">{{ group }}</a>
-                            <button type="submit" name="exit" value={{ group.name }} class="btn btn--default btn--sm grid-column span-1">
+                            <button type="submit" name="exit" value="{{ group.name }}" class="btn btn--default btn--sm grid-column span-1">
                                 Exit
                             </button>
-                        </p>
+                        </div>
                     {% endfor %}
                     </form>
                 </div>

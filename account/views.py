@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 import uuid
+import logging
 
 User = get_user_model()
 
@@ -140,6 +141,9 @@ def edit_view(request):
 
 
 def edit_page(request):
+    post: dict = request.POST
+    logging.debug('create problem request: ')
+    logging.info(post)
     if request.method == 'GET':
         if request.user.is_authenticated:
             return render(request, 'home_edit.html')

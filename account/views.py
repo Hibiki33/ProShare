@@ -209,9 +209,11 @@ def group_search_page(request):
         selected_group_name = request.POST.get('selected_group')
 
         selected_group = Group.objects.get(name=selected_group_name)
+
         selected_group.user_set.add(request.user)
 
-        return render(request, 'group_search.html', locals())
+        request.method = 'GET'
+        return group_search_page(request)
 
 
 

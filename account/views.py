@@ -192,10 +192,10 @@ def group_search_page(request):
         search_info = request.GET.get('search_info')
 
         if not search_info:
-            return render(request, 'group_search.html', locals())
+            return render(request, 'abort_group_search.html', locals())
 
         search_result = Group.objects.filter(name__contains=search_info)
-        return render(request, 'group_search.html', locals())
+        return render(request, 'abort_group_search.html', locals())
 
     elif request.method == 'POST':
         selected_group_name = request.POST.get('selected_group')

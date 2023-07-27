@@ -65,8 +65,9 @@
                     <p>TEL: {{ phone }}</p>
                     <br>
                     <p class="bold text-light-gray">Groups:</p>
-                    <p class="bold text-light-gray">AAUB</p>
-                    <p class="bold text-light-gray">U149</p>
+                    {% for group in groups %}
+                        <p class="italic text--gray">{{ group }}</p>
+                    {% endfor %}
                 </div>
                 <p><a class="btn" style="color:black;" href="./edit">Edit Profile</a></p>
                 <br><br>

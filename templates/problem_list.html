@@ -87,9 +87,9 @@
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
                 <div class="grid-column span-3 bold text--darkest-gray">{{ problem_info.Name }}</div>
                 <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
-                <a class="grid-column span-1 bold text--darkest-gray" href="">{{ problem_info.Tag1 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray" href="">{{ problem_info.Tag2 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray" href="">{{ problem_info.Tag3 }}</a>
+                <div class="grid-column span-1 bold text--darkest-gray"><a href="">{{ problem_info.Tag1 }}</a></div>
+                <div class="grid-column span-1 bold text--darkest-gray"><a href="">{{ problem_info.Tag2 }}</a></div>
+                <div class="grid-column span-1 bold text--darkest-gray"><a href="">{{ problem_info.Tag3 }}</a></div>
             </a></td></tr>
             {% endfor %}
         </table>

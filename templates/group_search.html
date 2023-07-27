@@ -57,10 +57,10 @@
         <div class="pt4"></div>
 
         <div class="container pt3 pb3">
-        <h2 class="text--gray pb1 border--bottom">Problems</h2>
+        <h2 class="text--gray pb1 border--bottom">{{ group_info.Name }}</h2>
         </div>
 
-        <div class="container">
+        {% comment %} <div class="container">
             <div class="grid-row">
                 <div class="grid-column">
                     <a><input class="form-control" placeholder="Enter your search message"></a>
@@ -69,28 +69,24 @@
                     <a class="btn btn--outline" href="">Search</a>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
 
         <div class="pt1"></div>
 
         <table class="container border--top pt1 pb1">
             <tr><td>
-            <div class="grid-row border--bottom">
-                <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
-                <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
-                <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
-                <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
-            </div></td>
+            <a class="grid-row border--bottom link pt1 pb1" href="/polls">
+                <h4 class="grid-column span-3 bold text--darkest-gray">User Name</h4>
+                <h4 class="grid-column span-3 bold text--darkest-gray">E-Mail</h4>
+                <h4 class="grid-column span-3 bold text--darkest-gray">Privilege</h4>
+            </a></td>
             </tr>
-            {% for problem_info in problem_info_list %}
-            <tr><td><div class="grid-row border--bottom">
-                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
-                <a class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</a>
-                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</a>
-            </div></td></tr>
+            {% for user in group_info.Users %}
+            <tr><td><a class="grid-row border--bottom link pt1 pb1" href="/polls">
+                <div class="grid-column span-3 bold text--darkest-gray">{{ user.Name }}</div>
+                <div class="grid-column span-3 bold text--darkest-gray">{{ user.Email }}</div>
+                <div class="grid-column span-3 bold text--darkest-gray">{{ user.Privilege }}</div>
+            </a></td></tr>
             {% endfor %}
         </table>
 

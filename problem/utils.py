@@ -28,6 +28,9 @@ def list_msg(request, page=1, order='time', difficulty='all', type='all', upload
                 "Time": question.create_time,
                 "Diff": question.difficulty,
             })
+            tags = question.tags.all()
+            for i in range(3):
+                msg[-1][f'Tag{i + 1}'] = tags[i].name if len(tags) > i else ''
         logging.debug('problem_info_list: ')
         logging.info(msg)
         return msg

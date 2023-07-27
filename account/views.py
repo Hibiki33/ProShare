@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -184,3 +185,26 @@ def home_page(request):
             pass
         else:
             return HttpResponseRedirect('/account/login/')
+
+
+def group_search_page(request):
+    if request.method == 'GET':
+        search_info = request.GET.get('search_info')
+
+        if not search_info:
+            return render(request, 'abort_group_search.html', locals())
+
+        search_result = Group.objects.filter(name__contains=search_info)
+        return render(request, 'abort_group_search.html', locals())
+
+    elif request.method == 'POST':
+        selected_group_name = request.POST.get('selected_group')
+
+        selected_group = Group.objects.get(name=selected_group_name)
+        selected_group.user_set.add(request.user)
+
+        return HttpResponseRedirect('/account/group_search/')
+
+
+
+

@@ -82,26 +82,26 @@
                         </div>
                     </form>
                     <div class="border--bottom pt4">
-                        <h2>problems</h2>
+                        <h2>Problems</h2>
                     </div>
                     <table class="container pt1 pb1">
                         <tr><td>
-                        <a class="grid-row border--bottom link" href="/polls">
+                        <div class="grid-row border--bottom">
                             <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
-                            <h4 class="grid-column span-4 bold text--darkest-gray">Name</h4>
+                            <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
                             <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
                             <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
-                        </a></td>
+                        </div></td>
                         </tr>
                         {% for problem_info in problem_info_list %}
-                        <tr><td><a class="grid-row border--bottom link" href="/problem/{{ problem_info.ID }}">
+                        <tr><td><div class="grid-row border--bottom">
                             <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
-                            <div class="grid-column span-4 bold text--darkest-gray">{{ problem_info.Name }}</div>
+                            <a class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</a>
                             <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
-                            <a class="grid-column span-1 bold text--darkest-gray" href="">{{ problem_info.Tag1 }}</a>
-                            <a class="grid-column span-1 bold text--darkest-gray" href="">{{ problem_info.Tag2 }}</a>
-                            <a class="grid-column span-1 bold text--darkest-gray" href="">{{ problem_info.Tag3 }}</a>
-                        </a></td></tr>
+                            <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</a>
+                            <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</a>
+                            <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</a>
+                        </div></td></tr>
                         {% endfor %}
                     </table>
                 </div>
@@ -109,8 +109,8 @@
                     <div class="border--bottom">
                         <h2>One Word</h2>
                     </div>
-                    <p class="italic text--gray mb1 pt1">"Loneliness is deadly poison"</p>
-                    <p class="bold">- Horo, Spice and Wolf</p>
+                    <label class="italic text--gray mb1 pt1">"Loneliness is deadly poison"</label>
+                    <label class="bold">- Horo, </label><label class="bold italic">Spice and Wolf</label>
                 </div>
             </div>
         </div>

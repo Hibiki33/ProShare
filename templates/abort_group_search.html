@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form role="search" class="col" action="" method="get">
+        {% csrf_token %}
+        <label>
+            <input type="search" placeholder="Group Name" name="search_info">
+        </label>
+        <button class="" type="submit">search</button>
+    </form>
+    <form name="select" action="" method="post">
+        <div class="container">
+            {% for sr in search_result %}
+                <li>{{ sr.name }}
+                    <button type="submit" name="selected_group" value="{{ sr.name }}">
+                        select
+                    </button>
+                </li>
+            {% endfor %}
+        </div>
+    </form>
+</body>
+</html>

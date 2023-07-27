@@ -56,8 +56,8 @@
 
         <div class="grid-row">
             <div class="grid-column mt3 mb2">
-                <div class="border--bottom pb2 mb2">
-                    <h2>
+                <div class="pb2 mb2">
+                    <h2 class="border--bottom pb1">
                         {{ username }}
                         's Home
                     </h2>
@@ -74,14 +74,21 @@
                 <p><a style="color:midnightblue;text-decoration:none;font-weight: 800;" href="./logout/">Logout</a></p>
                 
             </div>
-            {% comment %} <div class="grid-column mt3 mb2">
-                
-            </div> {% endcomment %}
+            <div class="grid-column mt3 mb2">
+                <div class="pb2 mb2">
+                    <h2 class="border--bottom pb1">Usage Data</h2>
+                    <p>Total Asks: 0</p>
+                    <p>Total Answers: 0</p>
+                    <p>Correct Rate: 0%</p>
+                </div>
+                <p class="bold">Trophies:</p>
+                <p class="italic text--gray">You have no trophies yet.</p>
+            </div>
         </div>
-        <div class="grid-row">
-            {% comment %} <div class="grid-column mt3 mb2">
+        {% comment %} <div class="grid-row">
+            <div class="grid-column mt3 mb2">
                 
-            </div> {% endcomment %}
+            </div>
             <div class="grid-column mt3 mb2">
                 <div class="border--bottom pb2 mb2">
                     <h2>Usage Data</h2>
@@ -92,7 +99,7 @@
                 <p class="bold">Trophies:</p>
                 <p class="italic text--gray">You have no trophies yet.</p>
             </div>
-        </div>
+        </div> {% endcomment %}
     </div>
 </body>
 </html>

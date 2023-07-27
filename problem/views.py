@@ -72,7 +72,7 @@ def problem_create_page(request):
             difficulty=post.get('question_diff', 1),
             created_by=request.user,
             type=post.get('question_type', 1),
-            options=list(filter(None, post.getlist('choice', ['']))),
+            options=list(filter(None, post.getlist('options', ['']))),
             answer=post.get('question_answer', ''),
         )
         return HttpResponseRedirect('/problem/' + str(q._id) + '/')

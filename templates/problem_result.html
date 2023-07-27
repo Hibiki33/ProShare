@@ -37,9 +37,18 @@
             .liRight {
                 
             }
+            .redColor {
+                color: #ff0000;
+            }
             .greenColor {
                 color: 	#24ce15;
             }
+            .none {text-decoration: none}
+            .underline {text-decoration: underline}
+            .overline {text-decoration: overline}
+            .line-through {text-decoration: line-through}
+            .blink {text-decoration: blink}
+            .inherit {text-decoration: inherit}
         </style>
     </head>
 
@@ -121,10 +130,11 @@
                     {% else %}
                     <div class="pt1">
                         <a class="pt1">Your answer is: </a>
-                        <a class="pt1">{{ problem_info.Answer }}</a>
+                        <a class="pt1 underline redColor">{{ problem_info.Answer }}</a>
                     </div>
                     <div class="pt1">
-                        <p class="pt1">Correct answer is: "{{ problem_info.Correct }}"</p>
+                        <a class="pt1">Correct answer is: </a>
+                        <a class="pt1 underline greenColor">{{ problem_info.Correct }}</p>
                     </div>
                     {% endif %}
                     <div style="text-align: center">

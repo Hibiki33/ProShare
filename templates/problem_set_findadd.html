@@ -86,11 +86,11 @@
                     <input class="form-control" placeholder="Enter your search message" name="search_info">
                 </div>
                 <div class="grid-column span-2">
-                    <button type="submit" class="btn btn--outline">Search</button>
+                    <button type="submit" class="btn btn--outline" name="search">Search</button>
                 </div>
                 <div class="grid-column span-4">
                     <div class="select mb1">
-                        <select id="filter-set" onchange="showFilters()">
+                        <select id="filter-set" onchange="showFilters()" name="is_op">
                             <option selected="selected" value="no">No Filters</option>
                             <option value="yes">Advanced Filters</option>
                         </select>

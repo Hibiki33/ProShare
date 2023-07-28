@@ -438,7 +438,7 @@ def problem_set_create_page(request):
             created_by=request.user
         )
 
-        return HttpResponseRedirect('/problem/set/' + question_set.id + '/' + 'modify/')
+        return HttpResponseRedirect('/problem/set/' + str(question_set.id) + '/' + 'modify/')
 
         # temp_id = request.POST.get('id')
         # temp_question_set = TempQuestionSet.objects.get(id=temp_id)
@@ -563,8 +563,8 @@ def problem_set_modify_add_page(request, set_id):
                 info = request.POST.get('search_info')
 
                 if not info:
-                    return render(request, 'problem_list.html', {
+                    return render(request, 'problem_set_findadd.html', {
                         'problem_info_list': list_msg(request)})
-                return render(request, 'problem_list.html', {
+                return render(request, 'problem_set_findadd.html', {
                     'problem_info_list': list_msg(request,
                                                   search=info)})

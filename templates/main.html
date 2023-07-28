@@ -59,6 +59,7 @@
             <h2 class="text--gray pb1">ProShare</h2>
         </div>
 
+        {% if user.is_authenticated %}
         <div class="pb4 pt4" style="text-align: center;">
             <a href="/problem" class="link"><img src="/static/img/button_find_problem.svg" ></a>
             &ensp;
@@ -66,6 +67,15 @@
             <a><img src="/static/img/main_or.svg" ></a>
             <a href="/problem/create" class="link"><img src="/static/img/button_create_yours.svg" ></a>
         </div>
+        {% else %}
+        <div class="pb4 pt4" style="text-align: center;">
+            <a href="/problem" class="link"><img src="/static/img/button_find_problem.svg" ></a>
+            &ensp;
+            <a href="/account/login" class="link"><img src="/static/img/button_group.svg" ></a>
+            <a><img src="/static/img/main_or.svg" ></a>
+            <a href="/account/login" class="link"><img src="/static/img/button_create_yours.svg" ></a>
+        </div>
+        {% endif %}
 
         <div class="container--lg pt4 pb1">
 

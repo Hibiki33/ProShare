@@ -173,22 +173,27 @@
         <table class="container border--top pt1 pb1">
             <tr><td>
             <div class="grid-row border--bottom">
-                <h4 class="grid-column span-1 bold text--darkest-gray">Choose</h4>
                 <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
                 <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
+                <h4 class="grid-column span-1 bold text--darkest-gray">Add</h4>
             </div></td>
             </tr>
             {% for problem_info in problem_info_list %}
             <tr><td><div class="grid-row border--bottom pt1 pb1">
-                <input class="grid-column span-1" type="checkbox" name="choice{{ problem_info.ID }}" value="{{ option }}" />
+                {% comment %} <input class="grid-column span-1" type="checkbox" name="choice{{ problem_info.ID }}" value="{{ option }}" /> {% endcomment %}
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
-                <div class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</div>
+                <div class="grid-column span-3 bold text--darkest-gray">{{ problem_info.Name }}</div>
                 <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
-                <div class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</div>
-                <div class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</div>
-                <div class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag1 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag2 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag3 }}</div>
+                {% if problem_info.unAdd %}
+                <button class="grid-column span-1 bold text--darkest-gray btn" type="submit" name="add{{ problem_info.ID }}" value="add{{ problem_info.ID }}">Add</button>
+                {% else %}
+                <div class="grid-column span-1 bold text--darkest-gray link"></div>
+                {% endif %}
             </div></td></tr>
             {% endfor %}
         </table>

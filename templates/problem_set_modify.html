@@ -117,7 +117,7 @@
             </div>
             <div class="grid-row pt1">
                 <div class="grid-column span-8">
-                    <h4 class="bold text--darkest-gray">Add Questions: </h4>
+                    <h4 class="bold text--darkest-gray">Questions in this set: </h4>
                 </div>
                 <div class="grid-column span-2"></div>
                 <div class="grid-column span-1">
@@ -126,14 +126,39 @@
             </div>
         </div>
 
+        <table class="container border--top pt1 pb1">
+            <tr><td>
+            <div class="grid-row border--bottom">
+                <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
+                <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
+                <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
+                <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
+                <div class="grid-column span-1 bold text--darkest-gray"></div>
+                <h4 class="grid-column span-1 bold text--darkest-gray">Remove</h4>
+            </div></td>
+            </tr>
+            {% for problem_info in problem_info_list %}
+            <tr><td><div class="grid-row border--bottom pt1 pb1">
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
+                <div class="grid-column span-3 bold text--darkest-gray">{{ problem_info.Name }}</div>
+                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag1 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag2 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag3 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray"></div>
+                <button class="grid-column span-1 bold text--darkest-gray btn btn--outline btn--sm link" type="submit" name="button{{ problem_info.ID }}">Remove</button>
+            </div></td></tr>
+            {% endfor %}
+        </table>
+
         {% comment %} a button to confirm {% endcomment %}
-        {% comment %} <div class="container pt2 pb2">
+        <div class="container pt2 pb2">
             <div class="grid-row">
                 <div class="grid-column span-2">
                     <button type="submit" class="btn btn--outline" name="confirm">Confirm</button>
                 </div>
             </div>
-        </div> {% endcomment %}
+        </div>
 
         {% comment %} hidden element for storing id {% endcomment %}
         <div class="container">

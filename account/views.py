@@ -177,14 +177,16 @@ def home_page(request):
             #     print(q.title)
             # for q in request.user.get_wrong_questions():
             #     print(q.title)
+            total_answered = request.user.finish_questions_cnt
+            total_wrong = request.user.wrong_questions_cnt
             return render(request, 'home.html', {
                 'username': request.user.username,
                 'email': request.user.email,
                 'phone': request.user.phone,
                 'quote': request.user.quote,
                 'groups': request.user.groups.all(),
-                'total_answered': request.user.finish_problems_cnt,
-                'total_wrong': request.user.wrong_questions.count(),
+                'total_answered': total_answered,
+                'wrong_rate': total_wrong / total_answered if total_answered != 0 else 0,
             })
         else:
             return HttpResponseRedirect('/account/login/')

@@ -186,7 +186,7 @@ def home_page(request):
                 'quote': request.user.quote,
                 'groups': request.user.groups.all(),
                 'total_answered': total_answered,
-                'wrong_rate': total_wrong / total_answered if total_answered != 0 else 0,
+                'wrong_rate': format(total_wrong / total_answered * 100, '.2f') if total_answered != 0 else 0,
             })
         else:
             return HttpResponseRedirect('/account/login/')

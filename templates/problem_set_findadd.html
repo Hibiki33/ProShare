@@ -1,0 +1,207 @@
+{% load static %}
+<!doctype html>
+<html lang="en-us">
+
+    <head>
+
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <title>Problem List</title>
+        <base href="/">
+        <meta name="description" content="">
+
+        <!-- The compiled CSS file -->
+        <link rel="stylesheet" href="/static/css/production.css">
+
+        <!-- Web fonts -->
+        <link href="/static/css/font1.css" rel="stylesheet">
+
+    </head>
+
+
+    <header class="fixed">
+        <nav class="align--center pt1 pb1 pl1 pr1" style="background-color: rgb(188, 205, 222);">
+            <div class="pb1"></div>
+    {#            svg from : https://www.iconfont.cn/#}
+            <a class="link" href="/">
+                <img class="icon" src="/static/img/icon/home.svg" >
+                <h6 class="text--darkest-gray" style="font-size:12px">ProShare</h6>
+            </a>
+            <div class="border--top mb1"></div>
+            <a class="link " href="/problem">
+                <img class="icon" src="/static/img/icon/search_file.svg" >
+                <h6 class="text--darkest-gray" style="font-size:12px;">Search</h6>
+            </a>
+            <a class="link" href="/problem/create">
+                <img class="icon" src="/static/img/icon/add_file.svg" >
+                <h6 class="text--darkest-gray" style="font-size:12px;">Create</h6>
+            </a>
+            <div class="border--top mb1"></div>
+            <a class="link" href="/account/group/search">
+                <img class="icon" src="/static/img/icon/group.svg" >
+                <h6 class="text--darkest-gray">Group</h6>
+            </a>
+            <a class="link" href="/account/">
+                <img class="icon" src="/static/img/icon/setting.svg" >
+                <h6 class="text--darkest-gray">Account</h6>
+            </a>
+            <div class="border--top mb1"></div>
+            <div class="pt1 pb2">
+                {% if user.is_authenticated %}
+                    <p class="text--darkest-gray"style="font-weight:800">Hello,</p>
+                    <a class="italic text--darkest-gray link"style="font-weight:800" href="/account">{{ user.username }}</a>
+                {% else %}
+                    <a class="text--darkest-gray link"style="font-weight:800" href="/account/login">Login</a>
+                {% endif %}
+            </div>
+            <div class="border--top mb1"></div>
+            <a class="link" href="/admin">
+                <img class="icon" src="/static/img/icon/wrench.svg" >
+                <h6 class="text--darkest-gray">Admin</h6>
+            </a>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+        </nav>
+    </header>
+    <body class="has-animations">
+        <div class="pt4"></div>
+
+        <div class="container pt3 pb3">
+        <h2 class="text--gray pb1 border--bottom">Problems</h2>
+        </div>
+
+        <form action="" method="POST" class="">
+        <div class="container">
+            <div class="grid-row">
+                <div class="grid-column span-6">
+                    <a><input class="form-control" placeholder="Enter your search message"></a>
+                </div>
+                <div class="grid-column span-2">
+                    <a class="btn btn--outline" href="">Search</a>
+                </div>
+                <div class="grid-column span-4">
+                    <div class="select mb1">
+                        <select id="filter-set" onchange="showFilters()">
+                            <option selected="selected" value="no">No Filters</option>
+                            <option value="yes">Advanced Filters</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div style="display: none;" id="filter">
+            <div class="grid-row pt1">
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select name="order">
+                            <option selected="selected" value="time">Order By Time</option>
+                            <option value="difficulty">Order By Difficulty</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select id="question-type"  name="question_type">
+                            <option selected="selected" value="all">All Question Types</option>
+                            <option value="single-choice">Single Answer</option>
+                            <option value="multiple-choice">Multiple Answer</option>
+                            <option value="fill-blank">Fill the blank</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select id="question-diff" name="question_diff">
+                            <option selected="selected" value="all">All Difficulties</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                            <option value="expert">Expert</option>
+                            <option value="master">Master</option>
+                            <option value="re_master">Re:Master</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-row pt1">
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select name="tag1">
+                            <option selected="selected" value="all">No Tag Filter</option>
+                            {% for tag in tag_list %}
+                            <option value="{{ tag }}">{{ tag }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select name="tag2">
+                            <option selected="selected" value="all">No Tag Filter</option>
+                            {% for tag in tag_list %}
+                            <option value="{{ tag }}">{{ tag }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select name="tag3">
+                            <option selected="selected" value="all">No Tag Filter</option>
+                            {% for tag in tag_list %}
+                            <option value="{{ tag }}">{{ tag }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </form>
+
+        <div class="pt1"></div>
+
+        <table class="container border--top pt1 pb1">
+            <tr><td>
+            <div class="grid-row border--bottom">
+                <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
+                <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
+                <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
+                <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
+            </div></td>
+            </tr>
+            {% for problem_info in problem_info_list %}
+            <tr><td><div class="grid-row border--bottom pt1 pb1">
+                
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
+                <a class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</a>
+                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
+                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</a>
+                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</a>
+                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</a>
+            </div></td></tr>
+            {% endfor %}
+        </table>
+
+        <script>
+            function showFilters() {
+                var filterSet = document.getElementById("filter-set");
+                var filter = document.getElementById("filter");
+                if (filterSet.value == "yes") {
+                    filter.style.display = "block";
+                } else {
+                    filter.style.display = "none";
+                }
+            }
+        </script>
+
+    </body>
+</html>

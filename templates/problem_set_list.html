@@ -79,37 +79,26 @@
         <h2 class="text--gray pb1 border--bottom">Problem Sets</h2>
         </div>
 
-        <div class="container">
-            <div class="grid-row">
-                <div class="grid-column">
-                    <a><input class="form-control" placeholder="Enter your search message"></a>
-                </div>
-                <div class="grid-column">
-                    <a class="btn btn--outline" href="">Search</a>
-                </div>
-            </div>
-        </div>
-
         <div class="pt1"></div>
 
         <table class="container border--top pt1 pb1">
             <tr><td>
-            <a class="grid-row border--bottom link pt1 pb1" href="/polls">
+            <div class="grid-row border--bottom">
                 <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
-                <h4 class="grid-column span-4 bold text--darkest-gray">Description</h4>
-                <h4 class="grid-column span-2 bold text--darkest-gray">Time</h4>
+                <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
                 <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
-                <h4 class="grid-column span-2 bold text--darkest-gray">Uploader</h4>
-            </a></td>
+                <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
+            </div></td>
             </tr>
-            {% for problem_group in problem_group_list %}
-            <tr><td><a class="grid-row border--bottom link pt1 pb1" href={{ problem_group.link }}>
-                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_group.ID }}</div>
-                <div class="grid-column span-4 bold text--darkest-gray">{{ problem_group.Name }}</div>
-                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_group.Time }}</div>
-                <div class="grid-column span-2 bold {{ problem_group.text_color }} {{ problem_group.bg_color }}">{{ problem_group.Diff }}</div>
-                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_group.Uploader }}</div>
-            </a></td></tr>
+            {% for problem_info in problem_info_list %}
+            <tr><td><div class="grid-row border--bottom pt1 pb1">
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
+                <a class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</a>
+                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
+                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</a>
+                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</a>
+                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</a>
+            </div></td></tr>
             {% endfor %}
         </table>
 

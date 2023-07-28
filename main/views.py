@@ -8,7 +8,7 @@ def main_view(request):
 
 
 def test_view(request):
-    return render(request, 'group_list.html')
+    return render(request, 'problem_set_findadd.html')
 
 
 def not_found_view(request):

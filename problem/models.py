@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from django.db import models
 from utils.models import RichTextField, JSONField
 from account.models import User
@@ -53,7 +54,8 @@ class QuestionSet(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
 
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='question_sets')
+    belongs_to = models.ForeignKey(Group, on_delete=models.CASCADE, null=True, related_name='question_sets')
     questions = models.ManyToManyField(Question)
 
     def add_question(self, question):
@@ -76,6 +78,13 @@ class QuestionSet(models.Model):
 
     def get_questions(self):
         return self.questions.all()
+
+    class Meta:
+        default_permissions = ()
+        permissions = (
+            ("view_question_set", "Can view question_set"),
+            ("edit_question_set", "Can edit question_set"),
+        )
 
 
 class QuestionTag(models.Model):

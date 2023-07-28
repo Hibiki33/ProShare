@@ -313,6 +313,8 @@ def problem_set_list_page(request):
 
 
 def problem_set_detail_page(request, set_id):
+    set_id = int(set_id)
+
     if request.method == 'GET':
         if QuestionSet.objects.filter(id=set_id).exists():
             question_set = QuestionSet.objects.get(id=set_id)
@@ -471,6 +473,98 @@ def problem_set_modify_page(request, set_id):
 
     if request.method == 'GET':
         question_set = QuestionSet.objects.get(id=set_id)
-        return render(request, 'problem_set_findadd.html', {'problem_info_list': list_msg(request)})
+        questions = question_set.get_questions()
+        return render(request, 'problem_set_modify.html', {
+            'name': question_set.name,
+            'set_type': question_set.belongs_to.name if question_set.belongs_to else 'public',
+            'groups': request.user.groups.all(),
+            'problem_info_list': list_msg(request, questions=questions),
+        })
+
     elif request.method == 'POST':
-        pass
+        if 'remove' in request.POST.keys():
+            question_id = request.POST.get('remove')
+            question_set = QuestionSet.objects.get(id=set_id)
+            question_set.remove_question(Question.objects.get(_id=question_id))
+            question_set.save()
+            return HttpResponseRedirect('/problem/set/' + str(set_id) + '/modify/')
+
+        elif 'confirm' in request.POST.keys():
+            question_set = QuestionSet.objects.get(id=set_id)
+            question_set_name = request.POST.get('name')
+            group_name = request.POST.get('set_type', 'public')
+
+            question_set.name = question_set_name
+            question_set.belongs_to = Group.objects.get(name=group_name) if group_name != 'public' else None
+            question_set.save()
+
+            return HttpResponseRedirect('/problem/' + str(set_id) + '/')
+
+        elif 'add' in request.POST.keys():
+            return HttpResponseRedirect('/problem/set/' + str(set_id) + '/modify/add/')
+
+
+def problem_set_modify_add_page(request, set_id):
+    set_id = int(set_id)
+    question_set = QuestionSet.objects.get(id=set_id)
+
+    if request.method == 'GET':
+        return render(request, 'problem_set_findadd.html', {
+            'problem_info_list': list_msg(request)
+        })
+
+    elif request.method == 'POST':
+        if 'add' in request.POST.keys():
+            choices = request.POST.getlist('choice')
+            for choice in choices:
+                question_set.add_question(Question.objects.get(_id=choice))
+
+            return HttpResponseRedirect('/problem/set/' + str(set_id) + '/modify/add/')
+
+        elif 'search' in request.POST.keys():
+            is_op = request.POST.get('is_op', 'no')
+
+            if is_op == 'yes':
+                info = request.POST.get('search_info', '')
+
+                order = request.POST.get('order', 'time')
+                question_type = request.POST.get('question_type', 'all')
+                question_diff = request.POST.get('question_diff', 'all')
+
+                tag1 = request.POST.get('tag1', 'all')
+                tag2 = request.POST.get('tag2', 'all')
+                tag3 = request.POST.get('tag3', 'all')
+
+                questions = Question.objects.all()
+                if tag1 != 'all':
+                    questions = questions.filter(tags__name=tag1)
+                if tag2 != 'all':
+                    questions = questions.filter(tags__name=tag2)
+                if tag3 != 'all':
+                    questions = questions.filter(tags__name=tag3)
+
+                if not info:
+                    return render(request, 'problem_set_findadd.html', {
+                        'problem_info_list': list_msg(request,
+                                                      questions=questions,
+                                                      order=order,
+                                                      difficulty=question_diff,
+                                                      type=question_type)})
+
+                return render(request, 'problem_set_findadd.html', {
+                    'problem_info_list': list_msg(request,
+                                                  questions=questions,
+                                                  order=order,
+                                                  difficulty=question_diff,
+                                                  type=question_type,
+                                                  search=info)})
+
+            elif is_op == 'no':
+                info = request.POST.get('search_info')
+
+                if not info:
+                    return render(request, 'problem_list.html', {
+                        'problem_info_list': list_msg(request)})
+                return render(request, 'problem_list.html', {
+                    'problem_info_list': list_msg(request,
+                                                  search=info)})

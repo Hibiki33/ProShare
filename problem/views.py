@@ -300,6 +300,10 @@ def problem_set_list_page(request):
         for group in groups:
             problem_set_list.extend(group.question_sets.all())
 
+        for question_set in QuestionSet.objects.all():
+            if question_set.belongs_to is None:
+                problem_set_list.append(question_set)
+
         problem_set_list = list(set(problem_set_list))
 
         return render(request, 'problem_set_list.html', locals())
@@ -396,3 +400,24 @@ def problem_set_detail_page(request, set_id):
 
             else:
                 return render(request, '404.html')
+
+
+def problem_set_create_page(request):
+    if request.method == 'GET':
+        question_set = QuestionSet.objects.create(
+            name=None,
+            created_by=request.user,
+            belongs_to=None,)
+
+
+
+        return render(request, 'problem_set_create.html', {
+            'id': question_set.id,
+            'groups': request.user.groups.all(),
+            })
+
+    elif request.method == 'POST':
+        if request.POST.has_key('add'):
+            pass
+        elif request.POST.has_key('confirm'):
+            pass

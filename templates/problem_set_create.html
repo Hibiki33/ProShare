@@ -98,6 +98,7 @@
                 <div class="grid-column span-4">
                     <div class="select mb1">
                         <select name="set_type">
+                            <!--
                             {% if isPublic %}
                             <option selected="selected" value="public">Public</option>
                             <option value="private">Private</option>
@@ -105,6 +106,11 @@
                             <option value="public">Public</option>
                             <option selected="selected" value="private">Private</option>
                             {% endif %}
+                            -->
+                            <option value="public">public</option>
+                            {% for group in groups %}
+                            <option value="{{ group.group_name }}">{{ group.name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>

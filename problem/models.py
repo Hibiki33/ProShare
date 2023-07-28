@@ -52,9 +52,11 @@ class Question(models.Model):
 
 class QuestionSet(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, null=True)
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='question_sets')
+    # belongs_to = None indicated public?
+    # above
     belongs_to = models.ForeignKey(Group, on_delete=models.CASCADE, null=True, related_name='question_sets')
     questions = models.ManyToManyField(Question)
 

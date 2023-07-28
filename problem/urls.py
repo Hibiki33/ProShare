@@ -13,6 +13,6 @@ urlpatterns = [
     # path('set/<int:set_id>/modify/', ),
     # path('set/<int:set_id>/modify/add/', ),
     # path('set/<int:set_id>/result/', ),
-    # path('set/create/', ),
+    path('set/create/', views.problem_set_create_page),
     # path('set/create/add', ),
 ]

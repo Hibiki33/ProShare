@@ -101,7 +101,13 @@
                 <div class="grid-column span-2 bold text--darkest-gray">{{ ps.id }}</div>
                 <div class="grid-column span-4 bold text--darkest-gray">{{ ps.name }}</div>
                 <div class="grid-column span-1 bold text--darkest-gray">{{ ps.created_by }}</div>
-                <div class="grid-column span-1 bold text--darkest-gray">{{ ps.belongs_to }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">
+                    {% if ps.belongs_to %}
+                    {{ ps.belongs_to }}
+                    {% else %}
+                    public
+                    {%  endif %}
+                </div>
                 <a class="grid-column span-1 bold text--darkest-gray btn btn--outline btn--sm link" href="/problem/set/{{ ps.id }}">Exercise</a>
             </div></td></tr>
             {% endfor %}

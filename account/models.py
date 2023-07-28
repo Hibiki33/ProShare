@@ -65,11 +65,11 @@ class User(AbstractUser):
         self.wrong_problems.add(problem)
         self.save(update_fields=["wrong_problems"])
 
-    def rm_wrong_question(self, question):
+    def remove_wrong_question(self, question):
         self.wrong_questions.remove(question)
         self.save(update_fields=["wrong_questions"])
 
-    def rm_wrong_problem(self, problem):
+    def remove_wrong_problem(self, problem):
         self.wrong_problems.remove(problem)
         self.save(update_fields=["wrong_problems"])
 

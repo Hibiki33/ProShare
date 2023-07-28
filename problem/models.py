@@ -38,10 +38,45 @@ class Question(models.Model):
         self.save(update_fields=["tags"])
         tag.add_question(self)
 
-
     # class Meta:
     #     db_table = "question"
     #     ordering = ("create_time",)
+    class Meta:
+        default_permissions = ()
+        permissions = (
+            ("view_question", "Can view question"),
+            ("edit_question", "Can edit question"),
+        )
+
+
+class QuestionSet(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=128)
+
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    questions = models.ManyToManyField(Question)
+
+    def add_question(self, question):
+        self.questions.add(question)
+        self.save(update_fields=["questions"])
+
+    def add_questions(self, questions):
+        for question in questions:
+            self.add_question(question)
+        self.save(update_fields=["questions"])
+
+    def remove_question(self, question):
+        self.questions.remove(question)
+        self.save(update_fields=["questions"])
+
+    def remove_questions(self, questions):
+        for question in questions:
+            self.remove_question(question)
+        self.save(update_fields=["questions"])
+
+    def get_questions(self):
+        return self.questions.all()
+
 
 class QuestionTag(models.Model):
     name = models.CharField(max_length=128)
@@ -111,6 +146,42 @@ class Problem(models.Model):
     def add_ac_number(self):
         self.accepted_number = models.F("accepted_number") + 1
         self.save(update_fields=["accepted_number"])
+
+    class Meta:
+        default_permissions = ()
+        permissions = (
+            ("view_question", "Can view question"),
+            ("edit_question", "Can edit question"),
+        )
+
+
+class ProblemSet(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=128)
+
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    problems = models.ManyToManyField(Problem)
+
+    def add_problem(self, problem):
+        self.problems.add(problem)
+        self.save(update_fields=["problems"])
+
+    def add_problems(self, problems):
+        for problem in problems:
+            self.add_problem(problem)
+        self.save(update_fields=["problems"])
+
+    def remove_problem(self, problem):
+        self.problems.remove(problem)
+        self.save(update_fields=["problems"])
+
+    def remove_problems(self, problems):
+        for problem in problems:
+            self.remove_problem(problem)
+        self.save(update_fields=["problems"])
+
+    def get_problems(self):
+        return self.problems.all()
 
 
 class ProblemFile(models.Model):

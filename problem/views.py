@@ -96,27 +96,40 @@ def problem_detail_page(request, id):
                 msg['Answer'] = ' '.join(choice)
                 msg['Correct'] = ' '.join(question.correct_options)
                 if set(choice) == set(question.correct_options):
-                    # if request.user.is_wrong_question(question):
-                    #     request.user.remove_wrong_question(question)
+                    # maintain question related user information
                     request.user.remove_wrong_question(question)
                     request.user.finish_questions_cnt += 1
                     request.user.save()
+
                     verdict = 'Accepted'
                     question.add_ac_number()
                 else:
+                    # maintain question related user information
                     request.user.add_wrong_question(question)
                     request.user.finish_questions_cnt += 1
                     request.user.wrong_questions_cnt += 1
                     request.user.save()
+
                     verdict = 'Wrong Answer'
             elif question.type == 'fill-blank':
                 answer = post.get('answer')
                 msg['Answer'] = answer
                 msg['Correct'] = question.answer
                 if answer == question.answer:
+                    # maintain question related user information
+                    request.user.remove_wrong_question(question)
+                    request.user.finish_questions_cnt += 1
+                    request.user.save()
+
                     verdict = 'Accepted'
                     question.add_ac_number()
                 else:
+                    # maintain question related user information
+                    request.user.add_wrong_question(question)
+                    request.user.finish_questions_cnt += 1
+                    request.user.wrong_questions_cnt += 1
+                    request.user.save()
+
                     verdict = 'Wrong Answer'
             else:
                 verdict = 'System Error'
@@ -273,3 +286,10 @@ def problem_upload_page(request):
         # TODO: 把 problems 里的问题存到数据库里
 
         return HttpResponse('Upload Success!')
+
+
+def problem_set_list_page(request):
+    if request.method == 'GET':
+        pass
+    elif request.method == 'POST':
+        pass

@@ -93,14 +93,36 @@
     </header>
     <body class="has-animations">
 
+        <form action="" method="POST" class="">
         <div class="container--lg pt3 pb3">
-        <h2 class="text--gray pb1">{{ problem_group_info.Name }}</h2>
+            <div class="grid-row">
+                <div class="grid-column span-11">
+                    <h2 class="text--gray pb1">{{ name }}</h2>
+                </div>
+                <div class="grid-column span-1">
+                </div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-column span-9">
+                </div>
+                <div class="grid-column span-1">
+                    {% if modify %}
+                    <button class="btn btn--outline" type="submit" name="modify">Modify</button>
+                    {% endif %}
+                </div>
+            </div>
         </div>
+        </form>
+        
 
         <div class="container--lg pt1 pb1">
             <form action="" method="POST" class="">
             {% for problem_info in problem_info_list %}
-            <div class="grid-row grid-row--top border--bottom pb1">
+            <div class="grid-row pt4">
+                <div class="grid-column">
+                </div>
+            </div>
+            <div class="grid-row grid-row--top border--top pb1 pt1">
                 <div class="grid-column span-9">
                     <div class="">
                         <h3>{{ problem_info.Name }}</h3>
@@ -138,6 +160,7 @@
                     <label>
                         <input type="answer" name="answer{{ problem_info.ID }}" placeholder="Your Answer" class="form-control">
                     </label>
+                    {% endif %}
                 </div>
 
                 
@@ -180,8 +203,8 @@
                 </div>
             </div>
             {% endfor %}
-            <div style="text-align: center">
-                <button type="submit" class="btn btn--outline">submit</button>
+            <div style="text-align: center" class="pt2">
+                <button type="submit" class="btn btn--outline" name="submit">Submit</button>
             </div>
             <form action="" method="POST" class="pt1">
         </div>

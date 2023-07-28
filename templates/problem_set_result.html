@@ -99,7 +99,11 @@
 
         <div class="container--lg pt1 pb1">
             {% for problem_info in problem_info_list %}
-            <div class="grid-row grid-row--top border--bottom pb1">
+            <div class="grid-row pt4">
+                <div class="grid-column">
+                </div>
+            </div>
+            <div class="grid-row grid-row--top border--top pb1 pt1">
                 <div class="grid-column span-9">
                     <div class="">
                         <h3>{{ problem_info.Name }}</h3>
@@ -194,7 +198,7 @@
                 <span class="text--gray bold">You have passed: </span>
                 <span class="text--gray">{{ problem_info.ResultStr }}</span>
             </p>
-            <div style="text-align: center">
+            <div style="text-align: center" class="pt2">
                 <a type="button" class="btn btn--outline" href="/problem/set/">Back</a>
             </div>
         </div>

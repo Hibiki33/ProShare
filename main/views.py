@@ -16,7 +16,7 @@ def test_view(request):
         {"ID": 5, "Name": "Question E", "Diff": "Medium", "Tag1": "Tag1", "Tag2": "Tag2", "Tag3": "Tag3"},
         {"ID": 6, "Name": "Question F", "Diff": "Hard", "Tag1": "Tag1", "Tag2": "Tag2", "Tag3": "Tag3"}
     ]
-    # return render(request, 'problem_set_findadd.html', {"problem_info_list": a})
+    return render(request, 'problem_set_detail.html', {"problem_info_list": a, "name": "Test Set", "modify": True})
     # a = [
     #     {"id": 1, "name": "Question A", "created_by": "Easy", "belongs_to": "Tag1"},
     #     {"id": 2, "name": "Question B", "created_by": "Medium", "belongs_to": "Tag1"},
@@ -24,7 +24,7 @@ def test_view(request):
     #     {"id": 4, "name": "Question D", "created_by": "Easy", "belongs_to": "Tag1"},
     # ]
     # return render(request, 'problem_set_list.html', {"problem_set_list": a})
-    return render(request, 'problem_set_create.html', {"problem_info_list": a, "name": "Test Set", "isPublic": False})
+    # return render(request, 'problem_set_create.html', {"problem_info_list": a, "name": "Test Set", "isPublic": False})
 
 
 def not_found_view(request):

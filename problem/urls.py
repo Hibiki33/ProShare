@@ -9,7 +9,7 @@ urlpatterns = [
     path('create/', views.problem_create_page),
     path('upload/', views.problem_upload_page),
     path('set/', views.problem_set_list_page),
-    # path('set/<int:set_id>/', ),
+    path('set/<int:set_id>/', views.problem_set_detail_page),
     # path('set/<int:set_id>/modify/', ),
     # path('set/<int:set_id>/modify/add/', ),
     # path('set/<int:set_id>/result/', ),

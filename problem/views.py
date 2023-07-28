@@ -303,3 +303,87 @@ def problem_set_list_page(request):
 
     elif request.method == 'POST':
         pass
+
+
+def problem_set_detail_page(request, set_id):
+    if request.method == 'GET':
+        if QuestionSet.objects.filter(id=set_id).exists():
+            question_set = QuestionSet.objects.get(id=set_id)
+            questions = question_set.get_questions()
+            problem_info_list = []
+            for question in questions:
+                problem_info_list.append(detail_msg(request, question._id))
+            return render(request, 'problem_set_detail.html', {
+                'problem_info_list': problem_info_list,
+            })
+        else:
+            return render(request, '404.html')
+
+    elif request.method == 'POST':
+        if QuestionSet.objects.filter(id=set_id).exists():
+            question_set = QuestionSet.objects.get(id=set_id)
+            questions = question_set.get_questions()
+            msgs = []
+            for question in questions:
+                verdict = 'System Error'
+                question.add_submission_number()
+                msg = {}
+                if question.type == 'single-choice' or question.type == 'multiple-choice':
+                    choice = request.POST.getlist('choice' + str(question._id))
+                    msg['Answer'] = ' '.join(choice)
+                    msg['Correct'] = ' '.join(question.correct_options)
+                    if set(choice) == set(question.correct_options):
+                        # maintain question related user information
+                        request.user.remove_wrong_question(question)
+                        request.user.finish_questions_cnt += 1
+                        request.user.save()
+
+                        verdict = 'Accepted'
+                        question.add_ac_number()
+
+                    else:
+                        # maintain question related user information
+                        request.user.add_wrong_question(question)
+                        request.user.finish_questions_cnt += 1
+                        request.user.wrong_questions_cnt += 1
+                        request.user.save()
+
+                        verdict = 'Wrong Answer'
+
+                elif question.type == 'fill-blank':
+                    answer = request.POST.get('answer' + str(question._id))
+                    msg['Answer'] = answer
+                    msg['Correct'] = question.answer
+                    if answer == question.answer:
+                        # maintain question related user information
+                        request.user.remove_wrong_question(question)
+                        request.user.finish_questions_cnt += 1
+                        request.user.save()
+
+                        verdict = 'Accepted'
+                        question.add_ac_number()
+
+                    else:
+                        # maintain question related user information
+                        request.user.add_wrong_question(question)
+                        request.user.finish_questions_cnt += 1
+                        request.user.wrong_questions_cnt += 1
+                        request.user.save()
+
+                        verdict = 'Wrong Answer'
+
+                else:
+                    verdict = 'System Error'
+                    return render(request, '404.html')
+
+                msg['Verdict'] = verdict
+                msg.update(detail_msg(request, question._id))
+
+                msgs.append(msg)
+
+            return render(request, 'problem_set_result.html', {
+                'problem_info_list': msgs,
+            })
+
+        else:
+            return render(request, '404.html')

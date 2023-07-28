@@ -196,6 +196,26 @@ def home_page(request):
             return HttpResponseRedirect('/account/login/')
 
 
+def group_detail_page(request, group_name):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            group = Group.objects.get(name=group_name)
+            return render(request, 'group_detail.html', {
+                'group_name': group.name,
+                'group_question_sets': group.question_sets.all(),
+            })
+        else:
+            return HttpResponseRedirect('/account/login/')
+    elif request.method == 'POST':
+        if request.user.is_authenticated:
+            group_name = request.POST.get('exit')
+            group = Group.objects.get(name=group_name)
+            group.user_set.remove(request.user)
+            return HttpResponseRedirect('/account/')
+        else:
+            return HttpResponseRedirect('/account/login/')
+
+
 def group_search_page(request):
     if request.method == 'GET':
         search_info = request.GET.get('search_info')

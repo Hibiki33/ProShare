@@ -73,7 +73,7 @@
                     {% if groups %}
                     {% for group in groups %}
                         <div class="grid-row pt1">
-                            <a class="italic text--gray grid-column span-2">{{ group }}</a>
+                            <a class="italic text--gray grid-column span-2 link" href="/account/group/{{ group.name }}">{{ group }}</a>
                             <button type="submit" name="exit" value="{{ group.name }}" class="btn btn--default btn--sm grid-column span-1">
                                 Exit
                             </button>

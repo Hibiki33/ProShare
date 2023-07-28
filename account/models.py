@@ -43,7 +43,8 @@ class User(AbstractUser):
     wrong_problems = models.ManyToManyField("problem.Problem", blank=True)
     wrong_questions = models.ManyToManyField("problem.Question", blank=True)
 
-    finish_problems_cnt = models.IntegerField(default=0)
+    finish_questions_cnt = models.IntegerField(default=0)
+    wrong_questions_cnt = models.IntegerField(default=0)
 
     def set_quote(self, quote):
         self.quote = quote
@@ -61,25 +62,31 @@ class User(AbstractUser):
 
     def add_wrong_question(self, question):
         self.wrong_questions.add(question)
-        self.save(update_fields=["wrong_questions"])
+        self.save()
 
     def add_wrong_problem(self, problem):
         self.wrong_problems.add(problem)
-        self.save(update_fields=["wrong_problems"])
+        self.save()
 
     def remove_wrong_question(self, question):
         self.wrong_questions.remove(question)
-        self.save(update_fields=["wrong_questions"])
+        self.save()
 
     def remove_wrong_problem(self, problem):
         self.wrong_problems.remove(problem)
-        self.save(update_fields=["wrong_problems"])
+        self.save()
 
     def get_wrong_questions(self):
         return self.wrong_questions.all()
 
     def get_wrong_problems(self):
         return self.wrong_problems.all()
+
+    def is_wrong_question(self, question):
+        return question in self.wrong_questions.all()
+
+    def is_wrong_problem(self, problem):
+        return problem in self.wrong_problems.all()
 
     class Meta(AbstractUser.Meta):
         swappable = "AUTH_USER_MODEL"

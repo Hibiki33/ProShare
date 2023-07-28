@@ -37,11 +37,11 @@ def problem_detail_page(request, id):
                 msg['Answer'] = ' '.join(choice)
                 msg['Correct'] = ' '.join(question.correct_options)
                 if set(choice) == set(question.correct_options):
-                    request.user.wrong_questions.remove(question)
+                    request.user.rm_wrong_questions.remove(question)
                     verdict = 'Accepted'
                     question.add_ac_number()
                 else:
-                    request.user.wrong_questions.add(question)
+                    request.user.add_wrong_question(question)
                     verdict = 'Wrong Answer'
             elif question.type == 'fill-blank':
                 answer = post.get('answer')

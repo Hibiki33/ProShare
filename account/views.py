@@ -175,6 +175,8 @@ def home_page(request):
             # test if wrong questions can be got
             # for q in request.user.wrong_questions.all():
             #     print(q.title)
+            # for q in request.user.get_wrong_questions():
+            #     print(q.title)
             return render(request, 'home.html', {
                 'username': request.user.username,
                 'email': request.user.email,

@@ -72,21 +72,40 @@
         </div> {% endcomment %}
 
         <div class="pt1"></div>
+        <p class="text--gray pt1 pb1">Group Description: {{ group_info.Description }}</p>
+
+        {% comment %} group problem lists {% endcomment %}
+        <h3 class="text--gray italic pb1">Group Problem Lists:</h3>
+
+        <table class="container border--top border--bottom pt1 pb1">
+            <tr><td>
+            <div class="grid-row border--bottom pt1 pb1">
+                <h4 class="grid-column span-3 bold text--darkest-gray">Problem List Name</h4>
+                <h4 class="grid-column span-9 bold text--darkest-gray">Problem List Description</h4>
+            </div></td>
+            </tr>
+            {% for problem_list in group_info.ProblemLists %}
+            <tr><td><div class="grid-row border--bottom pt1 pb1">
+                <a class="grid-column span-3 bold text--darkest-gray">{{ problem_list.Name }}</a>
+                <div class="grid-column span-9 italic text--darkest-gray">{{ problem_list.Description }}</div>
+            </div></td></tr>
+            {% endfor %}
+        </table>
+
+        <h3 class="text--gray italic pb1 pt2">Group Members:</h3>
 
         <table class="container border--top pt1 pb1">
-            <tr><td>
-            <a class="grid-row border--bottom link pt1 pb1" href="/polls">
+            <tr><td><div class="grid-row border--bottom pt1 pb1">
                 <h4 class="grid-column span-3 bold text--darkest-gray">User Name</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">E-Mail</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">Privilege</h4>
-            </a></td>
-            </tr>
+            </div></td></tr>
             {% for user in group_info.Users %}
-            <tr><td><a class="grid-row border--bottom link pt1 pb1" href="/polls">
-                <div class="grid-column span-3 bold text--darkest-gray">{{ user.Name }}</div>
-                <div class="grid-column span-3 bold text--darkest-gray">{{ user.Email }}</div>
-                <div class="grid-column span-3 bold text--darkest-gray">{{ user.Privilege }}</div>
-            </a></td></tr>
+            <tr><td><div class="grid-row border--bottom pt1 pb1">
+                <a class="grid-column span-3 bold text--darkest-gray">{{ user.Name }}</a>
+                <div class="grid-column span-3 text--darkest-gray">{{ user.Email }}</div>
+                <div class="grid-column span-3 text--darkest-gray">{{ user.Privilege }}</div>
+            </div></td></tr>
             {% endfor %}
         </table>
 

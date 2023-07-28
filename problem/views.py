@@ -22,7 +22,10 @@ def problem_main_page(request):
 
 def problem_detail_page(request, id):
     if request.method == 'GET':
-        return render(request, 'problem_detail.html', {'problem_info': detail_msg(request, id)})
+        try:
+            return render(request, 'problem_detail.html', {'problem_info': detail_msg(request, id)})       
+        except:
+            return render(request, '404.html')
     elif request.method == 'POST':
         post: QueryDict = request.POST
         logging.debug('problem submit request: ')

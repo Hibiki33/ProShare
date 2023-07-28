@@ -190,7 +190,7 @@
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag2 }}</div>
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag3 }}</div>
                 {% if problem_info.unAdd %}
-                <button class="grid-column span-1 bold text--darkest-gray btn" type="submit" name="add{{ problem_info.ID }}" value="add{{ problem_info.ID }}">Add</button>
+                <button class="grid-column span-1 bold text--darkest-gray btn" type="submit" name="add" value="{{ problem_info.ID }}">Add</button>
                 {% else %}
                 <div class="grid-column span-1 bold text--darkest-gray link"></div>
                 {% endif %}
@@ -202,7 +202,7 @@
         <div class="container pt2 pb2">
             <div class="grid-row">
                 <div class="grid-column span-2">
-                    <button type="submit" class="btn btn--outline">Confirm</button>
+                    <button type="submit" class="btn btn--outline" name="confirm">Confirm</button>
                 </div>
             </div>
         </div>

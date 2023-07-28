@@ -69,6 +69,8 @@
                 <div class="pt2 mb2">
                     <h3 class="bold text-light-gray pt1 border--top">Groups:</h3>
                     <form action="" method="POST">
+                    {% comment %} check if there's no groups {% endcomment %}
+                    {% if groups %}
                     {% for group in groups %}
                         <div class="grid-row pt1">
                             <a class="italic text--gray grid-column span-2">{{ group }}</a>
@@ -77,13 +79,79 @@
                             </button>
                         </div>
                     {% endfor %}
+                    {% else %}
+                        <p class="italic text--gray">You have not joined any groups yet.</p>
+                    {% endif %}
                     </form>
                 </div>
-                
-                <br><br>
-                <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./change_password/">Change Password</a></p>
-                <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./logout/">Logout</a></p>
-                
+
+                <h3 class="bold text-light-gray pt1 border--top">Wrong Diary:</h3>
+                <form action="" method="POST">
+                <div class="grid-row pt1">
+                    <div class="grid-column">
+                        Choose a preferred tag:
+                    </div>
+                    <div class="grid-column">
+                        <div class="select mb1">
+                            <select name="tag">
+                                <option selected="selected" value="all">All tags</option>
+                                {% for tag in tag_list %}
+                                <option value="{{ tag }}">{{ tag }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-row pt1">
+                    <div class="grid-column">
+                        How many questions:
+                    </div>
+                    <div class="grid-column">
+                        <div class="select mb1">
+                            <select name="question_num">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option selected="selected" value="5">5</option>
+                                <option value="7">7</option>
+                                <option value="11">11</option>
+                                <option value="13">13</option>
+                                <option value="17">17</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-row pt1 pb1">
+                    {% comment %} a button to generate recommended problem list {% endcomment %}
+                    <button type="submit" name="generate" value="generate" class="btn btn--default pb1">
+                        Generate
+                    </button>
+                </div>
+                </form>
+                {% if problem_info_list %}
+                <table class="container pt2 pb1">
+                    <tr><td>
+                    <div class="grid-row border--bottom">
+                        <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
+                        <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
+                        <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
+                        <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
+                    </div></td>
+                    </tr>
+                    {% for problem_info in problem_info_list %}
+                    <tr><td><div class="grid-row border--bottom pt1 pb1">
+                        <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
+                        <a class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</a>
+                        <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
+                        <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</a>
+                        <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</a>
+                        <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</a>
+                    </div></td></tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <p class="italic text--gray">You have no need to practice any wrong questions on chosen tag! Congratulations!</p>
+                {% endif %}
             </div>
             <div class="grid-column mt3 mb2 span-4">
                 <div class="pb2 mb2">
@@ -94,6 +162,9 @@
                     <br>
                     <p class="bold">Trophies:</p>
                     <p class="italic text--gray">You have no trophies yet.</p>
+                    <br><br>
+                    <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./change_password/">Change Password</a></p>
+                    <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./logout/">Logout</a></p>
                 </div>
             </div>
         </div>

@@ -173,27 +173,27 @@
         <table class="container border--top pt1 pb1">
             <tr><td>
             <div class="grid-row border--bottom">
+                <h4 class="grid-column span-1 bold text--darkest-gray">Choose</h4>
                 <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
                 <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
-                <h4 class="grid-column span-1 bold text--darkest-gray">Add</h4>
             </div></td>
             </tr>
             {% for problem_info in problem_info_list %}
             <tr><td><div class="grid-row border--bottom pt1 pb1">
-                {% comment %} <input class="grid-column span-1" type="checkbox" name="choice{{ problem_info.ID }}" value="{{ option }}" /> {% endcomment %}
+                <input class="grid-column span-1" type="checkbox" name="choice" value="{{ problem_info.ID }}" />
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
                 <div class="grid-column span-3 bold text--darkest-gray">{{ problem_info.Name }}</div>
                 <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag1 }}</div>
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag2 }}</div>
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag3 }}</div>
-                {% if problem_info.unAdd %}
-                <button class="grid-column span-1 bold text--darkest-gray btn" type="submit" name="add{{ problem_info.ID }}" value="add{{ problem_info.ID }}">Add</button>
+                {% comment %} {% if problem_info.unAdd %}
+                <button class="grid-column span-1 bold text--darkest-gray btn" type="submit" name="add" value="{{ problem_info.ID }}">Add</button>
                 {% else %}
                 <div class="grid-column span-1 bold text--darkest-gray link"></div>
-                {% endif %}
+                {% endif %} {% endcomment %}
             </div></td></tr>
             {% endfor %}
         </table>
@@ -202,7 +202,12 @@
         <div class="container pt2 pb2">
             <div class="grid-row">
                 <div class="grid-column span-2">
-                    <button type="submit" class="btn btn--outline">Confirm</button>
+                    <button type="submit" class="btn btn--outline" name="add">Add</button>
+                </div>
+            </div>
+            <div class="grid-row">
+                <div class="grid-column span-2">
+                    <button type="submit" class="btn btn--outline" name="confirm">Confirm</button>
                 </div>
             </div>
         </div>

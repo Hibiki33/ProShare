@@ -155,38 +155,38 @@
                         <div id="single-choice-editor" style="display: block;">
                             <p class="text--gray pt2 pb1 italic">(Choose the only right answer)</p>
                             <div class="grid--row">
-                                <input class="" type="radio" name="place" value="A"/>
+                                <input id="choiceA1button" class="" type="radio" name="place" value="A"/>
                                 <input type="choice" name="options" id="choiceA1" placeholder="choice A" class="form-wfy" />
                             </div>
                             <div class="grid--row">
-                                <input class="" type="radio" name="place" value="B"/>
+                                <input id="choiceB1button" class="" type="radio" name="place" value="B"/>
                                 <input type="choice" name="options" id="choiceB1" placeholder="choice B" class="form-wfy" />
                             </div>
                             <div class="grid--row">
-                                <input class="" type="radio" name="place" value="C"/>
+                                <input id="choiceC1button" class="" type="radio" name="place" value="C"/>
                                 <input type="choice" name="options" id="choiceC1" placeholder="choice C" class="form-wfy" />
                             </div>
                             <div class="grid--row">
-                                <input class="" type="radio" name="place" value="D"/>
+                                <input id="choiceD1button" class="" type="radio" name="place" value="D"/>
                                 <input type="choice" name="options" id="choiceD1" placeholder="choice D" class="form-wfy" />
                             </div>
                         </div>
                         <div id="multiple-choice-editor" style="display: none;">
                             <p class="text--gray pt2 pb1 italic">(Choose all the right answers)</p>
                             <div class="grid--row">
-                                <input class="" type="checkbox" name="place" value="A"/>
+                                <input id="choiceA2button" class="" type="checkbox" name="place" value="A"/>
                                 <input type="choice" name="options" id="choiceA2" placeholder="choice A" class="form-wfy" />
                             </div>
                             <div class="grid--row">
-                                <input class="" type="checkbox" name="place" value="B"/>
+                                <input id="choiceB2button" class="" type="checkbox" name="place" value="B"/>
                                 <input type="choice" name="options" id="choiceB2" placeholder="choice B" class="form-wfy" />
                             </div>
                             <div class="grid--row">
-                                <input class="" type="checkbox" name="place" value="C"/>
+                                <input id="choiceC2button" class="" type="checkbox" name="place" value="C"/>
                                 <input type="choice" name="options" id="choiceC2" placeholder="choice C" class="form-wfy" />
                             </div>
                             <div class="grid--row">
-                                <input class="" type="checkbox" name="place" value="D"/>
+                                <input id="choiceD2button" class="" type="checkbox" name="place" value="D"/>
                                 <input type="choice" name="options" id="choiceD2" placeholder="choice D" class="form-wfy" />
                             </div>
                         </div>
@@ -315,9 +315,16 @@
                     var inputB1Value = document.getElementById('choiceB1').value;
                     var inputC1Value = document.getElementById('choiceC1').value;
                     var inputD1Value = document.getElementById('choiceD1').value;
+                    var singleChoiceA = document.getElementById("choiceA1button");
+                    var singleChoiceB = document.getElementById("choiceB1button");
+                    var singleChoiceC = document.getElementById("choiceC1button");
+                    var singleChoiceD = document.getElementById("choiceD1button");
                     if (inputA1Value == '' || inputB1Value == '' || inputC1Value == '' ||
                         inputD1Value == '' || titleValue == '' || descriptionValue == '') {
                         alert('Please input all choices!');
+                    } else if (singleChoiceA.checked == false && singleChoiceB.checked == false &&
+                               singleChoiceC.checked == false && singleChoiceD.checked == false) {
+                        alert('Please choose the right answer!');
                     } else {
                         document.getElementById('userForm').submit();
                     }
@@ -326,9 +333,16 @@
                     var inputB2Value = document.getElementById('choiceB2').value;
                     var inputC2Value = document.getElementById('choiceC2').value;
                     var inputD2Value = document.getElementById('choiceD2').value;
+                    var multipleChoiceA = document.getElementById("choiceA2button");
+                    var multipleChoiceB = document.getElementById("choiceB2button");
+                    var multipleChoiceC = document.getElementById("choiceC2button");
+                    var multipleChoiceD = document.getElementById("choiceD2button");
                     if (inputA2Value == '' || inputB2Value == '' || inputC2Value == '' ||
                         inputD2Value == '' || titleValue == '' || descriptionValue == '') {
                         alert('Please input all choices!');
+                    } else if (multipleChoiceA.checked == false && multipleChoiceB.checked == false &&
+                               multipleChoiceC.checked == false && multipleChoiceD.checked == false) {
+                        alert('Please choose at least one right answer!');
                     } else {
                         document.getElementById('userForm').submit();
                     }

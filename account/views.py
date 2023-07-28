@@ -207,13 +207,7 @@ def group_detail_page(request, group_name):
         else:
             return HttpResponseRedirect('/account/login/')
     elif request.method == 'POST':
-        if request.user.is_authenticated:
-            group_name = request.POST.get('exit')
-            group = Group.objects.get(name=group_name)
-            group.user_set.remove(request.user)
-            return HttpResponseRedirect('/account/')
-        else:
-            return HttpResponseRedirect('/account/login/')
+        pass
 
 
 def group_search_page(request):

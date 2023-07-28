@@ -43,6 +43,8 @@ class User(AbstractUser):
     wrong_problems = models.ManyToManyField("problem.Problem", blank=True)
     wrong_questions = models.ManyToManyField("problem.Question", blank=True)
 
+    finish_problems_cnt = models.IntegerField(default=0)
+
     def set_quote(self, quote):
         self.quote = quote
         self.save()

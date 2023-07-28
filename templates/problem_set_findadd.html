@@ -9,7 +9,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
 
-        <title>Problem List</title>
+        <title>Select Problem</title>
         <base href="/">
         <meta name="description" content="">
 
@@ -76,23 +76,21 @@
         <div class="pt4"></div>
 
         <div class="container pt3 pb3">
-        <h2 class="text--gray pb1 border--bottom">Problems</h2>
+        <h2 class="text--gray pb1 border--bottom">Select Problems</h2>
         </div>
 
         <form action="" method="POST" class="">
         <div class="container">
             <div class="grid-row">
                 <div class="grid-column span-6">
-                    <label>
-                        <input type="text" class="form-control" placeholder="Enter your search message" name="search_info">
-                    </label>
+                    <input class="form-control" placeholder="Enter your search message" name="search_info">
                 </div>
                 <div class="grid-column span-2">
                     <button type="submit" class="btn btn--outline">Search</button>
                 </div>
                 <div class="grid-column span-4">
                     <div class="select mb1">
-                        <select id="filter-set" onchange="showFilters()" name="is_op" >
+                        <select id="filter-set" onchange="showFilters()">
                             <option selected="selected" value="no">No Filters</option>
                             <option value="yes">Advanced Filters</option>
                         </select>
@@ -171,9 +169,11 @@
 
         <div class="pt1"></div>
 
+        <form action="" method="POST" class="">
         <table class="container border--top pt1 pb1">
             <tr><td>
             <div class="grid-row border--bottom">
+                <h4 class="grid-column span-1 bold text--darkest-gray">Choose</h4>
                 <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
                 <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
@@ -182,15 +182,26 @@
             </tr>
             {% for problem_info in problem_info_list %}
             <tr><td><div class="grid-row border--bottom pt1 pb1">
+                <input class="grid-column span-1" type="checkbox" name="choice{{ problem_info.ID }}" value="{{ option }}" />
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
-                <a class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</a>
+                <div class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</div>
                 <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</a>
+                <div class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</div>
             </div></td></tr>
             {% endfor %}
         </table>
+
+        {% comment %} a button to confirm {% endcomment %}
+        <div class="container pt2 pb2">
+            <div class="grid-row">
+                <div class="grid-column span-2">
+                    <button type="submit" class="btn btn--outline">Confirm</button>
+                </div>
+            </div>
+        </div>
+        </form>
 
         <script>
             function showFilters() {

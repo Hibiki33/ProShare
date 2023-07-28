@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from ProShare.settings import MEDIA_ROOT
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
@@ -15,9 +16,67 @@ import logging
 
 def problem_main_page(request):
     if request.method == 'GET':
-        return render(request, 'problem_list.html', {'problem_info_list': list_msg(request)})
+        return render(request, 'problem_list.html', {
+            'problem_info_list': list_msg(request)})
     elif request.method == 'POST':
-        pass
+        is_op = request.POST.get('is_op', 'no')
+
+        if is_op == 'yes':
+            info = request.POST.get('search_info', '')
+
+            order = request.POST.get('order', 'time')
+            question_type = request.POST.get('question_type', 'all')
+            question_diff = request.POST.get('question_diff', 'all')
+
+            tag1 = request.POST.get('tag1', 'all')
+            tag2 = request.POST.get('tag2', 'all')
+            tag3 = request.POST.get('tag3', 'all')
+            # _questions = Question.objects.all()
+            # questions = []
+            # for _q in _questions:
+            #     if tag1 != 'all' and tag1 not in _q.tags.all():
+            #         continue
+            #     if tag2 != 'all' and tag2 not in _q.tags.all():
+            #         continue
+            #     if tag3 != 'all' and tag3 not in _q.tags.all():
+            #         continue
+            #     questions.append(_q)
+            #
+            # questions = QuerySet(questions)
+
+            questions = Question.objects.all()
+            if tag1 != 'all':
+                questions = questions.filter(tags__name=tag1)
+            if tag2 != 'all':
+                questions = questions.filter(tags__name=tag2)
+            if tag3 != 'all':
+                questions = questions.filter(tags__name=tag3)
+
+            if not info:
+                return render(request, 'problem_list.html', {
+                    'problem_info_list': list_msg(request,
+                                                  questions=questions,
+                                                  order=order,
+                                                  difficulty=question_diff,
+                                                  type=question_type)})
+
+            return render(request, 'problem_list.html', {
+                'problem_info_list': list_msg(request,
+                                              questions=questions,
+                                              order=order,
+                                              difficulty=question_diff,
+                                              type=question_type,
+                                              search=info)})
+
+        elif is_op == 'no':
+            info = request.POST.get('search_info')
+
+            if not info:
+                return render(request, 'problem_list.html', {
+                    'problem_info_list': list_msg(request)})
+            return render(request, 'problem_list.html', {
+                'problem_info_list': list_msg(request,
+                                              search=info)})
 
 
 def problem_detail_page(request, id):
@@ -40,26 +99,40 @@ def problem_detail_page(request, id):
                 msg['Answer'] = ' '.join(choice)
                 msg['Correct'] = ' '.join(question.correct_options)
                 if set(choice) == set(question.correct_options):
-                    if request.user.is_wrong_question(question):
-                        request.user.remove_wrong_question(question)
+                    # maintain question related user information
+                    request.user.remove_wrong_question(question)
                     request.user.finish_questions_cnt += 1
                     request.user.save()
+
                     verdict = 'Accepted'
                     question.add_ac_number()
                 else:
+                    # maintain question related user information
                     request.user.add_wrong_question(question)
                     request.user.finish_questions_cnt += 1
                     request.user.wrong_questions_cnt += 1
                     request.user.save()
+
                     verdict = 'Wrong Answer'
             elif question.type == 'fill-blank':
                 answer = post.get('answer')
                 msg['Answer'] = answer
                 msg['Correct'] = question.answer
                 if answer == question.answer:
+                    # maintain question related user information
+                    request.user.remove_wrong_question(question)
+                    request.user.finish_questions_cnt += 1
+                    request.user.save()
+
                     verdict = 'Accepted'
                     question.add_ac_number()
                 else:
+                    # maintain question related user information
+                    request.user.add_wrong_question(question)
+                    request.user.finish_questions_cnt += 1
+                    request.user.wrong_questions_cnt += 1
+                    request.user.save()
+
                     verdict = 'Wrong Answer'
             else:
                 verdict = 'System Error'
@@ -216,3 +289,110 @@ def problem_upload_page(request):
         # TODO: 把 problems 里的问题存到数据库里
 
         return HttpResponse('Upload Success!')
+
+
+def problem_set_list_page(request):
+    if request.method == 'GET':
+        user = request.user
+        groups = user.groups.all()
+
+        problem_set_list = []
+        for group in groups:
+            problem_set_list.extend(group.question_sets.all())
+
+        problem_set_list = list(set(problem_set_list))
+
+        return render(request, 'problem_set_list.html', locals())
+
+    elif request.method == 'POST':
+        pass
+
+
+def problem_set_detail_page(request, set_id):
+    if request.method == 'GET':
+        if QuestionSet.objects.filter(id=set_id).exists():
+            question_set = QuestionSet.objects.get(id=set_id)
+            questions = question_set.get_questions()
+            problem_info_list = []
+            for question in questions:
+                problem_info_list.append(detail_msg(request, question._id))
+            return render(request, 'problem_set_detail.html', {
+                'name': question_set.name,
+                'problem_info_list': problem_info_list,
+                'modify': request.user.has_perm('problem.edit_question_set', question_set),
+            })
+        else:
+            return render(request, '404.html')
+
+    elif request.method == 'POST':
+        if request.POST.has_key('modify'):
+
+            pass
+        elif request.POST.has_key('submit'):
+            if QuestionSet.objects.filter(id=set_id).exists():
+                question_set = QuestionSet.objects.get(id=set_id)
+                questions = question_set.get_questions()
+                msgs = []
+                for question in questions:
+                    verdict = 'System Error'
+                    question.add_submission_number()
+                    msg = {}
+                    if question.type == 'single-choice' or question.type == 'multiple-choice':
+                        choice = request.POST.getlist('choice' + str(question._id))
+                        msg['Answer'] = ' '.join(choice)
+                        msg['Correct'] = ' '.join(question.correct_options)
+                        if set(choice) == set(question.correct_options):
+                            # maintain question related user information
+                            request.user.remove_wrong_question(question)
+                            request.user.finish_questions_cnt += 1
+                            request.user.save()
+
+                            verdict = 'Accepted'
+                            question.add_ac_number()
+
+                        else:
+                            # maintain question related user information
+                            request.user.add_wrong_question(question)
+                            request.user.finish_questions_cnt += 1
+                            request.user.wrong_questions_cnt += 1
+                            request.user.save()
+
+                            verdict = 'Wrong Answer'
+
+                    elif question.type == 'fill-blank':
+                        answer = request.POST.get('answer' + str(question._id))
+                        msg['Answer'] = answer
+                        msg['Correct'] = question.answer
+                        if answer == question.answer:
+                            # maintain question related user information
+                            request.user.remove_wrong_question(question)
+                            request.user.finish_questions_cnt += 1
+                            request.user.save()
+
+                            verdict = 'Accepted'
+                            question.add_ac_number()
+
+                        else:
+                            # maintain question related user information
+                            request.user.add_wrong_question(question)
+                            request.user.finish_questions_cnt += 1
+                            request.user.wrong_questions_cnt += 1
+                            request.user.save()
+
+                            verdict = 'Wrong Answer'
+
+                    else:
+                        verdict = 'System Error'
+                        return render(request, '404.html')
+
+                    msg['Verdict'] = verdict
+                    msg.update(detail_msg(request, question._id))
+
+                    msgs.append(msg)
+
+                return render(request, 'problem_set_result.html', {
+                    'problem_info_list': msgs,
+                })
+
+            else:
+                return render(request, '404.html')

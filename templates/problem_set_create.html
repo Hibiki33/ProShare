@@ -9,7 +9,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
 
-        <title>Problem List</title>
+        <title>Select Problem</title>
         <base href="/">
         <meta name="description" content="">
 
@@ -76,100 +76,49 @@
         <div class="pt4"></div>
 
         <div class="container pt3 pb3">
-        <h2 class="text--gray pb1 border--bottom">Problems</h2>
+        <h2 class="text--gray pb1 border--bottom">Problem Set</h2>
         </div>
 
         <form action="" method="POST" class="">
-        <div class="container">
+        <div class="container pb1">
             <div class="grid-row">
-                <div class="grid-column span-6">
-                    <label>
-                        <input type="text" class="form-control" placeholder="Enter your search message" name="search_info">
-                    </label>
+                <div class="grid-column span-8">
+                    <h4 class="bold text--darkest-gray">Set Name:</h4>
                 </div>
-                <div class="grid-column span-2">
-                    <button type="submit" class="btn btn--outline">Search</button>
+            </div>
+            <div class="grid-row">
+                <div class="grid-column">
+                    <input class="form-control" placeholder="Enter the group name" name="name" value="{{ name }}">
+                </div>
+            </div>
+            <div class="grid-row pt1">
+                <div class="grid-column span-8">
+                    <h4 class="bold text--darkest-gray">Choose the type of this question set:</h4>
                 </div>
                 <div class="grid-column span-4">
                     <div class="select mb1">
-                        <select id="filter-set" onchange="showFilters()" name="is_op" >
-                            <option selected="selected" value="no">No Filters</option>
-                            <option value="yes">Advanced Filters</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div style="display: none;" id="filter">
-            <div class="grid-row pt1">
-                <div class="grid-column">
-                    <div class="select mb1">
-                        <select name="order">
-                            <option selected="selected" value="time">Order By Time</option>
-                            <option value="difficulty">Order By Difficulty</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid-column">
-                    <div class="select mb1">
-                        <select id="question-type"  name="question_type">
-                            <option selected="selected" value="all">All Question Types</option>
-                            <option value="single-choice">Single Answer</option>
-                            <option value="multiple-choice">Multiple Answer</option>
-                            <option value="fill-blank">Fill the blank</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid-column">
-                    <div class="select mb1">
-                        <select id="question-diff" name="question_diff">
-                            <option selected="selected" value="all">All Difficulties</option>
-                            <option value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="hard">Hard</option>
-                            <option value="expert">Expert</option>
-                            <option value="master">Master</option>
-                            <option value="re_master">Re:Master</option>
+                        <select name="set_type">
+                            {% if isPublic %}
+                            <option selected="selected" value="public">Public</option>
+                            <option value="private">Private</option>
+                            {% else %}
+                            <option value="public">Public</option>
+                            <option selected="selected" value="private">Private</option>
+                            {% endif %}
                         </select>
                     </div>
                 </div>
             </div>
             <div class="grid-row pt1">
-                <div class="grid-column">
-                    <div class="select mb1">
-                        <select name="tag1">
-                            <option selected="selected" value="all">No Tag Filter</option>
-                            {% for tag in tag_list %}
-                            <option value="{{ tag }}">{{ tag }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <div class="grid-column span-8">
+                    <h4 class="bold text--darkest-gray">Questions in this set: </h4>
                 </div>
-                <div class="grid-column">
-                    <div class="select mb1">
-                        <select name="tag2">
-                            <option selected="selected" value="all">No Tag Filter</option>
-                            {% for tag in tag_list %}
-                            <option value="{{ tag }}">{{ tag }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <div class="grid-column span-2"></div>
+                <div class="grid-column span-1">
+                    <button class="btn btn--outline" type="submit" name="add">Add</button>
                 </div>
-                <div class="grid-column">
-                    <div class="select mb1">
-                        <select name="tag3">
-                            <option selected="selected" value="all">No Tag Filter</option>
-                            {% for tag in tag_list %}
-                            <option value="{{ tag }}">{{ tag }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-            </div>
             </div>
         </div>
-        </form>
-
-        <div class="pt1"></div>
 
         <table class="container border--top pt1 pb1">
             <tr><td>
@@ -178,19 +127,33 @@
                 <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
                 <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
                 <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
+                <div class="grid-column span-1 bold text--darkest-gray"></div>
+                <h4 class="grid-column span-1 bold text--darkest-gray">Remove</h4>
             </div></td>
             </tr>
             {% for problem_info in problem_info_list %}
             <tr><td><div class="grid-row border--bottom pt1 pb1">
                 <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
-                <a class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</a>
+                <div class="grid-column span-3 bold text--darkest-gray">{{ problem_info.Name }}</div>
                 <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</a>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag1 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag2 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.Tag3 }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray"></div>
+                <button class="grid-column span-1 bold text--darkest-gray btn btn--outline btn--sm link" type="submit" name="button{{ problem_info.ID }}">Remove</button>
             </div></td></tr>
             {% endfor %}
         </table>
+
+        {% comment %} a button to confirm {% endcomment %}
+        <div class="container pt2 pb2">
+            <div class="grid-row">
+                <div class="grid-column span-2">
+                    <button type="submit" class="btn btn--outline" name="confirm">Confirm</button>
+                </div>
+            </div>
+        </div>
+        </form>
 
         <script>
             function showFilters() {

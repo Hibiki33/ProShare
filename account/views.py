@@ -92,7 +92,7 @@ def register_page(request):
                                  password=password,
                                  email=email,
                                  quote=' ',
-                                 phone=' ',)
+                                 phone=' ', )
         return HttpResponseRedirect('/account/')
 
     return render(request, '404.html')
@@ -186,7 +186,8 @@ def home_page(request):
                 'quote': request.user.quote,
                 'groups': request.user.groups.all(),
                 'total_answered': total_answered,
-                'wrong_rate': format(total_wrong / total_answered * 100, '.2f') if total_answered != 0 else 0,
+                'wrong_rate': format((total_answered - total_wrong) / total_answered * 100, '.2f')
+                if total_answered != 0 else 0,
             })
         else:
             return HttpResponseRedirect('/account/login/')
@@ -241,7 +242,3 @@ def group_search_page(request):
 
         request.method = 'GET'
         return group_search_page(request)
-
-
-
-

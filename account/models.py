@@ -69,12 +69,14 @@ class User(AbstractUser):
         self.save()
 
     def remove_wrong_question(self, question):
-        self.wrong_questions.remove(question)
-        self.save()
+        if self.is_wrong_question(question):
+            self.wrong_questions.remove(question)
+            self.save()
 
     def remove_wrong_problem(self, problem):
-        self.wrong_problems.remove(problem)
-        self.save()
+        if self.is_wrong_problem(problem):
+            self.wrong_problems.remove(problem)
+            self.save()
 
     def get_wrong_questions(self):
         return self.wrong_questions.all()

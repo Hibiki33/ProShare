@@ -76,42 +76,37 @@
         <div class="pt4"></div>
 
         <div class="container pt3 pb3">
-        <h2 class="text--gray pb1 border--bottom">Problem Sets</h2>
-        </div>
-
-        <div class="container">
-            <div class="grid-row">
-                <div class="grid-column">
-                    <a><input class="form-control" placeholder="Enter your search message"></a>
-                </div>
-                <div class="grid-column">
-                    <a class="btn btn--outline" href="">Search</a>
-                </div>
-            </div>
+        <h2 class="text--gray pb1 border--bottom">My Problem Sets</h2>
         </div>
 
         <div class="pt1"></div>
 
-        <table class="container border--top pt1 pb1">
+         {% comment %} {% for ps in problem_set_list %}
+             <a>{{ ps.id }} {{ ps.name }} {{ ps.created_by }} {{ ps.belongs_to }}</a>
+             <button name="problem_set_detail" value="{{ ps.id }}">Detail</button>
+         {% endfor %} {% endcomment %}
+
+         <table class="container border--top pt1 pb1">
             <tr><td>
-            <a class="grid-row border--bottom link pt1 pb1" href="/polls">
-                <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
-                <h4 class="grid-column span-4 bold text--darkest-gray">Description</h4>
-                <h4 class="grid-column span-2 bold text--darkest-gray">Time</h4>
-                <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
-                <h4 class="grid-column span-2 bold text--darkest-gray">Uploader</h4>
-            </a></td>
+            <div class="grid-row border--bottom">
+                <h4 class="grid-column span-2 bold text--darkest-gray">ID</h4>
+                <h4 class="grid-column span-4 bold text--darkest-gray">Name</h4>
+                <h4 class="grid-column span-1 bold text--darkest-gray">Creator</h4>
+                <h4 class="grid-column span-1 bold text--darkest-gray">Owner</h4>
+                <h4 class="grid-column span-3 bold text--darkest-gray">Click For Detail</h4>
+            </div></td>
             </tr>
-            {% for problem_group in problem_group_list %}
-            <tr><td><a class="grid-row border--bottom link pt1 pb1" href={{ problem_group.link }}>
-                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_group.ID }}</div>
-                <div class="grid-column span-4 bold text--darkest-gray">{{ problem_group.Name }}</div>
-                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_group.Time }}</div>
-                <div class="grid-column span-2 bold {{ problem_group.text_color }} {{ problem_group.bg_color }}">{{ problem_group.Diff }}</div>
-                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_group.Uploader }}</div>
-            </a></td></tr>
+            {% for ps in problem_set_list %}
+            <tr><td><div class="grid-row border--bottom pt1 pb1">
+                <div class="grid-column span-2 bold text--darkest-gray">{{ ps.id }}</div>
+                <div class="grid-column span-4 bold text--darkest-gray">{{ ps.name }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ ps.created_by }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ ps.belongs_to }}</div>
+                <a class="grid-column span-1 bold text--darkest-gray btn btn--outline btn--sm link" href="/problem/set/{{ ps.id }}">Exercise</a>
+            </div></td></tr>
             {% endfor %}
         </table>
+
 
     </body>
 </html>

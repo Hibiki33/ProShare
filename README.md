@@ -87,3 +87,15 @@ Create a superuser:
 ```shell
 python manage.py createsuperuser
 ```
+
+## Contributors
+
+Front-end:
+
+- [jayfeather9](https://github.com/jayfeather9)
+- [Yttrin](https://github.com/Yttrin)
+
+Back-end:
+
+- [Pro-jekt-Red](https://github.com/Pro-jekt-Red)
+- [Hibiki33](https://github.com/Hibiki33)

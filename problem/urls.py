@@ -10,9 +10,9 @@ urlpatterns = [
     path('upload/', views.problem_upload_page),
     path('set/', views.problem_set_list_page),
     path('set/<int:set_id>/', views.problem_set_detail_page),
-    # path('set/<int:set_id>/modify/', ),
+    path('set/<int:set_id>/modify/', views.problem_set_modify_page),
     # path('set/<int:set_id>/modify/add/', ),
     # path('set/<int:set_id>/result/', ),
     path('set/create/', views.problem_set_create_page),
-    path('set/create/add', views.problem_set_add_page),
+    # path('set/create/add', views.problem_set_add_page),
 ]

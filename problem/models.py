@@ -89,6 +89,42 @@ class QuestionSet(models.Model):
         )
 
 
+class TempQuestionSet(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=128, null=True)
+
+    group_name = models.CharField(max_length=128, null=True)
+    questions = models.ManyToManyField(Question)
+
+    def add_question(self, question):
+        self.questions.add(question)
+        self.save(update_fields=["questions"])
+
+    def add_questions(self, questions):
+        for question in questions:
+            self.add_question(question)
+        self.save(update_fields=["questions"])
+
+    def remove_question(self, question):
+        self.questions.remove(question)
+        self.save(update_fields=["questions"])
+
+    def remove_questions(self, questions):
+        for question in questions:
+            self.remove_question(question)
+        self.save(update_fields=["questions"])
+
+    def get_questions(self):
+        return self.questions.all()
+
+    class Meta:
+        default_permissions = ()
+        permissions = (
+            ("view_question_set", "Can view question_set"),
+            ("edit_question_set", "Can edit question_set"),
+        )
+
+
 class QuestionTag(models.Model):
     name = models.CharField(max_length=128)
     questions = models.ManyToManyField(Question)

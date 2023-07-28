@@ -82,7 +82,7 @@ def problem_main_page(request):
 def problem_detail_page(request, id):
     if request.method == 'GET':
         try:
-            return render(request, 'problem_detail.html', {'problem_info': detail_msg(request, id)})       
+            return render(request, 'problem_detail.html', {'problem_info': detail_msg(request, id)})
         except:
             return render(request, '404.html')
     elif request.method == 'POST':
@@ -329,10 +329,10 @@ def problem_set_detail_page(request, set_id):
             return render(request, '404.html')
 
     elif request.method == 'POST':
-        if request.POST.has_key('modify'):
+        if 'modify' in request.POST.keys():
 
             pass
-        elif request.POST.has_key('submit'):
+        elif 'submit' in request.POST.keys():
             if QuestionSet.objects.filter(id=set_id).exists():
                 question_set = QuestionSet.objects.get(id=set_id)
                 questions = question_set.get_questions()
@@ -402,22 +402,58 @@ def problem_set_detail_page(request, set_id):
                 return render(request, '404.html')
 
 
-def problem_set_create_page(request):
+def problem_set_create_page(request, temp_set_id=None):
     if request.method == 'GET':
-        question_set = QuestionSet.objects.create(
-            name=None,
-            created_by=request.user,
-            belongs_to=None,)
+        if temp_set_id is None:
+            temp_question_set = TempQuestionSet.objects.create(
+                name=None,
+                group_name='public', )
+        else:
+            temp_question_set = QuestionSet.objects.get(id=temp_set_id)
 
-
+        questions = temp_question_set.get_questions()
 
         return render(request, 'problem_set_create.html', {
-            'id': question_set.id,
+            'id': temp_question_set.id,
+            'name': temp_question_set.name,
             'groups': request.user.groups.all(),
-            })
+            'problem_info_list': list_msg(request, questions=questions),
+        })
 
     elif request.method == 'POST':
-        if request.POST.has_key('add'):
-            pass
-        elif request.POST.has_key('confirm'):
-            pass
+        question_set_name = request.POST.get('name')
+        group_name = request.POST.get('set_type', 'public')
+
+        temp_id = request.POST.get('id')
+        temp_question_set = TempQuestionSet.objects.get(id=temp_id)
+
+        if group_name != 'public':
+            temp_question_set.group_name = group_name
+            temp_question_set.save()
+
+        if 'add' in request.POST.keys():
+            if question_set_name:
+                temp_question_set.name = question_set_name
+                temp_question_set.save()
+
+            return HttpResponseRedirect('/problem/set/create/add', {
+                'id': temp_id,
+                'mode': 'create',
+            })
+        elif 'confirm' in request.POST.keys():
+            if question_set_name:
+                temp_question_set.name = question_set_name
+                temp_question_set.save()
+            else:
+                messages.error(request, 'Question Set\'s name cannot be empty!')
+                request.method = 'GET'
+                return problem_set_create_page(request, temp_id)
+
+
+
+            return HttpResponseRedirect('/problem/set/')
+
+
+def problem_set_add_page(request):
+
+    return render(request, 'problem_set_findadd.html')

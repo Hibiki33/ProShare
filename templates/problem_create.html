@@ -194,6 +194,39 @@
                             <p class="text--gray pt2 pb1 italic">(Input the right answer)</p>
                             <input id="question_answer" type="question_answer" name="question_answer" placeholder="The answer to the question." class="form-control"/>
                         </div>
+                        <p class="text--gray pt2 pb1 italic">(Choose the tags for this problem or leave as none)</p>
+                        <div class="grid-row">
+                            <div class="grid-column">
+                                <div class="select mb1">
+                                    <select name="tag1">
+                                        <option selected="selected" value="none">No Tag</option>
+                                        {% for tag in tag_list %}
+                                        <option value="{{ tag }}">{{ tag }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid-column">
+                                <div class="select mb1">
+                                    <select name="tag2">
+                                        <option selected="selected" value="none">No Tag</option>
+                                        {% for tag in tag_list %}
+                                        <option value="{{ tag }}">{{ tag }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid-column">
+                                <div class="select mb1">
+                                    <select name="tag3">
+                                        <option selected="selected" value="none">No Tag</option>
+                                        {% for tag in tag_list %}
+                                        <option value="{{ tag }}">{{ tag }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="pt3">
                             <button type="button" class="btn btn--outline" onclick="submitForm()">Submit</button>
                         </div>

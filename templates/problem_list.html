@@ -60,16 +60,93 @@
         <h2 class="text--gray pb1 border--bottom">Problems</h2>
         </div>
 
+        <form action="" method="POST" class="">
         <div class="container">
             <div class="grid-row">
-                <div class="grid-column">
+                <div class="grid-column span-6">
                     <a><input class="form-control" placeholder="Enter your search message"></a>
                 </div>
-                <div class="grid-column">
+                <div class="grid-column span-2">
                     <a class="btn btn--outline" href="">Search</a>
                 </div>
+                <div class="grid-column span-4">
+                    <div class="select mb1">
+                        <select id="filter-set" onchange="showFilters()">
+                            <option selected="selected" value="no">No Filters</option>
+                            <option value="yes">Advanced Filters</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div style="display: none;" id="filter">
+            <div class="grid-row pt1">
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select name="order">
+                            <option selected="selected" value="time">Order By Time</option>
+                            <option value="difficulty">Order By Difficulty</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select id="question-type"  name="question_type">
+                            <option selected="selected" value="all">All Question Types</option>
+                            <option value="single-choice">Single Answer</option>
+                            <option value="multiple-choice">Multiple Answer</option>
+                            <option value="fill-blank">Fill the blank</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select id="question-diff" name="question_diff">
+                            <option selected="selected" value="all">All Difficulties</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                            <option value="expert">Expert</option>
+                            <option value="master">Master</option>
+                            <option value="re_master">Re:Master</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-row pt1">
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select name="tag1">
+                            <option selected="selected" value="all">No Tag Filter</option>
+                            {% for tag in tag_list %}
+                            <option value="{{ tag }}">{{ tag }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select name="tag2">
+                            <option selected="selected" value="all">No Tag Filter</option>
+                            {% for tag in tag_list %}
+                            <option value="{{ tag }}">{{ tag }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-column">
+                    <div class="select mb1">
+                        <select name="tag3">
+                            <option selected="selected" value="all">No Tag Filter</option>
+                            {% for tag in tag_list %}
+                            <option value="{{ tag }}">{{ tag }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
+        </form>
 
         <div class="pt1"></div>
 
@@ -93,6 +170,18 @@
             </div></td></tr>
             {% endfor %}
         </table>
+
+        <script>
+            function showFilters() {
+                var filterSet = document.getElementById("filter-set");
+                var filter = document.getElementById("filter");
+                if (filterSet.value == "yes") {
+                    filter.style.display = "block";
+                } else {
+                    filter.style.display = "none";
+                }
+            }
+        </script>
 
     </body>
 </html>

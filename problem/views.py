@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from ProShare.settings import MEDIA_ROOT
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
@@ -15,9 +16,67 @@ import logging
 
 def problem_main_page(request):
     if request.method == 'GET':
-        return render(request, 'problem_list.html', {'problem_info_list': list_msg(request)})
+        return render(request, 'problem_list.html', {
+            'problem_info_list': list_msg(request)})
     elif request.method == 'POST':
-        print(11111111111111111111111)
+        is_op = request.POST.get('is_op', 'no')
+
+        if is_op == 'yes':
+            info = request.POST.get('search_info', '')
+
+            order = request.POST.get('order', 'time')
+            question_type = request.POST.get('question_type', 'all')
+            question_diff = request.POST.get('question_diff', 'all')
+
+            tag1 = request.POST.get('tag1', 'all')
+            tag2 = request.POST.get('tag2', 'all')
+            tag3 = request.POST.get('tag3', 'all')
+            # _questions = Question.objects.all()
+            # questions = []
+            # for _q in _questions:
+            #     if tag1 != 'all' and tag1 not in _q.tags.all():
+            #         continue
+            #     if tag2 != 'all' and tag2 not in _q.tags.all():
+            #         continue
+            #     if tag3 != 'all' and tag3 not in _q.tags.all():
+            #         continue
+            #     questions.append(_q)
+            #
+            # questions = QuerySet(questions)
+
+            questions = Question.objects.all()
+            if tag1 != 'all':
+                questions = questions.filter(tags__name=tag1)
+            if tag2 != 'all':
+                questions = questions.filter(tags__name=tag2)
+            if tag3 != 'all':
+                questions = questions.filter(tags__name=tag3)
+
+            if not info:
+                return render(request, 'problem_list.html', {
+                    'problem_info_list': list_msg(request,
+                                                  questions=questions,
+                                                  order=order,
+                                                  difficulty=question_diff,
+                                                  type=question_type)})
+
+            return render(request, 'problem_list.html', {
+                'problem_info_list': list_msg(request,
+                                              questions=questions,
+                                              order=order,
+                                              difficulty=question_diff,
+                                              type=question_type,
+                                              search=info)})
+
+        elif is_op == 'no':
+            info = request.POST.get('search_info')
+
+            if not info:
+                return render(request, 'problem_list.html', {
+                    'problem_info_list': list_msg(request)})
+            return render(request, 'problem_list.html', {
+                'problem_info_list': list_msg(request,
+                                              search=info)})
 
 
 def problem_detail_page(request, id):

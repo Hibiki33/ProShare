@@ -37,8 +37,9 @@ def problem_detail_page(request, id):
                 msg['Answer'] = ' '.join(choice)
                 msg['Correct'] = ' '.join(question.correct_options)
                 if set(choice) == set(question.correct_options):
-                    if request.user.is_wrong_question(question):
-                        request.user.remove_wrong_question(question)
+                    # if request.user.is_wrong_question(question):
+                    #     request.user.remove_wrong_question(question)
+                    request.user.remove_wrong_question(question)
                     request.user.finish_questions_cnt += 1
                     request.user.save()
                     verdict = 'Accepted'

@@ -107,9 +107,13 @@
                             <option selected="selected" value="private">Private</option>
                             {% endif %}
                             -->
-                            <option value="public">public</option>
+                            {% if belongs_to == 'public' %}
+                            <option selected="selected" value="public">public</option>
+                            {% endif %}
                             {% for group in groups %}
+                            {% if group.name == belongs_to %}
                             <option value="{{ group.name }}">{{ group.name }}</option>
+                            {% endif %}
                             {% endfor %}
                         </select>
                     </div>

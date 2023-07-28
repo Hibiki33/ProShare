@@ -117,6 +117,7 @@
 
         <div class="container--lg pt1 pb1">
             <form action="" method="POST" class="">
+            {% if problem_info_list %}
             {% for problem_info in problem_info_list %}
             <div class="grid-row pt4">
                 <div class="grid-column">
@@ -203,6 +204,13 @@
                 </div>
             </div>
             {% endfor %}
+            {% else %}
+            <div class="grid-row pt1 pb1">
+                <div class="grid-column">
+                    <p class="text--gray">No problem is currently in this set.</p>
+                </div>
+            </div>
+            {% endif %}
             <div style="text-align: center" class="pt2">
                 <button type="submit" class="btn btn--outline" name="submit">Submit</button>
             </div>

@@ -37,6 +37,18 @@
             .liRight {
                 
             }
+            .redColor {
+                color: #ff0000;
+            }
+            .greenColor {
+                color: 	#24ce15;
+            }
+            .none {text-decoration: none}
+            .underline {text-decoration: underline}
+            .overline {text-decoration: overline}
+            .line-through {text-decoration: line-through}
+            .blink {text-decoration: blink}
+            .inherit {text-decoration: inherit}
         </style>
     </head>
 
@@ -145,12 +157,9 @@
                     </div>
                     <div class="pt1">
                         <a class="pt1">Correct answer is: </a>
-                        <a class="pt1 underline greenColor">{{ problem_info.Correct }}</p>
+                        <a class="pt1 underline greenColor">{{ problem_info.Correct }}</a>
                     </div>
                     {% endif %}
-                    <div style="text-align: center">
-                        <a type="button" class="btn btn--outline" href="/problem/">Back</a>
-                    </div>
                 </div>
 
                 
@@ -196,7 +205,7 @@
 
             <p class="pt1">
                 <span class="text--gray bold">You have passed: </span>
-                <span class="text--gray">{{ problem_info.ResultStr }}</span>
+                <span class="text--gray">{{ ResultStr }}</span>
             </p>
             <div style="text-align: center" class="pt2">
                 <a type="button" class="btn btn--outline" href="/problem/set/">Back</a>

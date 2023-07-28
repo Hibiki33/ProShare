@@ -62,21 +62,21 @@ class QuestionSet(models.Model):
 
     def add_question(self, question):
         self.questions.add(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     def add_questions(self, questions):
         for question in questions:
             self.add_question(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     def remove_question(self, question):
         self.questions.remove(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     def remove_questions(self, questions):
         for question in questions:
             self.remove_question(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     def get_questions(self):
         return self.questions.all()
@@ -98,21 +98,21 @@ class QuestionSet(models.Model):
 #
 #     def add_question(self, question):
 #         self.questions.add(question)
-#         self.save(update_fields=["questions"])
+#         self.save()
 #
 #     def add_questions(self, questions):
 #         for question in questions:
 #             self.add_question(question)
-#         self.save(update_fields=["questions"])
+#         self.save()
 #
 #     def remove_question(self, question):
 #         self.questions.remove(question)
-#         self.save(update_fields=["questions"])
+#         self.save()
 #
 #     def remove_questions(self, questions):
 #         for question in questions:
 #             self.remove_question(question)
-#         self.save(update_fields=["questions"])
+#         self.save()
 #
 #     def get_questions(self):
 #         return self.questions.all()
@@ -131,7 +131,7 @@ class QuestionTag(models.Model):
 
     def add_question(self, question):
         self.questions.add(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     # class Meta:
     #     db_table = "question_tag"

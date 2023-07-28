@@ -332,12 +332,13 @@ def problem_set_detail_page(request, set_id):
 
     elif request.method == 'POST':
         if 'modify' in request.POST.keys():
-
-            pass
+            return HttpResponseRedirect('/problem/set/' + str(set_id) + '/modify/')
         elif 'submit' in request.POST.keys():
             if QuestionSet.objects.filter(id=set_id).exists():
                 question_set = QuestionSet.objects.get(id=set_id)
                 questions = question_set.get_questions()
+                cur_finished_cnt = 0
+                cur_correct_cnt = 0
                 msgs = []
                 for question in questions:
                     verdict = 'System Error'
@@ -352,6 +353,8 @@ def problem_set_detail_page(request, set_id):
                             request.user.remove_wrong_question(question)
                             request.user.finish_questions_cnt += 1
                             request.user.save()
+                            cur_finished_cnt += 1
+                            cur_correct_cnt += 1
 
                             verdict = 'Accepted'
                             question.add_ac_number()
@@ -362,6 +365,7 @@ def problem_set_detail_page(request, set_id):
                             request.user.finish_questions_cnt += 1
                             request.user.wrong_questions_cnt += 1
                             request.user.save()
+                            cur_finished_cnt += 1
 
                             verdict = 'Wrong Answer'
 
@@ -374,6 +378,8 @@ def problem_set_detail_page(request, set_id):
                             request.user.remove_wrong_question(question)
                             request.user.finish_questions_cnt += 1
                             request.user.save()
+                            cur_finished_cnt += 1
+                            cur_correct_cnt += 1
 
                             verdict = 'Accepted'
                             question.add_ac_number()
@@ -384,6 +390,7 @@ def problem_set_detail_page(request, set_id):
                             request.user.finish_questions_cnt += 1
                             request.user.wrong_questions_cnt += 1
                             request.user.save()
+                            cur_finished_cnt += 1
 
                             verdict = 'Wrong Answer'
 
@@ -398,6 +405,7 @@ def problem_set_detail_page(request, set_id):
 
                 return render(request, 'problem_set_result.html', {
                     'problem_info_list': msgs,
+                    'ResultStr': f"{cur_correct_cnt}/{cur_finished_cnt}"
                 })
 
             else:
@@ -422,11 +430,12 @@ def problem_set_create_page(request):
         #     'problem_info_list': list_msg(request, questions=questions),
         # })
 
-        return render(request, 'problem_set_create.html')
+        return render(request, 'problem_set_create.html', {'groups': request.user.groups.all()})
 
     elif request.method == 'POST':
         question_set_name = request.POST.get('name')
         group_name = request.POST.get('set_type', 'public')
+        print("\n\n\n\n\nGROUP_NAME:", group_name)
 
         if not question_set_name:
             messages.error(request, 'Question Set\'s name cannot be empty!')
@@ -438,7 +447,7 @@ def problem_set_create_page(request):
             created_by=request.user
         )
 
-        return HttpResponseRedirect('/problem/set/' + str(question_set.id) + '/' + 'modify/')
+        return HttpResponseRedirect('/problem/set/' + str(question_set.id) + '/' + 'modify/add')
 
         # temp_id = request.POST.get('id')
         # temp_question_set = TempQuestionSet.objects.get(id=temp_id)
@@ -476,7 +485,7 @@ def problem_set_modify_page(request, set_id):
         questions = question_set.get_questions()
         return render(request, 'problem_set_modify.html', {
             'name': question_set.name,
-            'set_type': question_set.belongs_to.name if question_set.belongs_to else 'public',
+            'belongs_to': question_set.belongs_to.name if question_set.belongs_to else 'public',
             'groups': request.user.groups.all(),
             'problem_info_list': list_msg(request, questions=questions),
         })
@@ -498,7 +507,7 @@ def problem_set_modify_page(request, set_id):
             question_set.belongs_to = Group.objects.get(name=group_name) if group_name != 'public' else None
             question_set.save()
 
-            return HttpResponseRedirect('/problem/' + str(set_id) + '/')
+            return HttpResponseRedirect('/problem/set/' + str(set_id) + '/')
 
         elif 'add' in request.POST.keys():
             return HttpResponseRedirect('/problem/set/' + str(set_id) + '/modify/add/')
@@ -568,3 +577,5 @@ def problem_set_modify_add_page(request, set_id):
                 return render(request, 'problem_set_findadd.html', {
                     'problem_info_list': list_msg(request,
                                                   search=info)})
+        elif 'confirm' in request.POST.keys():
+            return HttpResponseRedirect('/problem/set/' + str(set_id) + '/modify/')

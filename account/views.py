@@ -172,6 +172,9 @@ def edit_page(request):
 def home_page(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
+            # test if wrong questions can be got
+            # for q in request.user.wrong_questions.all():
+            #     print(q.title)
             return render(request, 'home.html', {
                 'username': request.user.username,
                 'email': request.user.email,

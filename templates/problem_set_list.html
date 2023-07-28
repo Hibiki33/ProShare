@@ -77,9 +77,17 @@
 
         <div class="container pt3 pb3">
         <h2 class="text--gray pb1 border--bottom">My Problem Sets</h2>
+        <form>
+            <div class="pt1 pb1">
+                <button type="submit" name="create">create a new one.</button>
+            </div>
+        </form>
         </div>
 
         <div class="pt1"></div>
+
+        
+
 
          {% comment %} {% for ps in problem_set_list %}
              <a>{{ ps.id }} {{ ps.name }} {{ ps.created_by }} {{ ps.belongs_to }}</a>

@@ -8,7 +8,7 @@ urlpatterns = [
     path("<int:id>/", views.problem_detail_page),
     path('create/', views.problem_create_page),
     path('upload/', views.problem_upload_page),
-    path('set/', view.problem_set_list_pagr),
+    path('set/', views.problem_set_list_page),
     # path('set/<int:set_id>/', ),
     # path('set/<int:set_id>/modify/', ),
     # path('set/<int:set_id>/modify/add/', ),

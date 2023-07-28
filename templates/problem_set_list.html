@@ -76,31 +76,16 @@
         <div class="pt4"></div>
 
         <div class="container pt3 pb3">
-        <h2 class="text--gray pb1 border--bottom">Problem Sets</h2>
+        <h2 class="text--gray pb1 border--bottom">My Problem Sets</h2>
         </div>
 
         <div class="pt1"></div>
 
-        <table class="container border--top pt1 pb1">
-            <tr><td>
-            <div class="grid-row border--bottom">
-                <h4 class="grid-column span-1 bold text--darkest-gray">ID</h4>
-                <h4 class="grid-column span-3 bold text--darkest-gray">Name</h4>
-                <h4 class="grid-column span-2 bold text--darkest-gray">Difficulty</h4>
-                <h4 class="grid-column span-3 bold text--darkest-gray">Tags</h4>
-            </div></td>
-            </tr>
-            {% for problem_info in problem_info_list %}
-            <tr><td><div class="grid-row border--bottom pt1 pb1">
-                <div class="grid-column span-1 bold text--darkest-gray">{{ problem_info.ID }}</div>
-                <a class="grid-column span-3 bold text--darkest-gray link"  href="/problem/{{ problem_info.ID }}">{{ problem_info.Name }}</a>
-                <div class="grid-column span-2 bold text--darkest-gray">{{ problem_info.Diff }}</div>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag1 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag2 }}</a>
-                <a class="grid-column span-1 bold text--darkest-gray link" href="">{{ problem_info.Tag3 }}</a>
-            </div></td></tr>
-            {% endfor %}
-        </table>
+         {% for ps in problem_set_list %}
+             <a>{{ ps.id }} {{ ps.name }} {{ ps.created_by }} {{ ps.belongs_to }}</a>
+             <button name="problem_set_detail" value="{{ ps.id }}">Detail</button>
+        {% endfor %}
+
 
     </body>
 </html>

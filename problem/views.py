@@ -290,6 +290,16 @@ def problem_upload_page(request):
 
 def problem_set_list_page(request):
     if request.method == 'GET':
-        pass
+        user = request.user
+        groups = user.groups.all()
+
+        problem_set_list = []
+        for group in groups:
+            problem_set_list.extend(group.question_sets.all())
+
+        problem_set_list = list(set(problem_set_list))
+
+        return render(request, 'problem_set_list.html', locals())
+
     elif request.method == 'POST':
         pass

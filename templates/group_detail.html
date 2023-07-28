@@ -58,7 +58,7 @@
 
         <div class="container pt3 pb3">
         <h2 class="text--gray pb1 border--bottom">{{ group_name }}</h2>
-        </div>
+        
 
         {% comment %} <div class="container">
             <div class="grid-row">
@@ -75,7 +75,7 @@
         <p class="text--gray pt1 pb1">Group Description: {{ group_info.Description }}</p> {% endcomment %}
 
         {% comment %} group problem lists {% endcomment %}
-        <h3 class="text--gray italic pb1">Group Problem Sets:</h3>
+        <h3 class="text--gray bold pb1 pt2">Group Problem Sets:</h3>
 
         <table class="border--top border--bottom pt1 pb1">
             <tr><td>
@@ -93,6 +93,7 @@
             </div></td></tr>
             {% endfor %}
         </table>
+    </div>
 
         {% comment %} <h3 class="text--gray italic pb1 pt2">Group Members:</h3>
 

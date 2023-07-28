@@ -93,7 +93,7 @@
                         <ol type="A" start="" class="" >
                         {% for option in problem_info.Options %}
                             <div class="grid-row">
-                            <input class="grid-column-left span-1" type="radio" name="choice" value={{ option }} />
+                            <input class="grid-column-left span-1" type="radio" name="choice" value="{{ option }}" />
                             <div class="grid-column-left span-1"></div>
                             <li class="grid-column-left span-10">{{ option }}</li>
                             </div>
@@ -106,7 +106,7 @@
                         <ol type="A" start="" class="" >
                             {% for option in problem_info.Options %}
                             <div class="grid-row">
-                            <input class="grid-column-left span-1" type="checkbox" name="choice" value={{ option }} />
+                            <input class="grid-column-left span-1" type="checkbox" name="choice" value="{{ option }}" />
                             <div class="grid-column-left span-1"></div>
                             <li class="grid-column-left span-10">{{ option }}</li>
                             </div>

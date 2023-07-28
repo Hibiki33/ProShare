@@ -40,6 +40,9 @@ class User(AbstractUser):
     phone = RichTextField(max_length=11, null=True, blank=True)
     quote = models.TextField(max_length=128, null=True, blank=True)
 
+    wrong_problems = models.ManyToManyField("problem.Problem", blank=True)
+    wrong_questions = models.ManyToManyField("problem.Question", blank=True)
+
     def set_quote(self, quote):
         self.quote = quote
         self.save()

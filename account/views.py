@@ -183,6 +183,8 @@ def home_page(request):
                 'phone': request.user.phone,
                 'quote': request.user.quote,
                 'groups': request.user.groups.all(),
+                'total_answered': request.user.finish_problems_cnt,
+                'total_wrong': request.user.wrong_questions.count(),
             })
         else:
             return HttpResponseRedirect('/account/login/')

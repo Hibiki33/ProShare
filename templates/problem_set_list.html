@@ -81,10 +81,31 @@
 
         <div class="pt1"></div>
 
-         {% for ps in problem_set_list %}
+         {% comment %} {% for ps in problem_set_list %}
              <a>{{ ps.id }} {{ ps.name }} {{ ps.created_by }} {{ ps.belongs_to }}</a>
              <button name="problem_set_detail" value="{{ ps.id }}">Detail</button>
-         {% endfor %}
+         {% endfor %} {% endcomment %}
+
+         <table class="container border--top pt1 pb1">
+            <tr><td>
+            <div class="grid-row border--bottom">
+                <h4 class="grid-column span-2 bold text--darkest-gray">ID</h4>
+                <h4 class="grid-column span-4 bold text--darkest-gray">Name</h4>
+                <h4 class="grid-column span-1 bold text--darkest-gray">Creator</h4>
+                <h4 class="grid-column span-1 bold text--darkest-gray">Owner</h4>
+                <h4 class="grid-column span-3 bold text--darkest-gray">Click For Detail</h4>
+            </div></td>
+            </tr>
+            {% for ps in problem_set_list %}
+            <tr><td><div class="grid-row border--bottom pt1 pb1">
+                <div class="grid-column span-2 bold text--darkest-gray">{{ ps.id }}</div>
+                <div class="grid-column span-4 bold text--darkest-gray">{{ ps.name }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ ps.created_by }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">{{ ps.belongs_to }}</div>
+                <button class="grid-column span-1 bold text--darkest-gray btn btn--outline btn--sm" name="problem_set_detail" value="{{ ps.id }}">Detail</button>
+            </div></td></tr>
+            {% endfor %}
+        </table>
 
 
     </body>

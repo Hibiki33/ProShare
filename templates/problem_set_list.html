@@ -102,7 +102,7 @@
                 <div class="grid-column span-4 bold text--darkest-gray">{{ ps.name }}</div>
                 <div class="grid-column span-1 bold text--darkest-gray">{{ ps.created_by }}</div>
                 <div class="grid-column span-1 bold text--darkest-gray">{{ ps.belongs_to }}</div>
-                <button class="grid-column span-1 bold text--darkest-gray btn btn--outline btn--sm" name="problem_set_detail" value="{{ ps.id }}">Detail</button>
+                <a class="grid-column span-1 bold text--darkest-gray btn btn--outline btn--sm link" href="/problem/set/{{ ps.id }}">Exercise</a>
             </div></td></tr>
             {% endfor %}
         </table>

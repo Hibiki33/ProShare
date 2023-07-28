@@ -57,6 +57,28 @@ class User(AbstractUser):
     def get_phone(self):
         return self.phone
 
+    def add_wrong_question(self, question):
+        self.wrong_questions.add(question)
+        self.save(update_fields=["wrong_questions"])
+
+    def add_wrong_problem(self, problem):
+        self.wrong_problems.add(problem)
+        self.save(update_fields=["wrong_problems"])
+
+    def rm_wrong_question(self, question):
+        self.wrong_questions.remove(question)
+        self.save(update_fields=["wrong_questions"])
+
+    def rm_wrong_problem(self, problem):
+        self.wrong_problems.remove(problem)
+        self.save(update_fields=["wrong_problems"])
+
+    def get_wrong_questions(self):
+        return self.wrong_questions.all()
+
+    def get_wrong_problems(self):
+        return self.wrong_problems.all()
+
     class Meta(AbstractUser.Meta):
         swappable = "AUTH_USER_MODEL"
 

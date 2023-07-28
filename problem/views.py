@@ -17,7 +17,7 @@ def problem_main_page(request):
     if request.method == 'GET':
         return render(request, 'problem_list.html', {'problem_info_list': list_msg(request)})
     elif request.method == 'POST':
-        pass
+        print(11111111111111111111111)
 
 
 def problem_detail_page(request, id):

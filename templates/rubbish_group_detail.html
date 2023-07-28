@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Group {{ group_name }}</title>
+</head>
+<body>
+    <h1>Group Name: {{ group_name }}</h1>
+    <h2>Group Question Sets:</h2><br>
+    {% for qs in group_question_sets %}
+        <li>Question Set ID: {{ qs.id }}<br> Question Set Name: {{ qs.name }}<br> Question Set Creator:{{ qs.created_by }}<br></li>
+    {% endfor %}
+</body>
+</html>

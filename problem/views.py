@@ -1,4 +1,5 @@
 from django.db.models import QuerySet
+from guardian.shortcuts import assign_perm
 from ProShare.settings import MEDIA_ROOT
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
@@ -296,12 +297,17 @@ def problem_set_list_page(request):
         user = request.user
         groups = user.groups.all()
 
+        # check the user's perm to view
+        # instead of check the attribute of 'belongs_to'
         problem_set_list = []
-        for group in groups:
-            problem_set_list.extend(group.question_sets.all())
-
+        # for group in groups:
+        #     problem_set_list.extend(group.question_sets.all())
+        #
+        # for question_set in QuestionSet.objects.all():
+        #     if question_set.belongs_to is None:
+        #         problem_set_list.append(question_set)
         for question_set in QuestionSet.objects.all():
-            if question_set.belongs_to is None:
+            if user.has_perm('problem.view_question_set', question_set):
                 problem_set_list.append(question_set)
 
         problem_set_list = list(set(problem_set_list))
@@ -435,7 +441,7 @@ def problem_set_create_page(request):
     elif request.method == 'POST':
         question_set_name = request.POST.get('name')
         group_name = request.POST.get('set_type', 'public')
-        print("\n\n\n\n\nGROUP_NAME:", group_name)
+        # print("\n\n\n\n\nGROUP_NAME:", group_name)
 
         if not question_set_name:
             messages.error(request, 'Question Set\'s name cannot be empty!')
@@ -446,6 +452,16 @@ def problem_set_create_page(request):
             belongs_to=Group.objects.get(name=group_name) if group_name != 'public' else None,
             created_by=request.user
         )
+
+        # assign the perm to user and group
+        # the creator should have the perm to edit
+        assign_perm('problem.edit_question_set', request.user, question_set)
+        # the certain group should have the perm to view (or public)
+        if group_name == 'public':
+            for group in Group.objects.all():
+                assign_perm('problem.view_question_set', group, question_set)
+        else:
+            assign_perm('problem.view_question_set', Group.objects.get(name=group_name), question_set)
 
         return HttpResponseRedirect('/problem/set/' + str(question_set.id) + '/' + 'modify/add')
 

@@ -83,18 +83,24 @@
 
         <form method="post">
         <table class="container border--top pt1 pb1">
-            {% for item in punlum_items %}
             <tr><td><div class="grid-row border--bottom pt2 pb1">
+                <div class="grid-column span-2 bold text--darkest-gray">ID</div>
+                <div class="grid-column span-4 bold text--darkest-gray">Title</div>
+                <div class="grid-column span-3 bold text--darkest-gray">Difficulty</div>
+                <div class="grid-column span-3 bold text--darkest-gray">Click to Save Note</div>
+            </div></td></tr>
+            {% for item in punlum_items %}
+            <tr><td><div class="grid-row pt1 pb1">
                 <div class="grid-column span-2 bold text--darkest-gray">{{ item.id }}</div>
                 <a class="grid-column span-4 bold text--darkest-gray link" href="/problem/{{ item.id }}">{{ item.title }}</a>
-                <div class="grid-column span-4 bold text--darkest-gray">{{ item.difficuty }}</div>
-                <label>
-                    <input type="text" name="notes_content{{ item.id }}" placeholder="Notes" class="grid-column span-10 bold text--darkest-gray form-control" value={{ item.note }}>
-                </label>
-                <button name="take_notes" value="{{ item.id }}" class="grid-column span-2 bold text--darkest-gray">
-                    Take Notes
-                </button>
-            </div></td></tr>
+                <div class="grid-column span-3 bold text--darkest-gray">{{ item.difficulty }}</div>
+                <button name="take_notes" value="{{ item.id }}" class="grid-column span-2 bold text--darkest-gray btn btn--outline btn--sm">Take Notes</button>
+            </div>
+            <label>
+                <input type="text" name="notes_content{{ item.id }}" placeholder="Notes" class="pb2 grid-row bold text--darkest-gray form-control" value={{ item.note }}>
+            </label>
+            <div class="pt3 grid-row border--bottom "></div>
+            </td></tr>
             {% endfor %}
         </table>
         </form>

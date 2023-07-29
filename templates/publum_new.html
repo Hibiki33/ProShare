@@ -1,0 +1,103 @@
+{% load static %}
+<!doctype html>
+<html lang="en-us">
+
+    <head>
+
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <title>My Punlum</title>
+        <base href="/">
+        <meta name="description" content="">
+
+        <!-- The compiled CSS file -->
+        <link rel="stylesheet" href="/static/css/production.css">
+
+        <!-- Web fonts -->
+        <link href="/static/css/font1.css" rel="stylesheet">
+
+    </head>
+
+
+    <header class="fixed">
+        <nav class="align--center pt1 pb1 pl1 pr1" style="background-color: rgb(188, 205, 222);">
+            <div class="pb1"></div>
+    {#            svg from : https://www.iconfont.cn/#}
+            <a class="link" href="/">
+                <img class="icon" src="/static/img/icon/home.svg" >
+                <h6 class="text--darkest-gray" style="font-size:12px">ProShare</h6>
+            </a>
+            <div class="border--top mb1"></div>
+            <a class="link " href="/problem">
+                <img class="icon" src="/static/img/icon/search_file.svg" >
+                <h6 class="text--darkest-gray" style="font-size:12px;">Search</h6>
+            </a>
+            <a class="link" href="/problem/create">
+                <img class="icon" src="/static/img/icon/add_file.svg" >
+                <h6 class="text--darkest-gray" style="font-size:12px;">Create</h6>
+            </a>
+            <div class="border--top mb1"></div>
+            <a class="link" href="/account/group/search">
+                <img class="icon" src="/static/img/icon/group.svg" >
+                <h6 class="text--darkest-gray">Group</h6>
+            </a>
+            <a class="link" href="/account/">
+                <img class="icon" src="/static/img/icon/setting.svg" >
+                <h6 class="text--darkest-gray">Account</h6>
+            </a>
+            <div class="border--top mb1"></div>
+            <div class="pt1 pb2">
+                {% if user.is_authenticated %}
+                    <p class="text--darkest-gray"style="font-weight:800">Hello,</p>
+                    <a class="italic text--darkest-gray link"style="font-weight:800" href="/account">{{ user.username }}</a>
+                {% else %}
+                    <a class="text--darkest-gray link"style="font-weight:800" href="/account/login">Login</a>
+                {% endif %}
+            </div>
+            <div class="border--top mb1"></div>
+            <a class="link" href="/admin">
+                <img class="icon" src="/static/img/icon/wrench.svg" >
+                <h6 class="text--darkest-gray">Admin</h6>
+            </a>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+            <div class="pt4 pb4"></div>
+        </nav>
+    </header>
+    <body class="has-animations">
+        <div class="pt4"></div>
+
+        <div class="container pt3 pb3">
+        <h2 class="text--gray pb1 border--bottom">My Punlum</h2>
+        </div>
+
+        <div class="pt1"></div>
+
+        <form method="post">
+        <table class="container border--top pt1 pb1">
+            {% for item in punlum_items %}
+            <tr><td><div class="grid-row border--bottom pt2 pb1">
+                <div class="grid-column span-2 bold text--darkest-gray">{{ item.id }}</div>
+                <a class="grid-column span-4 bold text--darkest-gray" href="/problem/{{ item.id }}">{{ item.title }}</a>
+                <div class="grid-column span-4 bold text--darkest-gray">{{ item.difficuty }}</div>
+                <label>
+                    <input type="text" name="notes_content{{ item.id }}" placeholder="Notes" class="grid-column span-10 bold text--darkest-gray form-control" value={{ item.note }}>
+                </label>
+                <button name="take_notes" value="{{ item.id }}" class="grid-column span-2 bold text--darkest-gray">
+                    Take Notes
+                </button>
+            </div></td></tr>
+            {% endfor %}
+        </table>
+        </form>
+
+    </body>
+</html>

@@ -320,7 +320,34 @@ def problem_set_list_page(request):
         return render(request, 'problem_set_list.html', locals())
 
     elif request.method == 'POST':
-        pass
+        # print(request.POST)
+        # request.method = 'GET'
+        # return problem_set_list_page(request)
+        # <QueryDict: {'search_info': ['wfy'], 'search': [''], 'filter': ['name']}>
+        search_info = request.POST.get('search_info')
+        name_filter = 'name' in request.POST.get('filter')
+        creator_filter = 'creator' in request.POST.get('filter')
+        owner_filter = 'owner' in request.POST.get('filter')
+
+        user = request.user
+        problem_set_list = []
+
+        if search_info:
+            for question_set in QuestionSet.objects.all():
+                if not user.has_perm('problem.view_question_set', question_set):
+                    continue
+                if (name_filter and search_info in question_set.name) or \
+                        (creator_filter and search_info in question_set.created_by.username) or \
+                        (owner_filter and search_info in question_set.belongs_to.name):
+                    problem_set_list.append(question_set)
+        else:
+            for question_set in QuestionSet.objects.all():
+                if user.has_perm('problem.view_question_set', question_set):
+                    problem_set_list.append(question_set)
+
+        problem_set_list = list(set(problem_set_list))
+
+        return render(request, 'problem_set_list.html', locals())
 
 
 def problem_set_detail_page(request, set_id):

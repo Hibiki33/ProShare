@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
+
+from problem.models import Question
+from .models import Punlum, PunlumNote
 import uuid
 import logging
 
@@ -88,11 +91,14 @@ def register_page(request):
             messages.error(request, 'username already exists!')
             return HttpResponseRedirect('/account/register/')
 
-        User.objects.create_user(username=username,
+        user = User.objects.create_user(username=username,
                                  password=password,
                                  email=email,
-                                 quote=' ',
-                                 phone=' ', )
+                                 quote='',
+                                 phone='', )
+
+        Punlum.objects.create(user=user)
+
         return HttpResponseRedirect('/account/')
 
     return render(request, '404.html')
@@ -242,3 +248,42 @@ def group_search_page(request):
 
         request.method = 'GET'
         return group_search_page(request)
+
+
+def punlum_page(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            punlum = request.user.punlum
+            punlum_notes = punlum.notes.all()
+            punlum_items = []
+            for note in punlum_notes:
+                question = Question.objects.get(_id=note.question_id)
+                # print(question.title, question.difficulty)
+                punlum_items.append({
+                    # 'question': Question.objects.get(_id=note.question_id),
+                    'id': question._id,
+                    'title': question.title,
+                    'difficulty': question.difficulty,
+                    'note': note.question_note if note.question_note else '',
+                })
+
+            return render(request, 'punlum_new.html', {
+                'punlum_items': punlum_items,
+            })
+        else:
+            return HttpResponseRedirect('/account/login/')
+
+    elif request.method == 'POST':
+        question_id = request.POST.get('take_notes')
+        notes_content = request.POST.get('notes_content' + question_id)
+        print(notes_content)
+        if notes_content:
+            question = Question.objects.get(_id=question_id)
+            note = request.user.punlum.notes.get(question_id=question_id)
+            note.question_note = notes_content
+            note.save()
+
+        request.method = 'GET'
+        return punlum_page(request)
+
+

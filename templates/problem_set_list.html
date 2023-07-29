@@ -9,7 +9,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
 
-        <title>Problem List</title>
+        <title>Problem Sets</title>
         <base href="/">
         <meta name="description" content="">
 
@@ -75,11 +75,46 @@
     <body class="has-animations">
         <div class="pt4"></div>
 
-        <div class="container pt3 pb3">
-        <h2 class="text--gray pb1 border--bottom">My Problem Sets</h2>
+        <div class="container pt3 pb1">
+        <h2 class="text--gray pb1 border--bottom">Problem Sets</h2>
+        <div class="pt1 pb1">
+            <a type="submit" href="/problem/set/create/">create a new one.</a>
+        </div>
         </div>
 
         <div class="pt1"></div>
+
+        <form action="" method="POST" class="">
+            <div class="container">
+                <div class="grid-row">
+                    <div class="grid-column span-10">
+                        <label>
+                            <input type="text" class="form-control" placeholder="Enter your search message" name="search_info">
+                        </label>
+                    </div>
+                    <div class="grid-column span-2">
+                        <button type="submit" class="btn btn--outline" name="search">Search</button>
+                    </div>
+                </div>
+                <div class="grid-row pt1 pb2">
+                    <div class="grid-column">
+                        <p> Search By:</p>
+                    </div>
+                    <div class="grid-column">
+                        <input type="checkbox" id="search-name" name="filter" value="name" checked>
+                        <label>Name</label>
+                    </div>
+                    <div class="grid-column">
+                        <input type="checkbox" id="search-creator" name="filter" value="creator">
+                        <label>Creator</label>
+                    </div>
+                    <div class="grid-column">
+                        <input type="checkbox" id="search-owner" name="filter" value="owner">
+                        <label>Owner</label>
+                    </div>
+                </div>
+            </div>
+        </form>
 
          {% comment %} {% for ps in problem_set_list %}
              <a>{{ ps.id }} {{ ps.name }} {{ ps.created_by }} {{ ps.belongs_to }}</a>
@@ -101,7 +136,13 @@
                 <div class="grid-column span-2 bold text--darkest-gray">{{ ps.id }}</div>
                 <div class="grid-column span-4 bold text--darkest-gray">{{ ps.name }}</div>
                 <div class="grid-column span-1 bold text--darkest-gray">{{ ps.created_by }}</div>
-                <div class="grid-column span-1 bold text--darkest-gray">{{ ps.belongs_to }}</div>
+                <div class="grid-column span-1 bold text--darkest-gray">
+                    {% if ps.belongs_to %}
+                    {{ ps.belongs_to }}
+                    {% else %}
+                    public
+                    {%  endif %}
+                </div>
                 <a class="grid-column span-1 bold text--darkest-gray btn btn--outline btn--sm link" href="/problem/set/{{ ps.id }}">Exercise</a>
             </div></td></tr>
             {% endfor %}

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.utils import timezone
+
 from utils.models import RichTextField
 
 
@@ -93,3 +95,13 @@ class User(AbstractUser):
     class Meta(AbstractUser.Meta):
         swappable = "AUTH_USER_MODEL"
 
+
+class Punlum(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='punlum')
+
+
+class PunlumNote(models.Model):
+    question_id = models.IntegerField()
+    question_note = models.TextField(max_length=1024, null=True, blank=True)
+
+    punlum = models.ForeignKey(Punlum, on_delete=models.CASCADE, related_name="notes")

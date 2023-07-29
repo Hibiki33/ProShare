@@ -24,15 +24,15 @@ class Question(models.Model):
 
     def add_submission_number(self):
         self.submission_number = models.F("submission_number") + 1
-        self.save(update_fields=["submission_number"])
+        self.save()
 
     def add_ac_number(self):
         self.passed_number = models.F("passed_number") + 1
-        self.save(update_fields=["passed_number"])
+        self.save()
 
     def set_correct_options(self, place):
         self.correct_options = [self.options[ord(i) - ord('A')] for i in place]
-        self.save(update_fields=["correct_options"])
+        self.save()
 
     def add_tag(self, tag):
         self.tags.add(tag)
@@ -52,29 +52,31 @@ class Question(models.Model):
 
 class QuestionSet(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, null=True)
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='question_sets')
+    # belongs_to = None indicated public?
+    # above
     belongs_to = models.ForeignKey(Group, on_delete=models.CASCADE, null=True, related_name='question_sets')
     questions = models.ManyToManyField(Question)
 
     def add_question(self, question):
         self.questions.add(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     def add_questions(self, questions):
         for question in questions:
             self.add_question(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     def remove_question(self, question):
         self.questions.remove(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     def remove_questions(self, questions):
         for question in questions:
             self.remove_question(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     def get_questions(self):
         return self.questions.all()
@@ -87,13 +89,49 @@ class QuestionSet(models.Model):
         )
 
 
+# class TempQuestionSet(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     name = models.CharField(max_length=128, null=True)
+#
+#     group_name = models.CharField(max_length=128, null=True)
+#     questions = models.ManyToManyField(Question)
+#
+#     def add_question(self, question):
+#         self.questions.add(question)
+#         self.save()
+#
+#     def add_questions(self, questions):
+#         for question in questions:
+#             self.add_question(question)
+#         self.save()
+#
+#     def remove_question(self, question):
+#         self.questions.remove(question)
+#         self.save()
+#
+#     def remove_questions(self, questions):
+#         for question in questions:
+#             self.remove_question(question)
+#         self.save()
+#
+#     def get_questions(self):
+#         return self.questions.all()
+#
+#     class Meta:
+#         default_permissions = ()
+#         permissions = (
+#             ("view_question_set", "Can view question_set"),
+#             ("edit_question_set", "Can edit question_set"),
+#         )
+
+
 class QuestionTag(models.Model):
     name = models.CharField(max_length=128)
     questions = models.ManyToManyField(Question)
 
     def add_question(self, question):
         self.questions.add(question)
-        self.save(update_fields=["questions"])
+        self.save()
 
     # class Meta:
     #     db_table = "question_tag"
@@ -173,21 +211,21 @@ class ProblemSet(models.Model):
 
     def add_problem(self, problem):
         self.problems.add(problem)
-        self.save(update_fields=["problems"])
+        self.save()
 
     def add_problems(self, problems):
         for problem in problems:
             self.add_problem(problem)
-        self.save(update_fields=["problems"])
+        self.save()
 
     def remove_problem(self, problem):
         self.problems.remove(problem)
-        self.save(update_fields=["problems"])
+        self.save()
 
     def remove_problems(self, problems):
         for problem in problems:
             self.remove_problem(problem)
-        self.save(update_fields=["problems"])
+        self.save()
 
     def get_problems(self):
         return self.problems.all()

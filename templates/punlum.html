@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Punlum</title>
+</head>
+<body>
+    <h1>My Punlum</h1>
+    <form method="post">
+    {% for item in punlum_items %}
+        <li>
+            {{ item.id }}
+            {{ item.title }}
+            {{ item.difficuty }}
+            <label>
+                <input type="text" name="notes_content{{ item.id }}" placeholder="Notes" class="form-control" value={{ item.note }}>
+            </label>
+            <button name="take_notes" value="{{ item.id }}">
+                Take Notes
+            </button>
+        </li>
+    {% endfor %}
+    </form>
+</body>
+</html>

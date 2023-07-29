@@ -116,8 +116,11 @@ def problem_detail_page(request, id):
                     request.user.save()
 
                     # maintain punlum
-                    PunlumNote.objects.create(question_id=question._id,
-                                              punlum=Punlum.objects.get(user=request.user))
+                    # PunlumNote.objects.create(question_id=question._id,
+                    #                           punlum=Punlum.objects.get(user=request.user))
+                    if not PunlumNote.objects.filter(question_id=question._id).exists():
+                        PunlumNote.objects.create(question_id=question._id,
+                                                  punlum=Punlum.objects.get(user=request.user))
 
                     verdict = 'Wrong Answer'
             elif question.type == 'fill-blank':
@@ -138,6 +141,10 @@ def problem_detail_page(request, id):
                     request.user.finish_questions_cnt += 1
                     request.user.wrong_questions_cnt += 1
                     request.user.save()
+
+                    if not PunlumNote.objects.filter(question_id=question._id).exists():
+                        PunlumNote.objects.create(question_id=question._id,
+                                                  punlum=Punlum.objects.get(user=request.user))
 
                     verdict = 'Wrong Answer'
             else:

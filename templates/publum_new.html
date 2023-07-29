@@ -86,7 +86,7 @@
             {% for item in punlum_items %}
             <tr><td><div class="grid-row border--bottom pt2 pb1">
                 <div class="grid-column span-2 bold text--darkest-gray">{{ item.id }}</div>
-                <a class="grid-column span-4 bold text--darkest-gray" href="/problem/{{ item.id }}">{{ item.title }}</a>
+                <a class="grid-column span-4 bold text--darkest-gray link" href="/problem/{{ item.id }}">{{ item.title }}</a>
                 <div class="grid-column span-4 bold text--darkest-gray">{{ item.difficuty }}</div>
                 <label>
                     <input type="text" name="notes_content{{ item.id }}" placeholder="Notes" class="grid-column span-10 bold text--darkest-gray form-control" value={{ item.note }}>

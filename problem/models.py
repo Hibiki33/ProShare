@@ -24,15 +24,15 @@ class Question(models.Model):
 
     def add_submission_number(self):
         self.submission_number = models.F("submission_number") + 1
-        self.save(update_fields=["submission_number"])
+        self.save()
 
     def add_ac_number(self):
         self.passed_number = models.F("passed_number") + 1
-        self.save(update_fields=["passed_number"])
+        self.save()
 
     def set_correct_options(self, place):
         self.correct_options = [self.options[ord(i) - ord('A')] for i in place]
-        self.save(update_fields=["correct_options"])
+        self.save()
 
     def add_tag(self, tag):
         self.tags.add(tag)
@@ -211,21 +211,21 @@ class ProblemSet(models.Model):
 
     def add_problem(self, problem):
         self.problems.add(problem)
-        self.save(update_fields=["problems"])
+        self.save()
 
     def add_problems(self, problems):
         for problem in problems:
             self.add_problem(problem)
-        self.save(update_fields=["problems"])
+        self.save()
 
     def remove_problem(self, problem):
         self.problems.remove(problem)
-        self.save(update_fields=["problems"])
+        self.save()
 
     def remove_problems(self, problems):
         for problem in problems:
             self.remove_problem(problem)
-        self.save(update_fields=["problems"])
+        self.save()
 
     def get_problems(self):
         return self.problems.all()

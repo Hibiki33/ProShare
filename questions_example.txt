@@ -1,0 +1,520 @@
+Title:q1_1
+Description:Which Python operator is used to perform logical AND operation on two values?
+Difficulty:0
+Type:0
+Options:A.and B.or C.not D.if
+Answer:A
+
+Title:q1_2
+Description:Which Python operator is used to perform bitwise AND operation on two values?
+Difficulty:0
+Type:0
+Options:A.and B.or C.not D.&
+Answer:D
+
+Title:q1_3
+Description:Which Python built-in function is used to capitalize the first letter of a text?
+Difficulty:0
+Type:0
+Options:A.upper() B.lower() C.capitalize() D.title()
+Answer:C
+
+Title:q1_4
+Description:Which Python built-in function is used to concatenate multiple strings into one string?
+Difficulty:0
+Type:0
+Options:A.join() B.split() C.replace() D.strip()
+Answer:A
+
+Title:q1_5
+Description:Regarding assignment statements in Python, which of the following option(s) is incorrect？
+Difficulty:0
+Type:1
+Options:A.a = 1 B.b, c = 2, 3 C.d = [1, 2, 3] D.e = 1, 2, 3
+Answer:ABCD
+
+Title:q1_6
+Description:Regarding string formatting in Python, which of the following option(s) is correct?
+Difficulty:0
+Type:1
+Options:A.String formatting can be done using the % operator. B.String formatting can be done using the str.format() function. C.String formatting can be done using f-strings. D.All versions of Python support formatted strings.
+Answer:ABCD
+
+Title:q1_7
+Description:Regarding logical operators in Python, which of the following option(s) is correct?
+Difficulty:0
+Type:1
+Options:A.The "or" operator returns False only when both operands are False. B.The "and" operator returns True only when both operands are True. C.The "not" operator can be used with any data type.。 D.The "or" and "and" operators can have operands of any data type.
+Answer:ABCD
+
+Title:q1_8
+Description:In Python, which of the following option(s) is used to indicate that a variable or function is private?
+Difficulty:0
+Type:0
+Options:A._private B.__private C.private D.private_
+Answer:B
+
+Title:q1_9
+Description:In Python, what operation is performed when double slash is used during division?
+Difficulty:0
+Type:0
+Options:A.Round up B.Round down C.Round to the nearest integer D.Modulo operation
+Answer:B
+
+Title:q1_10
+Description:In Python, which of the following option(s) can be used to determine if one string is a substring of another string?
+Difficulty:0
+Type:0
+Options:A.string.find(substring) B.string.contains(substring) C.string.match(substring) D.string.sub(substring)
+Answer:A
+
+Title:q1_11
+Description:In Python, statement blocks are divided by ______. (indentation/brace/line breaks)
+Difficulty:0
+Type:2
+Answer:indentation
+
+Title:q1_12
+Description:Within a Python function, global variables can be defined using the keyword ______.
+Difficulty:0
+Type:2
+Answer:global
+
+Title:q1_13
+Description:In Python, modules can be imported using the keyword ______.
+Difficulty:0
+Type:2
+Answer:import
+
+Title:q1_14
+Description:If a = -3 and b = 12, the result of a % b is ______.
+Difficulty:0
+Type:2
+Answer:9
+
+Title:q1_15
+Description:The logical expression True and True or not True will return ______.
+Difficulty:0
+Type:2
+Answer:True
+
+Title:q1_16
+Description:The value of the expression int('123', 16) is ______.
+Difficulty:0
+Type:2
+Answer:291
+
+Title:q1_17
+Description:The value of the expression int('123', 8) is ______.
+Difficulty:0
+Type:2
+Answer:83
+
+Title:q1_18
+Description:The value of the expression int(4**0.5) is ______.
+Difficulty:0
+Type:2
+Answer:2
+
+Title:q1_19
+Description:In Python, the keyword used to define a function is ______.
+Difficulty:0
+Type:2
+Answer:def
+
+Title:q1_20
+Description:The result of the Python statement ''.join(list('hello world!')) is ______.
+Difficulty:0
+Type:2
+Answer:hello world!
+
+Title:q2_1
+Description:Which of the below Python data type is mutable?
+Difficulty:1
+Type:1
+Options:A.Tuple B.String C.List D.Dictionary
+Answer:CD
+
+Title:q2_2
+Description:In Python, which of the following option(s) can be used to retrieve the value corresponding to a key from a dictionary, and if the key does not exist, return a default value?
+Difficulty:1
+Type:0
+Options:A.dict.get(key, default) B.dict[key] C.dict.value(key, default) D.dict.fetch(key, default)
+Answer:A
+
+Title:q2_3
+Description:Which Python built-in function is used to add an element to a list?
+Difficulty:1
+Type:0
+Options:A.append() B.remove() C.pop() D.sort()
+Answer:A
+
+Title:q2_4
+Description:Which Python built-in function is used to remove and return an element from a list?
+Difficulty:1
+Type:0
+Options:A.append() B.remove() C.pop() D.sort()
+Answer:C
+
+Title:q2_5
+Description:What will be the output of the following code?\nlst = [1,  2,  3]\nlst.__setitem__(slice(None,  None,  -1),  [4,  5,  6])\nprint(lst)
+Difficulty:1
+Type:0
+Options:A.[6,  5,  4,  3,  2,  1] B.[1,  2,  3,  4,  5,  6] C.[3,  2,  1] D.[6,  5,  4]
+Answer:D
+
+Title:q2_6
+Description:Regarding lists and tuples in Python, which of the following option(s) is correct?
+Difficulty:1
+Type:0
+Options:A.Lists are mutable, tuples are immutable. B.Both lists and tuples are mutable. C.Both lists and tuples are immutable. D.The only difference between lists and tuples is their naming convention.
+Answer:A
+
+Title:q2_7
+Description:The following is a piece of code that sums up all the values in a dictionary and prints the result:\nd = {"a": 1,  "b": 2,  "c": 3}\ntotal = ___\nprint(total)\nPlease fill in the blanks in the code.
+Difficulty:1
+Type:0
+Options:A.sum(d) B.sum(d.values()) C.sum(d.keys()) D.sum(d.items())
+Answer:B
+
+Title:q2_8
+Description:The following is a piece of code that adds 1 to all even numbers and subtracts 1 from all odd numbers in a list, then the code prints a new list:\nlst = [1,  2,  3,  4,  5,  6,  7]\nnew_lst = [___ if ___ % ___ == ___ else ___ for x in lst]\nprint(new_lst)\nPlease fill in the blanks in the code.
+Difficulty:1
+Type:0
+Options:A.x,  x,  2,  0,  x + 1 B.x + 1,  x,  2,  0,  x - 1 C.x - 1,  lst,  2,  1,  x + 1 D.x + 1,  lst,  2,  1,  x - 1
+Answer:B
+
+Title:q2_9
+Description:In Python, which of the following option(s) can be used to sort the keys in a dictionary?
+Difficulty:1
+Type:0
+Options:A.dict.keys() B.dict.sort() C.sorted(dict) D.sort(dict.keys())
+Answer:C
+
+Title:q2_10
+Description:Which of the following option(s) can be used to merge the keys and values of a dictionary into a new string?Assuming that both the keys and values of the dictionary are strings.
+Difficulty:1
+Type:0
+Options:A."".join(list(dict.merge())) B."".join(list(dict)) C."".join(list(dict.items())) D."".join(list(dict.keys()) + list(dict.values()))
+Answer:D
+
+Title:q2_11
+Description:
+The value of the expression 2 // 1  ==  2 % 4 is ______.
+Difficulty:1
+Type:2
+Answer:True
+
+Title:q2_12
+Description:For the string s = 'abcdefg', the value of s[3:5] is ______.
+Difficulty:1
+Type:2
+Answer:de
+
+Title:q2_13
+Description:The value of the expression sum(range(1, 10, 2)) is ______.
+Difficulty:1
+Type:2
+Answer:25
+
+Title:q2_14
+Description:The function in Python's built-in string processing functions that returns the string representation of any type is ______.
+Difficulty:1
+Type:2
+Answer:__repr__
+
+Title:q2_15
+Description:The output of "{0:.2f}".format(12345.67890) + 'a' is ______.
+Difficulty:1
+Type:2
+Answer:12345.68a
+
+Title:q2_16
+Description:The value of the expression 'Hello world!'[-4] is ______.
+Difficulty:1
+Type:2
+Answer:r
+
+Title:q2_17
+Description:The value of the expression 'ab' in 'acbed' is ______.
+Difficulty:1
+Type:2
+Answer:False
+
+Title:q2_18
+Description:If a function does not have a return statement, its return value is ______.
+Difficulty:1
+Type:2
+Answer:None
+
+Title:q2_19
+Description:In a loop statement, the purpose of the ______ statement is to end the current iteration and proceed to the next one.
+Difficulty:1
+Type:2
+Answer:continue
+
+Title:q2_20
+Description:The output of the following piece of code is ______.\nfor i in "CHINA":\n    for k in range(2):        print(i, end="")        if i == "N":            break
+Difficulty:1
+Type:2
+Answer:CCHHIINNAA
+
+Title:q3_1
+Description:Which of the following options is not a reserved word in the Python programming language?
+Difficulty:2
+Type:0
+Options:A.pass B.while C.do D.except
+Answer:C
+
+Title:q3_2
+Description:The output result of the code below is:\na = 4\na ^= 3\nb = a ^ 2\nprint(a,end=",")\nprint(b)
+Difficulty:2
+Type:0
+Options:A.64,4096 B.4,3 C.5,7 D.7,5
+Answer:D
+
+Title:q3_3
+Description:The execution result of the following code is\na = "Python等级考试"\nb = "="\nc = ">"\nprint("{0:{1}{3}{2}}".format(a, b, 25, c))
+Difficulty:2
+Type:0
+Options:A.Python等级考试=============== B.===============Python等级考试 C.>>>>>>>>>>>>>>Python等级考试 D.Python等级考试===============
+Answer:B
+
+Title:q3_4
+Description:Which of the following options does not comply with the variable naming rules in the Python programming language?
+Difficulty:2
+Type:0
+Options:A._33keyword B.keyword_33 C.33_keyword D.keyword33_
+Answer:C
+
+Title:q3_5
+Description:Which of the following options describes a characteristic of the Python programming language incorrectly?
+Difficulty:2
+Type:0
+Options:A.Python language is a multi-paradigm language. B.Python language is a scripting language. C.Python language is a cross-platform language. D.Python language is not an open-source language.
+Answer:D
+
+Title:q3_6
+Description:Regarding the eval function, which of the following options describes incorrectly:
+Difficulty:2
+Type:0
+Options:A. The execution of eval(“Hello”) and eval(" ‘Hello’ ") yields the same result. B. The definition of the eval function is: eval(source, globals=None, locals=None, /) C. If a user wants to input a number and perform calculations on it using a program, they can use the combination eval(input(<输入提示字符串>)) D. The purpose of the eval function is to convert the input string into a Python statement and execute that statement.
+Answer:A
+
+Title:q3_7
+Description:Given a dictionary d, which of the following options correctly describes d.keys()?
+Difficulty:2
+Type:0
+Options:A. Returns a list type that includes all keys in dictionary d. B. Returns a set type that includes all keys in dictionary d. C. Returns a tuple type that includes all keys in dictionary d. D. Returns a dict_keys type that includes all keys in dictionary d.
+Answer:D
+
+Title:q3_8
+Description:Given a dictionary d, which of the following options correctly describes d.values()?
+Difficulty:2
+Type:0
+Options:A. Returns the value in dictionary d with key x, if it exists; otherwise, returns y. B. Returns the value in dictionary d with value y, if it exists; otherwise, returns x. C. Returns the value in dictionary d with key x, if it exists; otherwise, returns x. D. Returns the value in dictionary d with key-value pair x:y.
+Answer:A
+
+Title:q3_9
+Description:The output result of the code below is:\nstr1 = "mysqlsqlserverPostgresQL"\nstr2 = "sql"\nncount = str1.count(str2,10)\nprint(ncount)
+Difficulty:2
+Type:0
+Options:A.0 B.3 C.4 D.2
+Answer:A
+
+Title:q3_10
+Description:Regarding the description of formal parameters and actual arguments, which of the following options is correct?
+Difficulty:2
+Type:1
+Options:A. When the program is called, the formal parameters are copied to the actual arguments of the function. B. The parameters listed in the function definition are the actual parameters, also known as actual arguments. C. When invoking a function, the actual arguments are passed to the function by default in the order of their positions. Python also provides a way to input actual arguments based on parameter names. D. The parameter list specifies the parameters to be passed into the function, and such parameters are called formal parameters, also known as formal arguments.
+Answer:CD
+
+Title:q3_11
+Description:The value of the expression list(range(6))[::2] is ______.(With [] and commas)
+Difficulty:2
+Type:2
+Answer:[0, 2, 4]
+
+Title:q3_12
+Description:The value of the Python statement ''.join(list('hello world!')) is ______.(with single quotation marks)
+Difficulty:2
+Type:2
+Answer:'hello world!'
+
+Title:q3_13
+Description:Given x = {'a': 'b', 'c': 'd'}, the value of the expression 'a' in x is ______.
+Difficulty:2
+Type:2
+Answer:True
+
+Title:q3_14
+Description:Given x = {'a': 'b', 'c': 'd'}, the value of the expression 'b' in x is ______.
+Difficulty:2
+Type:2
+Answer:False
+
+Title:q3_15
+Description:Given x = {'a': 'b', 'c': 'd'}, the value of the expression 'b' in x.values() is ______.
+Difficulty:2
+Type:2
+Answer:True
+
+Title:q3_16
+Description:The value of the expression (1,3)+(5,7) is ______.(With () and commas)
+Difficulty:2
+Type:2
+Answer:(1, 3, 5, 7)
+
+Title:q3_17
+Description:For the list L=[2, 16, 36, 64], after executing L.insert(0,10), the value of L is ______. (With [] and commas)
+Difficulty:2
+Type:2
+Answer:[10,2,16,36,64]
+
+Title:q3_18
+Description:For the tuple T=(2, 4 ,6, 8) , the value of the expression T[-1]+T[1] is ______.
+Difficulty:2
+Type:2
+Answer:12
+
+Title:q3_19
+Description:Among the data structures, which are lists, tuples, and dictionaries, the non-ordered data structure is ______.
+Difficulty:2
+Type:2
+Answer:dictionaries
+
+Title:q3_20
+Description:When executing the statement print(set([1,2,2,3])[3]), the reason for error in execution is ______. (index error/set is not subscriptable)
+Difficulty:2
+Type:2
+Answer:set is not subscriptable
+
+Title:q4_1
+Description:The output result of the following code is\nMA = lambda x,y :  (x > y) * x + (x < y) * y\nMI = lambda x,y :  (x > y) * y + (x < y) * x\na = 10\nb = 20\nprint(MA(a,b),MI(a,b))
+Difficulty:3
+Type:0
+Options:A.20 10 B.10 20 C.10 10 D.20 20
+Answer:D
+
+Title:q4_2
+Description:Which of the following options describes the correct statement about local variables and global variables?
+Difficulty:3
+Type:1
+Options:A. Local variables are not released after the function operation ends. B. If a local variable is an undefined composite data type, it is equivalent to a global variable. C. Local variables act as placeholders within a function and may have the same name as global variables but are different. D. Local variables and global variables are different, but the ‘global’ keyword can be used to access global variables within a function.
+Answer:CD
+
+Title:q4_3
+Description:The option among the following with a value of False is
+Difficulty:3
+Type:0
+Options:A.'Hello' >'hello' B.'abcd' <'ad' C.' ' <'a' D.'abc' <'abcd'
+Answer:A
+
+Title:q4_4
+Description:The output result of the following code is\ndef func(num):\n    num += 1\na =10\nfunc(a)\nprint(a)
+Difficulty:3
+Type:0
+Options:A.11 B.int C.(error) D.10
+Answer:D
+
+Title:q4_5
+Description:The output result of the following code is\nfor s in "abc":\n   for i in range(3):\n      print (s,end="")\n      if s=="c":\n          break
+Difficulty:3
+Type:0
+Options:A.abbbccc B.aaabbbccc C.aaabbbc D.aaabccc
+Answer:C
+
+Title:q4_6
+Description:The option among the following that describes Python character encoding incorrectly is
+Difficulty:3
+Type:0
+Options:A.print(ord('a')) outputs 97. B.Python character encoding uses ASCII encoding. C.print(chr(65)) outputs A D.chr(x) and ord(x) functions are used for converting between single characters and Unicode code points.
+Answer:B
+
+Title:q4_7
+Description:The option among the following that allows access to the third character from the right to left in the string s is:
+Difficulty:3
+Type:0
+Options:A.s[:-3] B.s[3] C.s[0:-3] D.s[-3]
+Answer:D
+
+Title:q4_8
+Description:s = list("x\\nx\\nx")\nThe option(s) among the following that can output the frequency of the character "x" is:
+Difficulty:3
+Type:0
+Options:A.print(s.index("x"),6,len(s)) B.print(s.count("x")) C.print(s.index("x"),6) D.print(s.index("x"))
+Answer:B
+
+Title:q4_9
+Description:The value of ls[2][ –1][1] in the following code is\nls = [3.5, "Python", [10, "LIST"], 3.6]
+Difficulty:3
+Type:0
+Options:A.Y B.L C.P D.I
+Answer:D
+
+Title:q4_10
+Description:The option among the following that describes import statement incorrectly is
+Difficulty:3
+Type:0
+Options:A.Using ‘import turtle as t’ to import the turtle library and alias it as t. B.The ‘import’ keyword is used to import modules or objects from modules. C.It is possible to use ‘from turtle import’ setup to import the turtle library. D.Using ‘import turtle’ to import the turtle library.
+Answer:C
+
+Title:q4_11
+Description:The constructor method is a special method of a class, and its method name is ______. (with underscore)
+Difficulty:3
+Type:2
+Answer:__init__
+
+Title:q4_12
+Description:The__str__ method of a class cannot have any additional parameters and must have a return value of type ______.
+Difficulty:3
+Type:2
+Answer:str
+
+Title:q4_13
+Description:The ______ function can be used to test if an object is an instance of a class.
+Difficulty:3
+Type:2
+Answer:isinstance
+
+Title:q4_14
+Description:The object type returned by readlines function is a ______. (string/list/tuple).
+Difficulty:3
+Type:2
+Answer:list
+
+Title:q4_15
+Description:If the parameter dir_path is already an existing folder, the os.mkdir(dir_path) method will ______. (not do anything/raise an error/delete all files within the folder)
+Difficulty:3
+Type:2
+Answer:raise an error
+
+Title:q4_16
+Description:In the os library, the function name for getting the current directory is ______.
+Difficulty:3
+Type:2
+Answer:getcwd
+
+Title:q4_17
+Description:To open an existing file and append information to the end of the file, the appropriate opening mode is ______. ('a'/'r'/'w'/'x')
+Difficulty:3
+Type:2
+Answer:'a'
+
+Title:q4_18
+Description:To open an existing file in binary mode, clear its contents, allow both reading and writing, and create the file if it doesn't exist, the appropriate opening mode is ______. (with single quotation marks)
+Difficulty:3
+Type:2
+Answer:'wb+'
+
+Title:q4_19
+Description:Python uses the keyword ______ to define a class.
+Difficulty:3
+Type:2
+Answer:class
+
+Title:q4_20
+Description:In Python, to close a file object named f, the statement ______ should be used.(Complete statement)
+Difficulty:3
+Type:2
+Answer:f.close()

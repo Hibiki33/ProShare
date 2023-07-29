@@ -267,7 +267,7 @@ def punlum_page(request):
                     'note': note.question_note if note.question_note else '',
                 })
 
-            return render(request, 'punlum.html', {
+            return render(request, 'punlum_new.html', {
                 'punlum_items': punlum_items,
             })
         else:

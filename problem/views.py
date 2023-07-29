@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http.request import QueryDict
 from django.shortcuts import render
+from account.models import Punlum, PunlumNote
 from .models import *
 from .utils import list_msg, detail_msg
 import os
@@ -113,6 +114,10 @@ def problem_detail_page(request, id):
                     request.user.finish_questions_cnt += 1
                     request.user.wrong_questions_cnt += 1
                     request.user.save()
+
+                    # maintain punlum
+                    PunlumNote.objects.create(question_id=question._id,
+                                              punlum=Punlum.objects.get(user=request.user))
 
                     verdict = 'Wrong Answer'
             elif question.type == 'fill-blank':

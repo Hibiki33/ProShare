@@ -10,4 +10,5 @@ urlpatterns = [
     path('register/', views.register_page),
     path('group/<group_name>', views.group_detail_page),
     path('group/search/', views.group_search_page),
+    path('punlum/', views.punlum_page),
 ]

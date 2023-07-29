@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from .models import Punlum, PunlumNote
 import uuid
 import logging
 
@@ -88,11 +89,14 @@ def register_page(request):
             messages.error(request, 'username already exists!')
             return HttpResponseRedirect('/account/register/')
 
-        User.objects.create_user(username=username,
+        user = User.objects.create_user(username=username,
                                  password=password,
                                  email=email,
                                  quote=' ',
                                  phone=' ', )
+
+        Punlum.objects.create(user=user)
+
         return HttpResponseRedirect('/account/')
 
     return render(request, '404.html')
@@ -242,3 +246,17 @@ def group_search_page(request):
 
         request.method = 'GET'
         return group_search_page(request)
+
+
+def punlum_page(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return render(request, 'punlum.html', {
+                'punlum': request.user.punlum,
+                'punlum_notes': request.user.punlum.punlum_notes.all(),
+            })
+        else:
+            return HttpResponseRedirect('/account/login/')
+
+    elif request.method == 'POST':
+        pass

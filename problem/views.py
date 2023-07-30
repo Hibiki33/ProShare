@@ -220,6 +220,7 @@ def problem_upload_page(request):
                         ABCD, type = 0, 1
                         str, type = 2
                     } 
+                    
             '''
             line = source.readline()
             line_cnt = 1
@@ -292,9 +293,18 @@ def problem_upload_page(request):
                     _, answer = line.split(':')
                     answer = answer.strip()
                     problem['answer'] = answer
+                    status = 5
+                
+                elif line.startswith('Tag'):
+                    if status != 5:
+                        messages.error(
+                            request, 'Error at %d: Unexpected Tag' % line_cnt)
+                        return HttpResponseRedirect('./')
+                    _, tag = line.split(':')
+                    tag = tag.strip()
+                    problem['tag'] = tag
                     problems.append(problem)
                     problem = {}
-                    status = 0
 
                 line = source.readline()
                 line_cnt += 1

@@ -207,8 +207,21 @@ def problem_create_page(request):
             logging.debug('problem_info_list: ')
             logging.info(msg)
             return render(request, 'file_upload_preview.html', {'problem_info_list': msg})
-        elif post_type == 'upload-file':
-            pass
+        elif post_type == 'confirm':
+            for question in upload_questions:
+                q = Question.objects.create(
+                    description=question['description'],
+                    title=question['title'],
+                    difficulty=question['difficulty'],
+                    created_by=request.user,
+                    type=question['type'],
+                    options=question['options'],
+                    answer=question['answer'],
+                    correct_options=question['answer'].split(),
+                )
+                for tag in question['tags']:
+                    q.add_tag(tag)
+            return HttpResponseRedirect('/problem/')
 
 
 def problem_set_list_page(request):

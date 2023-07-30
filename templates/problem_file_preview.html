@@ -152,8 +152,16 @@
                         </ol>
                     </div>
                     {% endif %}
-                    <a class="text--darkest--gray bold">Answer: </a>
-                    <a class="italic">{{ problem_info.Answer }}</a>
+                    <p class="pt1">
+                        <a class="text--darkest--gray bold">Answer: </a>
+                        <a class="italic">{{ problem_info.Answer }}</a>
+                    </p>
+                    <p class="pt1">
+                        <a class="text--darkest--gray bold">Tags: </a>
+                        <a class="italic">{{ problem_info.Tag1 }} </a>
+                        <a class="italic">{{ problem_info.Tag2 }} </a>
+                        <a class="italic">{{ problem_info.Tag3 }} </a>
+                    </p>
                 </div>
 
                 
@@ -164,14 +172,6 @@
                     <p class="pt1">
                         <span class="text--gray bold">ID: </span>
                         <span class="text--gray">{{ problem_info.ID }}</span>
-                    </p>
-                    <p class="pt1">
-                        <span class="text--gray bold">Upload Date: </span>
-                        <span class="text--gray">{{ problem_info.Time }}</span>
-                    </p>
-                    <p class="pt1">
-                        <span class="text--gray bold">Uploader: </span>
-                        <span class="text--gray">{{ problem_info.Uploader }}</span>
                     </p>
                     <p class="pt1">
                         <span class="text--gray bold">Type: </span>
@@ -185,21 +185,13 @@
                         <span class="text--gray">Fill in the blank</span>
                         {% endif %}
                     </p>
-                    <p class="pt1">
-                        <span class="text--gray bold">Submit: </span>
-                        <span class="text--gray">{{ problem_info.Submit }}</span>
-                    </p>
-                    <p class="pt1">
-                        <span class="text--gray bold">Passed: </span>
-                        <span class="text--gray">{{ problem_info.Passed }}</span>
-                    </p>
                 </div>
             </div>
             {% endfor %}
             {% else %}
             <div class="grid-row pt1 pb1">
                 <div class="grid-column">
-                    <p class="text--gray">No problem is currently in this set.</p>
+                    <p class="text--gray">No problem is to be displayed.</p>
                 </div>
             </div>
             {% endif %}

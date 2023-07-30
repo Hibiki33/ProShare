@@ -265,17 +265,43 @@
                             <li>File name should be in the format of "problem_name.txt" or "problem_name.md".</li>
                         </ol>
                         <p class="text--gray pt2 pb1 italic">Content restrictions:</p>
+                        {% comment %} 
+                        example content:
+                        Title:q1_1
+                        Description:Which Python operator is used to perform logical AND operation on two values?
+                        Difficulty:0
+                        Type:0
+                        Options:A.and B.or C.not D.if
+                        Answer:A 
+                        {% endcomment %}
                         <ol class="olCss">
-                            <li>File should contain a title line, a description line, and a question line.</li>
-                            <li>Title line should be in the format of "# problem_name".</li>
-                            <li>Description line should be in the format of "## problem_description".</li>
-                            <li>Question line should be in the format of "### problem_question".</li>
-                            <li>Question type should be in the format of "#### problem_type".</li>
-                            <li>Single choice question should be in the format of "##### single_choice".</li>
-                            <li>Multiple choice question should be in the format of "##### multiple_choice".</li>
-                            <li>Fill blank question should be in the format of "##### fill_blank".</li>
-                            <li>Choices should be in the format of "choice A", "choice B", "choice C", "choice D".</li>
-                            <li>Answer should be in the format of "answer".</li>
+                            <li>Each choice problem should contain 6 lines.</li>
+                            <li>First line should be "Title:problem_name".</li>
+                            <li>Second line should be "Description:problem_description".</li>
+                            <li>Third line should be "Difficulty:problem_difficulty".</li>
+                            <li>Fourth line should be "Type:problem_type".</li>
+                            <li>Fifth line should be "Options:A.choice B.choice C.choice D.choice".</li>
+                            <li>Sixth line should be "Answer:answer", in the format of "A" or "BD".</li>
+                            <li>And for fill-in-blank problem there's no option line.</li>
+                            {% comment %} <li>Seventh line should be "Tag1:tag1".</li>
+                            <li>Eighth line should be "Tag2:tag2".</li>
+                            <li>Ninth line should be "Tag3:tag3".</li> {% endcomment %}
+                        </ol>
+                        <p class="text--gray pt2 pb1 italic">Example:</p>
+                        <ol class="olCss">
+                            <li>Title:q1_1</li>
+                            <li>Description:Which Python operator is used to perform logical AND operation on two values?</li>
+                            <li>Difficulty:0</li>
+                            <li>Type:0</li>
+                            <li>Options:A.and B.or C.not D.if</li>
+                            <li>Answer:A</li>
+                            <li></li>
+                            <li>Title:q1_12</li>
+                            <li>Description:Within a Python function, global variables can be defined using the keyword ______.</li>
+                            <li>Difficulty:0</li>
+                            <li>Type:2</li>
+                            <li>Answer:global</li>
+                            <li></li>
                         </ol>
                     </div>
                     {% comment %} <form action="" method="post" enctype="multipart/form-data" id="userForm3"> {% endcomment %}

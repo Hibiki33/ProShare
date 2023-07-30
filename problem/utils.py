@@ -1,6 +1,6 @@
 import logging
-from problem.models import Problem, Question
-
+from problem.models import Problem, Question, ProblemFile, QuestionTag
+from ProShare.settings import MEDIA_ROOT
 
 def list_msg(request,
              questions=Question.objects.all(),
@@ -67,3 +67,96 @@ def detail_msg(request, id):
         raise NotImplementedError
     else:
         raise FileNotFoundError
+    
+
+def exist_tag(tag_name):
+    return QuestionTag.objects.filter(name=tag_name).exists()
+
+
+def parse_file(file):
+
+    if file is None:
+        raise Exception('No file uploaded!')
+
+    ProblemFile.objects.create(file_name=file.name,
+                               file=file)
+
+    problems = []
+    with open(MEDIA_ROOT / file.name, 'r+') as source:
+        line = source.readline()
+        line_cnt = 1
+        status = 0
+        problem = {}
+        while line:
+            if line.startswith('Title'):
+                if status != 0:
+                    raise Exception('Error at %d: Unexpected Title' % line_cnt)
+                _, title = line.split(':')
+                title = title.strip()
+                problem['title'] = title
+                status = 1
+
+            elif line.startswith('Description'):
+                if status != 1:
+                    raise Exception('Error at %d: Unexpected Description' % line_cnt)
+                _, description = line.split(':')
+                description = description.strip()
+                problem['description'] = description
+                status = 2
+
+            elif line.startswith('Difficulty'):
+                if status != 2:
+                    raise Exception('Error at %d: Unexpected Difficulty' % line_cnt)
+                _, difficulty = line.split(':')
+                difficulty = difficulty.strip()
+                if difficulty not in ['Easy', 'Middle', 'Hard']:
+                    raise Exception('Error at %d: Invalid Difficulty' % line_cnt)
+                problem['difficulty'] = difficulty
+                status = 3
+
+            elif line.startswith('Type'):
+                if status != 3:
+                    raise Exception('Error at %d: Unexpected Type' % line_cnt)
+                _, _type = line.split(':')
+                _type = _type.strip()
+                if type not in ['0', '1', '2']:
+                    raise Exception('Error at %d: Invalid Type' % line_cnt)
+                problem['type'] = _type
+
+                if type == '0' or type == '1':
+                    line = source.readline()
+                    if not line.startswith('Options'):
+                        raise Exception('Error at %d: Unexpected Options' % line_cnt)
+                    # TODO: 懒得处理 A. 这种了
+                    options = list(line.split())
+                    problem['options'] = options
+                status = 4
+
+            elif line.startswith('Answer'):
+                if status != 4:
+                    raise Exception('Error at %d: Unexpected Answer' % line_cnt)
+                _, answer = line.split(':')
+                answer = answer.strip()
+                problem['answer'] = answer
+                status = 5
+
+            elif line.startswith('Tags'):
+                if status != 5:
+                    raise Exception('Error at %d: Unexpected Tag' % line_cnt)
+                _, tags = line.split(':')
+                tags = tags.strip()
+                tags = tags.split()
+                for tag in tags:
+                    if not exist_tag(tag):
+                        raise Exception('Error at %d: Invalid Tag' % line_cnt)
+                problem['tags'] = tags
+                problems.append(problem)
+                problem = {}
+
+            line = source.readline()
+            line_cnt += 1
+
+    logging.debug('uploaded problems: ')
+    logging.info(problems)
+
+    return problems

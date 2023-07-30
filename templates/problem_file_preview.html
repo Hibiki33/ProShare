@@ -9,7 +9,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
 
-        <title>Problem Detail</title>
+        <title>File Upload Preview</title>
         <base href="/">
         <meta name="description" content="">
 
@@ -101,18 +101,9 @@
         <div class="container--lg pt3 pb3">
             <div class="grid-row">
                 <div class="grid-column span-11">
-                    <h2 class="text--gray pb1">{{ name }}</h2>
+                    <h2 class="text--gray pb1">File Upload Preview</h2>
                 </div>
                 <div class="grid-column span-1">
-                </div>
-            </div>
-            <div class="grid-row">
-                <div class="grid-column span-9">
-                </div>
-                <div class="grid-column span-1">
-                    {% if modify %}
-                    <button class="btn btn--outline" type="submit" name="modify">Modify</button>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -140,7 +131,7 @@
                         <ol type="A" start="" class="" >
                         {% for option in problem_info.Options %}
                             <div class="grid-row">
-                            <input class="grid-column-left span-1" type="radio" name="choice{{ problem_info.ID }}" value="{{ option }}" />
+                            {% comment %} <input class="grid-column-left span-1" type="radio" name="choice{{ problem_info.ID }}" value="{{ option }}" /> {% endcomment %}
                             <div class="grid-column-left span-1"></div>
                             <li class="grid-column-left span-10">{{ option }}</li>
                             </div>
@@ -153,7 +144,7 @@
                         <ol type="A" start="" class="" >
                             {% for option in problem_info.Options %}
                             <div class="grid-row">
-                            <input class="grid-column-left span-1" type="checkbox" name="choice{{ problem_info.ID }}" value="{{ option }}" />
+                            {% comment %} <input class="grid-column-left span-1" type="checkbox" name="choice{{ problem_info.ID }}" value="{{ option }}" /> {% endcomment %}
                             <div class="grid-column-left span-1"></div>
                             <li class="grid-column-left span-10">{{ option }}</li>
                             </div>
@@ -161,11 +152,8 @@
                         </ol>
                     </div>
                     {% endif %}
-                    {% if problem_info.Type == "fill-blank" %}
-                    <label>
-                        <input type="answer" name="answer{{ problem_info.ID }}" placeholder="Your Answer" class="form-control">
-                    </label>
-                    {% endif %}
+                    <a class="text--darkest--gray bold">Answer: </a>
+                    <a class="italic">{{ problem_info.Answer }}</a>
                 </div>
 
                 
@@ -216,7 +204,7 @@
             </div>
             {% endif %}
             <div style="text-align: center" class="pt2">
-                <button type="submit" class="btn btn--outline" name="submit">Submit</button>
+                <button type="submit" class="btn btn--outline" name="confirm">Confirm</button>
             </div>
             <form action="" method="POST" class="pt1">
         </div>

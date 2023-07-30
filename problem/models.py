@@ -34,7 +34,10 @@ class Question(models.Model):
         self.correct_options = [self.options[ord(i) - ord('A')] for i in place]
         self.save()
 
-    def add_tag(self, tag):
+    def add_tag(self, tagname):
+        tag = QuestionTag.objects.get(name=tagname)
+        if tag is None:
+            return
         self.tags.add(tag)
         self.save(update_fields=["tags"])
         tag.add_question(self)

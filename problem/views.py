@@ -7,8 +7,7 @@ from django.http.request import QueryDict
 from django.shortcuts import render
 from account.models import Punlum, PunlumNote
 from .models import *
-from .utils import list_msg, detail_msg
-import os
+from .utils import list_msg, detail_msg, parse_file
 import logging
 
 
@@ -160,6 +159,7 @@ def problem_detail_page(request, id):
         else:
             raise FileNotFoundError
 
+global upload_questions
 
 def problem_create_page(request):
     if request.method == 'GET':
@@ -168,150 +168,47 @@ def problem_create_page(request):
         post: QueryDict = request.POST
         logging.debug('create problem request: ')
         logging.info(post)
-        q = Question.objects.create(
-            description=post.get('question_description', 'NULL'),
-            title=post.get('question_title', ''),
-            difficulty=post.get('question_diff', 1),
-            created_by=request.user,
-            type=post.get('question_type', 1),
-            options=list(filter(None, post.getlist('options', ['']))),
-            answer=post.get('question_answer', ''),
-        )
-        q.set_correct_options(post.getlist('place', []))
-        return HttpResponseRedirect('/problem/' + str(q._id) + '/')
-
-
-def problem_upload_page(request):
-    if request.method == 'GET':
-        return render(request, 'problem_upload.html')
-    elif request.method == 'POST':
-        # file_name = request.POST.get('file', '')
-        file = request.FILES.get('file', None)
-
-        if not file:
-            messages.error(request, 'No file uploaded!')
-            return HttpResponseRedirect('/problem/problem_upload/')
-
-        try:
-            os.remove(MEDIA_ROOT / file.name)
-        except FileNotFoundError:
+        post_type = post.get('upload_type')
+        if post_type == 'edit-online':
+            q = Question.objects.create(
+                description=post.get('question_description', 'NULL'),
+                title=post.get('question_title', ''),
+                difficulty=post.get('question_diff', 1),
+                created_by=request.user,
+                type=post.get('question_type', 1),
+                options=list(filter(None, post.getlist('options', ['']))),
+                answer=post.get('question_answer', ''),
+            )
+            q.set_correct_options(post.getlist('place', []))
+            return HttpResponseRedirect('/problem/' + str(q._id) + '/')
+        elif post_type == 'upload-file':
+            global upload_questions
+            file = request.FILES.get('file', None)
+            try:
+                upload_questions = parse_file(file)
+            except Exception as e:
+                messages.error(request, e)
+                return render(request, 'problem_create.html')
+            msg = []
+            for question in upload_questions:
+                msg.append({
+                    "ID": -1,
+                    "Name": question['title'],
+                    "Diff": question['difficulty'],
+                    "Type": question['type'],
+                    "Description": question['description'],
+                    "Options": question['options'],
+                    "Answer": question['answer'],
+                })
+                tags = question['tags']
+                for i in range(3):
+                    msg[-1][f'Tag{i + 1}'] = tags[i].name if len(
+                        tags) > i else ''
+            logging.debug('problem_info_list: ')
+            logging.info(msg)
+            return render(request, 'file_upload_preview.html', {'problem_info_list': msg})
+        elif post_type == 'upload-file':
             pass
-
-        # file_name, file_extension = os.path.splitext(file.name)
-        # file_path = MEDIA_ROOT / (file_name + '_' + timezone.now().strftime('%Y_%m_%d_%H_%M_%S') + file_extension)
-
-        # with open(file_path, 'w+', encoding='utf-8') as f:
-        #     f.write(file.read().decode('utf-8'))
-
-        ProblemFile.objects.create(file_name=file.name,
-                                   file=file)
-
-        problems = []
-        with open(MEDIA_ROOT / file.name, 'r+') as source:
-            '''
-            title: str
-            description: str
-            difficulty: 'Easy' | 'Middle' | 'Hard'
-            type: 0 | 1 | 2
-            { 
-                options: [ str, str, str, str ],    type = 0, 1
-            }
-            answer: {
-                        ABCD, type = 0, 1
-                        str, type = 2
-                    } 
-                    
-            '''
-            line = source.readline()
-            line_cnt = 1
-            status = 0
-            problem = {}
-            while line:
-                if line.startswith('Title'):
-                    if status != 0:
-                        messages.error(
-                            request, 'Error at %d: Unexpected Title' % line_cnt)
-                        return HttpResponseRedirect('./')
-                    _, title = line.split(':')
-                    title = title.strip()
-                    problem['title'] = title
-                    status = 1
-
-                elif line.startswith('Description'):
-                    if status != 1:
-                        messages.error(
-                            request, 'Error at %d: Unexpected Description' % line_cnt)
-                        return HttpResponseRedirect('./')
-                    _, description = line.split(':')
-                    description = description.strip()
-                    problem['description'] = description
-                    status = 2
-
-                elif line.startswith('Difficulty'):
-                    if status != 2:
-                        messages.error(
-                            request, 'Error at %d: Unexpected Difficulty' % line_cnt)
-                        return HttpResponseRedirect('./')
-                    _, difficulty = line.split(':')
-                    difficulty = difficulty.strip()
-                    if difficulty not in ['Easy', 'Middle', 'Hard']:
-                        messages.error(
-                            request, 'Error at %d: Invalid Difficulty' % line_cnt)
-                        return HttpResponseRedirect('./')
-                    problem['difficulty'] = difficulty
-                    status = 3
-
-                elif line.startswith('Type'):
-                    if status != 3:
-                        messages.error(
-                            request, 'Error at %d: Unexpected Type' % line_cnt)
-                        return HttpResponseRedirect('./')
-                    _, _type = line.split(':')
-                    _type = _type.strip()
-                    if type not in ['0', '1', '2']:
-                        messages.error(
-                            request, 'Error at %d: Invalid Type' % line_cnt)
-                        return HttpResponseRedirect('./')
-                    problem['type'] = _type
-
-                    if type == '0' or type == '1':
-                        line = source.readline()
-                        if not line.startswith('Options'):
-                            messages.error(
-                                request, 'Error at %d: Unexpected Options' % line_cnt)
-                            return HttpResponseRedirect('./')
-                        # TODO: 懒得处理 A. 这种了
-                        options = list(line.split())
-                        problem['options'] = options
-                    status = 4
-
-                elif line.startswith('Answer'):
-                    if status != 4:
-                        messages.error(
-                            request, 'Error at %d: Unexpected Answer' % line_cnt)
-                        return HttpResponseRedirect('./')
-                    _, answer = line.split(':')
-                    answer = answer.strip()
-                    problem['answer'] = answer
-                    status = 5
-                
-                elif line.startswith('Tag'):
-                    if status != 5:
-                        messages.error(
-                            request, 'Error at %d: Unexpected Tag' % line_cnt)
-                        return HttpResponseRedirect('./')
-                    _, tag = line.split(':')
-                    tag = tag.strip()
-                    problem['tag'] = tag
-                    problems.append(problem)
-                    problem = {}
-
-                line = source.readline()
-                line_cnt += 1
-
-        # TODO: 把 problems 里的问题存到数据库里
-
-        return HttpResponse('Upload Success!')
 
 
 def problem_set_list_page(request):
@@ -400,7 +297,8 @@ def problem_set_detail_page(request, set_id):
                     question.add_submission_number()
                     msg = {}
                     if question.type == 'single-choice' or question.type == 'multiple-choice':
-                        choice = request.POST.getlist('choice' + str(question._id))
+                        choice = request.POST.getlist(
+                            'choice' + str(question._id))
                         msg['Answer'] = ' '.join(choice)
                         msg['Correct'] = ' '.join(question.correct_options)
                         if set(choice) == set(question.correct_options):
@@ -498,7 +396,8 @@ def problem_set_create_page(request):
 
         question_set = QuestionSet.objects.create(
             name=question_set_name,
-            belongs_to=Group.objects.get(name=group_name) if group_name != 'public' else None,
+            belongs_to=Group.objects.get(
+                name=group_name) if group_name != 'public' else None,
             created_by=request.user
         )
 
@@ -510,7 +409,8 @@ def problem_set_create_page(request):
             for group in Group.objects.all():
                 assign_perm('problem.view_question_set', group, question_set)
         else:
-            assign_perm('problem.view_question_set', Group.objects.get(name=group_name), question_set)
+            assign_perm('problem.view_question_set',
+                        Group.objects.get(name=group_name), question_set)
 
         return HttpResponseRedirect('/problem/set/' + str(question_set.id) + '/' + 'modify/add')
 
@@ -569,7 +469,8 @@ def problem_set_modify_page(request, set_id):
             group_name = request.POST.get('set_type', 'public')
 
             question_set.name = question_set_name
-            question_set.belongs_to = Group.objects.get(name=group_name) if group_name != 'public' else None
+            question_set.belongs_to = Group.objects.get(
+                name=group_name) if group_name != 'public' else None
             question_set.save()
 
             return HttpResponseRedirect('/problem/set/' + str(set_id) + '/')

@@ -180,6 +180,8 @@ def problem_create_page(request):
                 answer=post.get('question_answer', ''),
             )
             q.set_correct_options(post.getlist('place', []))
+            for i in range(3):
+                q.add_tag(post.get(f'tag{i}', ''))
             return HttpResponseRedirect('/problem/' + str(q._id) + '/')
         elif post_type == 'upload-file':
             global upload_questions

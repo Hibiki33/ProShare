@@ -129,7 +129,7 @@
         </div>
 
         <div class="container pt1 pb1">
-            <form action="" method="POST" class="pt1"  id="userForm">
+            <form action="" method="POST" class="pt1"  id="userForm" enctype="multipart/form-data">
             <div class="">
                 <div class="">
                     <div class="">
@@ -412,6 +412,14 @@
                 <p class="mb3">A problem sharing platform. Made by oshi_no_compiler group.</p>
             </div>
         </main>
+
+        {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+        {% endif %}
     
     </body>
 </html>

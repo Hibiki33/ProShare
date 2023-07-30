@@ -1,6 +1,7 @@
 import logging
 from problem.models import Problem, Question, ProblemFile, QuestionTag
 from ProShare.settings import MEDIA_ROOT
+import os
 
 def list_msg(request,
              questions=Question.objects.all(),
@@ -76,7 +77,10 @@ def exist_tag(tag_name):
 def parse_file(file):
 
     if file is None:
-        raise Exception('No file uploaded!')
+        raise Exception('No File Uploaded!')
+    
+    if not os.path.exists(MEDIA_ROOT / file.name):
+        raise Exception('File not found!')
 
     ProblemFile.objects.create(file_name=file.name,
                                file=file)

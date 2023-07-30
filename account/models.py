@@ -4,7 +4,6 @@ from django.utils import timezone
 
 from utils.models import RichTextField, JSONField
 
-from problem.models import QuestionTag
 
 
 # class UserInfo(models.Model):
@@ -105,11 +104,13 @@ class User(AbstractUser):
     class Meta(AbstractUser.Meta):
         swappable = "AUTH_USER_MODEL"
 
-    recommended_questions = models.ManyToManyField("problem.Question", blank=True)
+    recommended_questions = models.ManyToManyField("problem.Question", blank=True, related_name="recommended")
     tag_count = JSONField(default=dict)
     need_update_recommendation = models.BooleanField(default=True)
 
     def get_recommended_questions(self):
+        from problem.models import QuestionTag
+
         if self.need_update_recommendation:
             q = {}
             for tag in self.tag_count:
@@ -122,8 +123,6 @@ class User(AbstractUser):
             self.need_update_recommendation = False
             self.save()
         return self.recommended_questions.all()
-    
-
 
 
 

@@ -316,8 +316,8 @@ class User(AbstractUser):
             for question in q.values():
                 reco.add(question)
             self.recommended_questions.clear()
-            for question in reco:
-                self.recommended_questions.add(question[1])
+            for _ in range(min(10, len(reco))):
+                self.recommended_questions.add(reco.pop())
         return self.recommended_questions.all()
 
 

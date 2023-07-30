@@ -195,6 +195,12 @@
                 </div>
             </div>
             {% endif %}
+            {% comment %} hidden message {% endcomment %}
+            <div class="grid-row pt1 pb1">
+                <div class="grid-column">
+                    <input type="hidden" name="create_type" value="confirm" />
+                </div>
+            </div>
             <div class="grid-row pt1 pb1">
                 <div class="grid-column">
                     <div style="text-align: center" class="pt2">
@@ -203,7 +209,7 @@
                 </div>
                 <div class="grid-column">
                     <div style="text-align: center" class="pt2">
-                        <button type="submit" class="btn btn--outline" name="discard" style="color: red">Discard</button>
+                        <a type="submit" class="btn btn--outline" style="color: red" href="/">Discard</a>
                     </div>
                 </div>
             </div>

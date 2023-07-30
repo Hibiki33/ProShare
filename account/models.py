@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils import timezone
 
-from utils.models import RichTextField
+from utils.models import RichTextField, JSONField
+
+from problem.models import QuestionTag
 
 
 # class UserInfo(models.Model):
@@ -64,6 +66,9 @@ class User(AbstractUser):
 
     def add_wrong_question(self, question):
         self.wrong_questions.add(question)
+        for tag in question.tags.all():
+            self.tag_count[tag.name] = self.tag_count.get(tag.name, 0) + 1
+        self.need_update_recommendation = True
         self.save()
 
     def add_wrong_problem(self, problem):
@@ -73,6 +78,11 @@ class User(AbstractUser):
     def remove_wrong_question(self, question):
         if self.is_wrong_question(question):
             self.wrong_questions.remove(question)
+            for tag in question.tags.all():
+                self.tag_count[tag.name] = self.tag_count.get(tag.name, 1) - 1
+                if self.tag_count[tag.name] == 0:
+                    del self.tag_count[tag.name]
+            self.need_update_recommendation = True
             self.save()
 
     def remove_wrong_problem(self, problem):
@@ -95,13 +105,36 @@ class User(AbstractUser):
     class Meta(AbstractUser.Meta):
         swappable = "AUTH_USER_MODEL"
 
+    recommended_questions = models.ManyToManyField("problem.Question", blank=True)
+    tag_count = JSONField(default=dict)
+    need_update_recommendation = models.BooleanField(default=True)
+
+    def get_recommended_questions(self):
+        if self.need_update_recommendation:
+            q = {}
+            for tag in self.tag_count:
+                for question in QuestionTag.objects.get(name=tag).questions.all():
+                    q[question.id] = q.get(question.id, 0) + 1
+            q = sorted(q.items(), key=lambda x: x[1], reverse=True)
+            self.recommended_questions.clear()
+            for i in range(min(10, len(q))):
+                self.recommended_questions.add(q[i][0])
+            self.need_update_recommendation = False
+            self.save()
+        return self.recommended_questions.all()
+    
+
+
+
 
 class Punlum(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='punlum')
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='punlum')
 
 
 class PunlumNote(models.Model):
     question_id = models.IntegerField()
     question_note = models.TextField(max_length=1024, null=True, blank=True)
 
-    punlum = models.ForeignKey(Punlum, on_delete=models.CASCADE, related_name="notes")
+    punlum = models.ForeignKey(
+        Punlum, on_delete=models.CASCADE, related_name="notes")

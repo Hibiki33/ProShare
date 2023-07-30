@@ -168,7 +168,7 @@ def problem_create_page(request):
         post: QueryDict = request.POST
         logging.debug('create problem request: ')
         logging.info(post)
-        post_type = post.get('upload_type')
+        post_type = post.get('create_type')
         if post_type == 'edit-online':
             q = Question.objects.create(
                 description=post.get('question_description', 'NULL'),

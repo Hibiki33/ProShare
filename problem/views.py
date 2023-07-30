@@ -189,7 +189,8 @@ def problem_create_page(request):
             try:
                 upload_questions = parse_file(file)
             except Exception as e:
-                messages.error(request, e)
+                messages.warning(request, e)
+                logging.info(e)
                 return render(request, 'problem_create.html')
             msg = []
             for question in upload_questions:

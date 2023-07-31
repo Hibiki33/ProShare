@@ -196,8 +196,8 @@ def edit_page(request):
 def home_page(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect('/account/login/')
-    
-    
+
+
     total_answered = request.user.finish_questions_cnt
     total_wrong = request.user.wrong_questions_cnt
 

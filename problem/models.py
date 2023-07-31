@@ -136,6 +136,10 @@ class QuestionTag(models.Model):
         self.questions.add(question)
         self.save()
 
+    # for tranfer of student's ability
+    # chosen in 0, 1, 2, 3, 4, 5, set by admin
+    ability = models.IntegerField(default=0)
+
     # class Meta:
     #     db_table = "question_tag"
     

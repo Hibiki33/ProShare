@@ -338,7 +338,10 @@ def punlum_page(request):
             punlum_notes = punlum.notes.all()
             punlum_items = []
             for note in punlum_notes:
-                question = Question.objects.get(_id=note.question_id)
+                try:
+                    question = Question.objects.get(_id=note.question_id)
+                except Question.DoesNotExist:
+                    continue
                 # print(question.title, question.difficulty)
                 punlum_items.append({
                     # 'question': Question.objects.get(_id=note.question_id),

@@ -233,7 +233,7 @@ def home_page(request):
             number = request.POST.get('question_num')
             tag_name = request.POST.get('tag')
 
-            # delete the questions that dont have tag_name
+            # delete the questions that don't have tag_name
             if tag_name != 'all':
                 for i in range(len(msg) - 1, -1, -1):
                     if msg[i]['Tag1'] != tag_name and msg[i]['Tag2'] != tag_name and msg[i]['Tag3'] != tag_name:
@@ -241,8 +241,18 @@ def home_page(request):
             if len(msg) > int(number):
                 msg = msg[:int(number)]
             return render(request, 'home.html', {'problem_info_list': msg})
+        elif 'exit' in request.POST.keys():
+            if request.user.is_authenticated:
+                group_name = request.POST.get('exit')
+                group = Group.objects.get(name=group_name)
+                group.user_set.remove(request.user)
+                return HttpResponseRedirect('/account/')
+            else:
+                return HttpResponseRedirect('/account/')
+
         else:
             return HttpResponseRedirect('/account/')
+
 
         
 

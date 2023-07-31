@@ -1,9 +1,12 @@
+from math import log2
+
 from django.contrib.auth.models import Group
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 
+from .utils import gen_ability_map
 from problem.models import Question
 from .models import Punlum, PunlumNote
 import uuid
@@ -93,10 +96,10 @@ def register_page(request):
             return HttpResponseRedirect('/account/register/')
 
         user = User.objects.create_user(username=username,
-                                 password=password,
-                                 email=email,
-                                 quote='',
-                                 phone='', )
+                                        password=password,
+                                        email=email,
+                                        quote='',
+                                        phone='', )
 
         Punlum.objects.create(user=user)
 
@@ -186,6 +189,16 @@ def home_page(request):
             #     print(q.title)
             total_answered = request.user.finish_questions_cnt
             total_wrong = request.user.wrong_questions_cnt
+
+            user_ability = gen_ability_map(request.user, lack=True)
+
+            average_ability = [0, 0, 0, 0, 0, 0]
+            for user in User.objects.all():
+                lack_ability = gen_ability_map(user, lack=True)
+                for i in range(6):
+                    average_ability[i] += lack_ability[i]
+            average_ability = [i / len(User.objects.all()) for i in average_ability]
+
             return render(request, 'home.html', {
                 'username': request.user.username,
                 'email': request.user.email,
@@ -195,6 +208,8 @@ def home_page(request):
                 'total_answered': total_answered,
                 'wrong_rate': format((total_answered - total_wrong) / total_answered * 100, '.2f')
                 if total_answered != 0 else 0,
+                'user_ability': user_ability,
+                'average_ability': average_ability,
             })
         else:
             return HttpResponseRedirect('/account/login/')
@@ -304,13 +319,3 @@ def punlum_page(request):
 
         request.method = 'GET'
         return punlum_page(request)
-
-
-def ability_page(request):
-    if request.method == 'GET':
-        pass
-
-    elif request.method == 'POST':
-        pass
-
-

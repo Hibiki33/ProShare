@@ -138,6 +138,7 @@ class QuestionTag(models.Model):
 
     # for tranfer of student's ability
     # chosen in 0, 1, 2, 3, 4, 5, set by admin
+    # basic knowledge, logical thinking, problem skills, detailed analysis, summarization, comprehensive ability
     ability = models.IntegerField(default=0)
 
     # class Meta:

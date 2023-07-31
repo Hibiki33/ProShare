@@ -19,7 +19,10 @@ import logging
 
 def problem_main_page(request):
     if request.method == 'GET':
-        return render(request, 'problem_list.html', {'problem_info_list': list_msg(request)})
+        return render(request, 'problem_list.html', {
+            'problem_info_list': list_msg(request),
+            'tag_list': [tag.name for tag in QuestionTag.objects.all()]
+        })
     elif request.method == 'POST':
         is_op = request.POST.get('is_op', 'no')
 

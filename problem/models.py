@@ -129,7 +129,7 @@ class QuestionSet(models.Model):
 
 
 class QuestionTag(models.Model):
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, primary_key=True)
     questions = models.ManyToManyField(Question)
 
     def add_question(self, question):

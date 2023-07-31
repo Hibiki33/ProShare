@@ -226,13 +226,26 @@ def problem_create_page(request):
             logging.info(msg)
             return render(request, 'problem_file_preview.html', {'problem_info_list': msg})
         elif post_type == 'confirm':
+            diff_table = {
+                '0': 'Easy',
+                '1': 'Medium',
+                '2': 'Hard',
+                '3': 'Expert',
+                '4': 'Master',
+                '5': 'Re-Master',
+            }
+            type_table = {
+                '0': 'single-choice',
+                '1': 'multiple-choice',
+                '2': 'fill-blank',
+            }
             for question in upload_questions:
                 q = Question.objects.create(
                     description=question['description'],
                     title=question['title'],
-                    difficulty=question['difficulty'],
+                    difficulty=diff_table[question['difficulty']],
                     created_by=request.user,
-                    type=question['type'],
+                    type=type_table[question['type']],
                     options=question['options'],
                     answer=question['answer'],
                     correct_options=question['answer'].split(),

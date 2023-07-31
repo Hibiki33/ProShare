@@ -24,11 +24,11 @@ class Question(models.Model):
 
     def add_submission_number(self):
         self.submission_number = models.F("submission_number") + 1
-        self.save()
+        self.save(update_fields=["submission_number"])
 
     def add_ac_number(self):
         self.passed_number = models.F("passed_number") + 1
-        self.save()
+        self.save(update_fields=["passed_number"])
 
     def set_correct_options(self, place):
         self.correct_options = [self.options[ord(i) - ord('A')] for i in place]

@@ -219,7 +219,7 @@ def problem_create_page(request):
                     "Answer": question['answer'],
                 })
                 if 'options' in question.keys():
-                    msg.append({'Options': question['options']})
+                    msg[-1]['Options'] = question['options']
                 tags = question['tags']
                 for i in range(3):
                     msg[-1][f'Tag{i + 1}'] = tags[i] if len(tags) > i else ''

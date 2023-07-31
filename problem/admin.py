@@ -3,7 +3,6 @@ from django.utils.html import format_html
 
 from .models import ProblemFile, Problem, Question, QuestionTag, QuestionSet
 
-admin.site.site_header = 'Problem Admin'
 # admin.site.register(ProblemFile)
 # admin.site.register(Problem)
 # admin.site.register(Question)

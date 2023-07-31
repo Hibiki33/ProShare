@@ -199,7 +199,6 @@ def home_page(request):
                     average_ability[i] += lack_ability[i]
             average_ability = [i / len(User.objects.all()) for i in average_ability]
 
-
             return render(request, 'home.html', {
                 'username': request.user.username,
                 'email': request.user.email,

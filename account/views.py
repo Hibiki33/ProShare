@@ -194,6 +194,10 @@ def edit_page(request):
 
 
 def home_page(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/account/login/')
+    
+    
     total_answered = request.user.finish_questions_cnt
     total_wrong = request.user.wrong_questions_cnt
 
@@ -226,42 +230,36 @@ def home_page(request):
         'tag_list': [tag.name for tag in QuestionTag.objects.all()],
     }
     if request.method == 'GET':
-        if request.user.is_authenticated:
-            # test if wrong questions can be got
-            # for q in request.user.wrong_questions.all():
-            #     print(q.title)
-            # for q in request.user.get_wrong_questions():
-            #     print(q.title)
-            total_answered = request.user.finish_questions_cnt
-            total_wrong = request.user.wrong_questions_cnt
+        # test if wrong questions can be got
+        # for q in request.user.wrong_questions.all():
+        #     print(q.title)
+        # for q in request.user.get_wrong_questions():
+        #     print(q.title)
+        total_answered = request.user.finish_questions_cnt
+        total_wrong = request.user.wrong_questions_cnt
 
-            user_ability = gen_ability_map(request.user, lack=True)
-            for i in range(6):
-                user_ability[i] = 0.2 if user_ability[i] < 0.2 else user_ability[i]
-                user_ability[i] = {'val': user_ability[i]}
+        user_ability = gen_ability_map(request.user, lack=True)
+        for i in range(6):
+            user_ability[i] = 0.2 if user_ability[i] < 0.2 else user_ability[i]
+            user_ability[i] = {'val': user_ability[i]}
 
-            average_ability = [0, 0, 0, 0, 0, 0]
-            for user in User.objects.all():
-                ability = gen_ability_map(user, lack=True)
-                for i in range(6):
-                    average_ability[i] += ability[i]
-            average_ability = [i / len(User.objects.all())
-                               for i in average_ability]
+        average_ability = [0, 0, 0, 0, 0, 0]
+        for user in User.objects.all():
+            ability = gen_ability_map(user, lack=True)
             for i in range(6):
-                average_ability[i] = 0.2 if average_ability[i] < 0.2 else average_ability[i]
-                average_ability[i] = {'val': average_ability[i]}
-            return render(request, 'home.html', msg)
-        else:
-            return HttpResponseRedirect('/account/login/')
+                average_ability[i] += ability[i]
+        average_ability = [i / len(User.objects.all())
+                            for i in average_ability]
+        for i in range(6):
+            average_ability[i] = 0.2 if average_ability[i] < 0.2 else average_ability[i]
+            average_ability[i] = {'val': average_ability[i]}
+        return render(request, 'home.html', msg)
     elif request.method == 'POST':
         if 'logout' in request.POST.keys():
-            if request.user.is_authenticated:
-                group_name = request.POST.get('exit')
-                group = Group.objects.get(name=group_name)
-                group.user_set.remove(request.user)
-                return HttpResponseRedirect('/account/')
-            else:
-                return HttpResponseRedirect('/account/login/')
+            group_name = request.POST.get('exit')
+            group = Group.objects.get(name=group_name)
+            group.user_set.remove(request.user)
+            return HttpResponseRedirect('/account/')
         elif 'generate' in request.POST.keys():
             number = request.POST.get('question_num', '10')
             tag_name = request.POST.get('tag')
@@ -274,13 +272,10 @@ def home_page(request):
             msg['selected_tag'] = tag_name
             return render(request, 'home.html', msg)
         elif 'exit' in request.POST.keys():
-            if request.user.is_authenticated:
-                group_name = request.POST.get('exit')
-                group = Group.objects.get(name=group_name)
-                group.user_set.remove(request.user)
-                return HttpResponseRedirect('/account/')
-            else:
-                return HttpResponseRedirect('/account/')
+            group_name = request.POST.get('exit')
+            group = Group.objects.get(name=group_name)
+            group.user_set.remove(request.user)
+            return HttpResponseRedirect('/account/')
 
         else:
             return HttpResponseRedirect('/account/')

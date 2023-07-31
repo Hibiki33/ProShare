@@ -210,25 +210,16 @@ def problem_create_page(request):
 
             msg = []
             for question in upload_questions:
+                msg.append({
+                    "ID": -1,
+                    "Name": question['title'],
+                    "Diff": question['difficulty'],
+                    "Type": question['type'],
+                    "Description": question['description'],
+                    "Answer": question['answer'],
+                })
                 if 'options' in question.keys():
-                    msg.append({
-                        "ID": -1,
-                        "Name": question['title'],
-                        "Diff": question['difficulty'],
-                        "Type": question['type'],
-                        "Description": question['description'],
-                        "Options": question['options'],
-                        "Answer": question['answer'],
-                    })
-                else:
-                    msg.append({
-                        "ID": -1,
-                        "Name": question['title'],
-                        "Diff": question['difficulty'],
-                        "Type": question['type'],
-                        "Description": question['description'],
-                        "Answer": question['answer'],
-                    })
+                    msg.append({'Options': question['options']})
                 tags = question['tags']
                 for i in range(3):
                     msg[-1][f'Tag{i + 1}'] = tags[i] if len(tags) > i else ''

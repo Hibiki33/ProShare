@@ -97,7 +97,7 @@ def parse_file(file):
             if line.startswith('Title'):
                 if status != 0:
                     raise Exception('Error at %d: Unexpected Title' % line_cnt)
-                _, title = line.split(':')
+                title = ''.join(line.split(':')[1:])
                 title = title.strip()
                 problem['title'] = title
                 status = 1
@@ -105,7 +105,7 @@ def parse_file(file):
             elif line.startswith('Description'):
                 if status != 1:
                     raise Exception('Error at %d: Unexpected Description' % line_cnt)
-                _, description = line.split(':')
+                description = ''.join(line.split(':')[1:])
                 description = description.strip()
                 problem['description'] = description
                 status = 2
@@ -123,7 +123,7 @@ def parse_file(file):
             elif line.startswith('Type'):
                 if status != 3:
                     raise Exception('Error at %d: Unexpected Type' % line_cnt)
-                _, _type = line.split(':')
+                _type = ''.join(line.split(':')[1:])
                 _type = _type.strip()
                 if _type not in ['0', '1', '2']:
                     raise Exception('Error at %d: Invalid Type' % line_cnt)
@@ -134,7 +134,7 @@ def parse_file(file):
                     if not line.startswith('Options'):
                         raise Exception('Error at %d: Unexpected Options' % line_cnt)
                     # options = list(line.split())
-                    _, options = line.split(':')
+                    options = ''.join(line.split(':')[1:])
                     options = list(re.split(r'A.|B.|C.|D.|:', options))
                     options = options[1:]
                     print(options)
@@ -147,7 +147,7 @@ def parse_file(file):
             elif line.startswith('Answer'):
                 if status != 4:
                     raise Exception('Error at %d: Unexpected Answer' % line_cnt)
-                _, answer = line.split(':')
+                answer = ''.join(line.split(':')[1:])
                 answer = answer.strip()
                 problem['answer'] = answer
                 status = 5
@@ -155,7 +155,7 @@ def parse_file(file):
             elif line.startswith('Tags'):
                 if status != 5:
                     raise Exception('Error at %d: Unexpected Tag' % line_cnt)
-                _, tags = line.split(':')
+                tags = ''.join(line.split(':')[1:])
                 tags = [x.strip() for x in tags.split()]
                 # for tag in tags:
                 #     if not exist_tag(tag):

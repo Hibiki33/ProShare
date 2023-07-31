@@ -108,9 +108,12 @@
                     <div class="grid-column">
                         <div class="select mb1">
                             <select name="tag">
-                                <option selected="selected" value="all">All tags</option>
+                                <option value="all">All tags</option>
                                 {% for tag in tag_list %}
-                                <option value="{{ tag }}">{{ tag }}</option>
+                                {% if tag.is_selected %}
+                                <option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
+                                {% else %}
+                                <option value="{{ tag.name }}">{{ tag.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>

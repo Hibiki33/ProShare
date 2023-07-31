@@ -20,6 +20,7 @@ def gen_ability_map(user, lack=False):
         total_ability = 0
         for i in user_lack_ability:
             total_ability += i
+        total_ability += 0.2
         user_ability = [log2((total_ability - i) / total_ability + 1) for i in user_lack_ability]
 
         return user_ability

@@ -19,8 +19,7 @@ import logging
 
 def problem_main_page(request):
     if request.method == 'GET':
-        return render(request, 'problem_list.html', {
-            'problem_info_list': list_msg(request, questions=request.user.get_recommended_questions())})
+        return render(request, 'problem_list.html', {'problem_info_list': list_msg(request)})
     elif request.method == 'POST':
         is_op = request.POST.get('is_op', 'no')
 
@@ -167,7 +166,7 @@ global upload_questions
 
 def problem_create_page(request):
     if request.method == 'GET':
-        return render(request, 'problem_create.html')
+        return render(request, 'problem_create.html', {'tag_list': [tag.name for tag in QuestionTag.objects.all()]})
     elif request.method == 'POST':
         post: QueryDict = request.POST
         logging.debug('create problem request: ')

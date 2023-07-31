@@ -39,7 +39,6 @@ class Question(models.Model):
         if tag is None:
             return
         self.tags.add(tag)
-        self.save(update_fields=["tags"])
         tag.add_question(self)
 
     # class Meta:

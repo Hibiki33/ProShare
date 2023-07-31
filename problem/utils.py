@@ -173,3 +173,7 @@ def parse_file(file):
     logging.info(problems)
 
     return problems
+
+
+def new_tag(tagname):
+    QuestionTag.objects.create(name=tagname)

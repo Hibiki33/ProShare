@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 
 from .utils import gen_ability_map
-from problem.models import Question
+from problem.models import Question, QuestionSet
 from .models import Punlum, PunlumNote
 import uuid
 import logging
@@ -284,10 +284,17 @@ def home_page(request):
 def group_detail_page(request, group_name):
     if request.method == 'GET':
         if request.user.is_authenticated:
+            group_question_sets = []
             group = Group.objects.get(name=group_name)
+            for question_set in group.question_sets.all():
+                group_question_sets.append(question_set)
+            for question_set in QuestionSet.objects.all():
+                if question_set.belongs_to is None:
+                    group_question_sets.append(question_set)
+            group_question_set = list(set(group_question_sets))
             return render(request, 'group_detail.html', {
                 'group_name': group.name,
-                'group_question_sets': group.question_sets.all(),
+                'group_question_sets': group_question_set,
             })
         else:
             return HttpResponseRedirect('/account/login/')

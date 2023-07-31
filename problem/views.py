@@ -1,3 +1,5 @@
+import os
+
 from django.db.models import QuerySet
 from guardian.shortcuts import assign_perm
 from ProShare.settings import MEDIA_ROOT
@@ -18,7 +20,7 @@ import logging
 def problem_main_page(request):
     if request.method == 'GET':
         return render(request, 'problem_list.html', {
-            'problem_info_list': list_msg(request,questions=request.user.get_recommended_questions())})
+            'problem_info_list': list_msg(request, questions=request.user.get_recommended_questions())})
     elif request.method == 'POST':
         is_op = request.POST.get('is_op', 'no')
 
@@ -159,7 +161,9 @@ def problem_detail_page(request, id):
         else:
             raise FileNotFoundError
 
+
 global upload_questions
+
 
 def problem_create_page(request):
     if request.method == 'GET':
@@ -185,7 +189,18 @@ def problem_create_page(request):
             return HttpResponseRedirect('/problem/' + str(q._id) + '/')
         elif post_type == 'upload-file':
             global upload_questions
-            file = request.FILES.get('file', None)
+            file = request.FILES.get('files')
+
+            try:
+                os.remove(MEDIA_ROOT / file.name)
+            except FileNotFoundError:
+                pass
+
+            ProblemFile.objects.create(
+                file=file,
+                file_name=file.name,
+            )
+
             try:
                 upload_questions = parse_file(file)
             except Exception as e:

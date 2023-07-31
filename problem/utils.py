@@ -2,6 +2,8 @@ import logging
 from problem.models import Problem, Question, ProblemFile, QuestionTag
 from ProShare.settings import MEDIA_ROOT
 import os
+import re
+
 
 def list_msg(request,
              questions=Question.objects.all(),
@@ -82,11 +84,11 @@ def parse_file(file):
     if not os.path.exists(MEDIA_ROOT / file.name):
         raise Exception('File not found!')
 
-    ProblemFile.objects.create(file_name=file.name,
-                               file=file)
+    # ProblemFile.objects.create(file_name=file.name,
+    #                            file=file)
 
     problems = []
-    with open(MEDIA_ROOT / file.name, 'r+') as source:
+    with open(MEDIA_ROOT / file.name, 'r+', encoding='utf-8') as source:
         line = source.readline()
         line_cnt = 1
         status = 0
@@ -113,7 +115,7 @@ def parse_file(file):
                     raise Exception('Error at %d: Unexpected Difficulty' % line_cnt)
                 _, difficulty = line.split(':')
                 difficulty = difficulty.strip()
-                if difficulty not in ['Easy', 'Middle', 'Hard']:
+                if difficulty not in ['0', '1', '2', '3', '4', '5']:
                     raise Exception('Error at %d: Invalid Difficulty' % line_cnt)
                 problem['difficulty'] = difficulty
                 status = 3
@@ -123,16 +125,21 @@ def parse_file(file):
                     raise Exception('Error at %d: Unexpected Type' % line_cnt)
                 _, _type = line.split(':')
                 _type = _type.strip()
-                if type not in ['0', '1', '2']:
+                if _type not in ['0', '1', '2']:
                     raise Exception('Error at %d: Invalid Type' % line_cnt)
                 problem['type'] = _type
 
-                if type == '0' or type == '1':
+                if _type == '0' or _type == '1':
                     line = source.readline()
                     if not line.startswith('Options'):
                         raise Exception('Error at %d: Unexpected Options' % line_cnt)
-                    # TODO: 懒得处理 A. 这种了
-                    options = list(line.split())
+                    # options = list(line.split())
+                    _, options = line.split(':')
+                    options = list(re.split(r'A.|B.|C.|D.|:', options))
+                    options = options[1:-1]
+                    # print('1', end='')
+                    # print(options)
+
                     problem['options'] = options
                 status = 4
 
@@ -148,14 +155,15 @@ def parse_file(file):
                 if status != 5:
                     raise Exception('Error at %d: Unexpected Tag' % line_cnt)
                 _, tags = line.split(':')
-                tags = tags.strip()
-                tags = tags.split()
+                tags = tags.split().strip()
                 for tag in tags:
                     if not exist_tag(tag):
                         raise Exception('Error at %d: Invalid Tag' % line_cnt)
                 problem['tags'] = tags
                 problems.append(problem)
                 problem = {}
+                line = source.readline()
+                line_cnt += 1
 
             line = source.readline()
             line_cnt += 1

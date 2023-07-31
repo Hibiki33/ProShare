@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from problem.utils import list_msg
+from django.contrib.auth.models import AnonymousUser
 
 
 def main_view(request):
-    return render(request, 'main.html', {'problem_info_list': list_msg(request)})
+    if isinstance(request.user, AnonymousUser):
+        return render(request, 'main.html', {'problem_info_list': list_msg(request)})
+    return render(request, 'main.html', {'problem_info_list': 
+        list_msg(request, questions=request.user.get_recommended_questions())})
     # return render(request, 'abort_main.html')
 
 

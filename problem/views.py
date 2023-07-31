@@ -207,6 +207,7 @@ def problem_create_page(request):
                 messages.warning(request, e)
                 logging.info(e)
                 return render(request, 'problem_create.html')
+
             msg = []
             for question in upload_questions:
                 msg.append({
@@ -220,11 +221,10 @@ def problem_create_page(request):
                 })
                 tags = question['tags']
                 for i in range(3):
-                    msg[-1][f'Tag{i + 1}'] = tags[i].name if len(
-                        tags) > i else ''
+                    msg[-1][f'Tag{i + 1}'] = tags[i] if len(tags) > i else ''
             logging.debug('problem_info_list: ')
             logging.info(msg)
-            return render(request, 'file_upload_preview.html', {'problem_info_list': msg})
+            return render(request, 'problem_file_preview.html', {'problem_info_list': msg})
         elif post_type == 'confirm':
             for question in upload_questions:
                 q = Question.objects.create(

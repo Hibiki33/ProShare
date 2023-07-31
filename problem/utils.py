@@ -136,7 +136,8 @@ def parse_file(file):
                     # options = list(line.split())
                     _, options = line.split(':')
                     options = list(re.split(r'A.|B.|C.|D.|:', options))
-                    options = options[1:-1]
+                    options = options[1:]
+                    print(options)
                     # print('1', end='')
                     # print(options)
 
@@ -155,10 +156,10 @@ def parse_file(file):
                 if status != 5:
                     raise Exception('Error at %d: Unexpected Tag' % line_cnt)
                 _, tags = line.split(':')
-                tags = tags.split().strip()
-                for tag in tags:
-                    if not exist_tag(tag):
-                        raise Exception('Error at %d: Invalid Tag' % line_cnt)
+                tags = [x.strip() for x in tags.split()]
+                # for tag in tags:
+                #     if not exist_tag(tag):
+                #         raise Exception('Error at %d: Invalid Tag' % line_cnt)
                 problem['tags'] = tags
                 problems.append(problem)
                 problem = {}

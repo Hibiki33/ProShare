@@ -309,9 +309,9 @@ class User(AbstractUser):
             q = {}
             for tag in self.tag_count:
                 for question in QuestionTag.objects.get(name=tag).questions.all():
-                    q[question.id] = (q.get(question.id, 0)[0] + 1, question)
+                    q[question._id] = (q.get(question.id, 0)[0] + 1, question)
             for question in self.get_wrong_questions():
-                q[question.id] = downgrade(q.get(question.id, 0))
+                q[question._id] = downgrade(q.get(question._id, 0))
             reco = Recommendation()
             for question in q.values():
                 reco.add(question)

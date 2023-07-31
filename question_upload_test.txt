@@ -2,6 +2,6 @@ Title:q1_7
 Description:Regarding logical operators in Python, which of the following option(s) is correct?
 Difficulty:0
 Type:1
-Options:A.The "or" operator returns False only when both operands are False. B.The "and" operator returns True only when both operands are True. C.The "not" operator can be used with any data type.。 D.The "or" and "and" operators can have operands of any data type.
+Options:A.The "or" operator returns False only when both operands are False. B.The "and" operator returns True only when both operands are True. C.The "not" operator can be used with any data type. D.The "or" and "and" operators can have operands of any data type.
 Answer:ABCD
-tags:python basic programming
+Tags:python basic programming

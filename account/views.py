@@ -262,6 +262,15 @@ def home_page(request):
             msg['problem_info_list'] = problem_info_list
             msg['selected_tag'] = tag_name
             return render(request, 'home.html', msg)
+        elif 'exit' in request.POST.keys():
+            if request.user.is_authenticated:
+                group_name = request.POST.get('exit')
+                group = Group.objects.get(name=group_name)
+                group.user_set.remove(request.user)
+                return HttpResponseRedirect('/account/')
+            else:
+                return HttpResponseRedirect('/account/')
+
         else:
             return HttpResponseRedirect('/account/')
 

@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils import timezone
 
 from utils.models import RichTextField, JSONField
+from .utils import downgrade
 
 
 # class UserInfo(models.Model):
@@ -108,7 +109,7 @@ class User(AbstractUser):
     tag_count = JSONField(default=dict)
     memorization_recommendation = models.BooleanField(default=True)
 
-    def get_recommended_questions(self):
+    def get_recommended_questions(self, num=5, selected_tag='all', cal_weight=downgrade):
         class Recommendation:
             def __init__(self, iterable=[], _load=200):
                 values = sorted(iterable)
@@ -298,26 +299,27 @@ class User(AbstractUser):
             def __repr__(self):
                 return f'Recommendation({list(self)})'
 
-        def downgrade(wei):
-            from math import ceil, log2
-            if wei <= 0:
-                return 0
-            return wei - max(int(ceil(pow(wei, 1 / 2))), int(log2(wei) + 1))
-
         from problem.models import QuestionTag
-        if self.memorization_recommendation:
+        if cal_weight != downgrade or selected_tag != 'all' or num != 5 or self.memorization_recommendation:            
             q = {}
             for tag in self.tag_count:
                 for question in QuestionTag.objects.get(name=tag).questions.all():
-                    q[question._id] = q.get(question._id, 0) + 1
+                    if selected_tag == 'all' or question.has_tag(selected_tag):
+                        q[question._id] = q.get(question._id, 0) + self.tag_count[tag]
             for question in self.get_wrong_questions():
-                q[question._id] = downgrade(q.get(question._id, 0))
+                if selected_tag == 'all' or question.has_tag(selected_tag):
+                    q[question._id] = cal_weight(q.get(question._id, 0))
             reco = Recommendation()
             for question in q.items():
                 reco.add((question[1], question[0]))
-            self.recommended_questions.clear()
-            for _ in range(min(10, len(reco))):
-                self.recommended_questions.add(reco.pop()[1])
+
+            if self.memorization_recommendation:
+                self.recommended_questions.clear()
+                for _ in range(min(num, len(reco))):
+                    self.recommended_questions.add(reco.pop()[1])
+            else:
+                return [reco.pop()[1] for _ in range(min(num, len(reco)))]
+        self.memorization_recommendation = False
         return self.recommended_questions.all()
 
 

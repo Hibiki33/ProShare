@@ -78,7 +78,8 @@ def register_page(request):
 
         if password != confirm_password:
             # return render(request, 'abort_register.html', {'message': 'password and confirm_password is not same!'})
-            messages.error(request, 'password and confirm_password is not same!')
+            messages.error(
+                request, 'password and confirm_password is not same!')
             return HttpResponseRedirect('/account/register/')
 
         if not username or not password or not email:
@@ -133,10 +134,12 @@ def change_password_page(request):
             return HttpResponseRedirect('/account/change_password/')
 
         if new_password != confirm_password:
-            messages.error(request, 'new_password and confirm_password is not same!')
+            messages.error(
+                request, 'new_password and confirm_password is not same!')
             return HttpResponseRedirect('/account/change_password/')
 
-        user = authenticate(request, username=request.user.username, password=old_password)
+        user = authenticate(
+            request, username=request.user.username, password=old_password)
 
         if user:
             user.set_password(new_password)
@@ -180,6 +183,37 @@ def edit_page(request):
 
 
 def home_page(request):
+    total_answered = request.user.finish_questions_cnt
+    total_wrong = request.user.wrong_questions_cnt
+
+    user_ability = gen_ability_map(request.user, lack=True)
+    for i in range(6):
+        user_ability[i] = 0.2 if user_ability[i] < 0.2 else user_ability[i]
+        user_ability[i] = {'val': user_ability[i]}
+
+    average_ability = [0, 0, 0, 0, 0, 0]
+    for user in User.objects.all():
+        ability = gen_ability_map(user, lack=True)
+        for i in range(6):
+            average_ability[i] += ability[i]
+    average_ability = [i / len(User.objects.all()) for i in average_ability]
+    for i in range(6):
+        average_ability[i] = 0.2 if average_ability[i] < 0.2 else average_ability[i]
+        average_ability[i] = {'val': average_ability[i]}
+    from problem.models import QuestionTag
+    msg = {
+        'username': request.user.username,
+        'email': request.user.email,
+        'phone': request.user.phone,
+        'quote': request.user.quote,
+        'groups': request.user.groups.all(),
+        'total_answered': total_answered,
+        'wrong_rate': format((total_answered - total_wrong) / total_answered * 100, '.2f')
+        if total_answered != 0 else 0,
+        'user_ability': user_ability,
+        'average_ability': average_ability,
+        'tag_list': [tag.name for tag in QuestionTag.objects.all()],
+    }
     if request.method == 'GET':
         if request.user.is_authenticated:
             # test if wrong questions can be got
@@ -200,23 +234,12 @@ def home_page(request):
                 ability = gen_ability_map(user, lack=True)
                 for i in range(6):
                     average_ability[i] += ability[i]
-            average_ability = [i / len(User.objects.all()) for i in average_ability]
+            average_ability = [i / len(User.objects.all())
+                               for i in average_ability]
             for i in range(6):
                 average_ability[i] = 0.2 if average_ability[i] < 0.2 else average_ability[i]
                 average_ability[i] = {'val': average_ability[i]}
-
-            return render(request, 'home.html', {
-                'username': request.user.username,
-                'email': request.user.email,
-                'phone': request.user.phone,
-                'quote': request.user.quote,
-                'groups': request.user.groups.all(),
-                'total_answered': total_answered,
-                'wrong_rate': format((total_answered - total_wrong) / total_answered * 100, '.2f')
-                if total_answered != 0 else 0,
-                'user_ability': user_ability,
-                'average_ability': average_ability,
-            })
+            return render(request, 'home.html', msg)
         else:
             return HttpResponseRedirect('/account/login/')
     elif request.method == 'POST':
@@ -229,22 +252,18 @@ def home_page(request):
             else:
                 return HttpResponseRedirect('/account/login/')
         elif 'generate' in request.POST.keys():
-            msg = list_msg(request, questions=request.user.get_recommended_questions())
-            number = request.POST.get('question_num')
+            number = request.POST.get('question_num', '10')
             tag_name = request.POST.get('tag')
-
-            # delete the questions that dont have tag_name
-            if tag_name != 'all':
-                for i in range(len(msg) - 1, -1, -1):
-                    if msg[i]['Tag1'] != tag_name and msg[i]['Tag2'] != tag_name and msg[i]['Tag3'] != tag_name:
-                        del msg[i]
-            if len(msg) > int(number):
-                msg = msg[:int(number)]
-            return render(request, 'home.html', {'problem_info_list': msg})
+            problem_info_list = list_msg(request, questions=request.user.get_recommended_questions(
+                num=int(number),
+                selected_tag=tag_name,
+                cal_weight=lambda x: x * 2
+            ))
+            msg['problem_info_list'] = problem_info_list
+            msg['selected_tag'] = tag_name
+            return render(request, 'home.html', msg)
         else:
             return HttpResponseRedirect('/account/')
-
-        
 
 
 def group_detail_page(request, group_name):

@@ -1,9 +1,3 @@
-from math import log2
-
-from django.contrib.auth import get_user_model
-from problem.models import Question, QuestionTag
-User = get_user_model()
-
 
 def gen_ability_map(user, lack=False):
     wrong_questions = user.get_wrong_questions()
@@ -26,3 +20,9 @@ def gen_ability_map(user, lack=False):
         return user_ability
 
     return related_ability
+
+def downgrade(wei):
+    from math import ceil, log2
+    if wei <= 0:
+        return 0
+    return wei - max(int(ceil(pow(wei, 1 / 2))), int(log2(wei) + 1))

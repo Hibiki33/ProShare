@@ -36,10 +36,15 @@ class Question(models.Model):
 
     def add_tag(self, tagname):
         tag = QuestionTag.objects.get(name=tagname)
-        if tag is None:
-            return
         self.tags.add(tag)
         tag.add_question(self)
+
+    def has_tag(self, tagname):
+        try:
+            tag = QuestionTag.objects.get(name=tagname)
+        except QuestionTag.DoesNotExist:
+            return False
+        return tag in self.tags.all()
 
     # class Meta:
     #     db_table = "question"

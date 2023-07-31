@@ -238,7 +238,9 @@ def problem_create_page(request):
                     correct_options=question['answer'].split(),
                 )
                 for tag in question['tags']:
-                    q.add_tag(tag)
+                    if QuestionTag.objects.filter(name=tag).exists():
+                        q.add_tag(tag)
+                    # q.add_tag(tag)
             return HttpResponseRedirect('/problem/')
 
 

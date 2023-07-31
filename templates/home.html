@@ -16,6 +16,8 @@
 
     <!-- Web fonts -->
     <link href="/static/css/font1.css" rel="stylesheet">
+
+    <script src="/static/js/echarts.js"></script>
 </head>
 <!-- The compiled JavaScript file -->
 <script src="/static/js/production.js"></script>
@@ -76,11 +78,12 @@
 </header>
 
 <body class="has-animations">
+
     <div class="container pt3 pb1">
 
         <div class="grid-row">
             <div class="grid-column mt3 mb1 span-8">
-                <div class="">
+                <div class="pb2">
                     <h2 class="border--bottom pb1">
                         {{ username }}'s Home
                     </h2>
@@ -88,26 +91,11 @@
                     <p class="pt1">E-MAIL: {{ email }}</p>
                     <p class="pt1">TEL: {{ phone }}</p>
                     <br>
+                    <p><a class="btn" style="color:black;" href="./edit">Edit Profile</a></p>
                 </div>
-                <p><a class="btn" style="color:black;" href="./edit">Edit Profile</a></p>
-                <div class="pt2 mb2">
-                    <h3 class="bold text-light-gray pt1 border--top">Groups:</h3>
-                    <form action="" method="POST">
-                    {% comment %} check if there's no groups {% endcomment %}
-                    {% if groups %}
-                    {% for group in groups %}
-                        <div class="grid-row pt1">
-                            <a class="italic text--gray grid-column span-2 link" href="/account/group/{{ group.name }}">{{ group }}</a>
-                            <button type="submit" name="exit" value="{{ group.name }}" class="btn btn--default btn--sm grid-column span-1">
-                                Quit
-                            </button>
-                        </div>
-                    {% endfor %}
-                    {% else %}
-                        <p class="italic text--gray">You have not joined any groups yet.</p>
-                    {% endif %}
-                    </form>
-                </div>
+                
+                <div class="border--top pt1"></div>
+                <div id="chart" style="width: 600px;height:400px;"></div>
 
                 <h3 class="bold text-light-gray pt1 border--top">Wrong Diary:</h3>
                 <form action="" method="POST">
@@ -189,6 +177,24 @@
                     <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./change_password/">Change Password</a></p>
                     <p><a style="color:rgb(28, 28, 146);text-decoration:none;font-weight: 800;" href="./logout/">Logout</a></p>
                 </div>
+                <div class="mb2">
+                    <h3 class="bold text-light-gray pt1 border--top">Groups:</h3>
+                    <form action="" method="POST">
+                    {% comment %} check if there's no groups {% endcomment %}
+                    {% if groups %}
+                    {% for group in groups %}
+                        <div class="grid-row pt1">
+                            <a class="italic text--gray grid-column span-2 link" href="/account/group/{{ group.name }}">{{ group }}</a>
+                            <button type="submit" name="exit" value="{{ group.name }}" class="btn btn--default btn--sm grid-column span-1">
+                                Quit
+                            </button>
+                        </div>
+                    {% endfor %}
+                    {% else %}
+                        <p class="italic text--gray">You have not joined any groups yet.</p>
+                    {% endif %}
+                    </form>
+                </div>
             </div>
         </div>
         {% comment %} <div class="grid-row">
@@ -207,6 +213,49 @@
             </div>
         </div> {% endcomment %}
     </div>
+    <script type="text/javascript">
+        var chartDom = document.getElementById('chart');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+        title: {
+            text: 'Ability Diagram'
+        },
+        legend: {
+            data: ['Yours', 'Average']
+        },
+        radar: {
+            // shape: 'circle',
+            indicator: [
+            { name: 'val1', max: 1 },
+            { name: 'val2', max: 1 },
+            { name: 'val3', max: 1 },
+            { name: 'val4', max: 1 },
+            { name: 'val5', max: 1 },
+            { name: 'val6', max: 1 }
+            ]
+        },
+        series: [
+            {
+            name: 'Budget vs spending',
+            type: 'radar',
+            data: [
+                {
+                value: [0.8, 0.6, 0.5, 0.1, 0.3, 1.0],
+                name: 'Yours'
+                },
+                {
+                value: [0.7, 0.65, 0.15, 0.33, 0.53, 0.99],
+                name: 'Average'
+                }
+            ]
+            }
+        ]
+        };
+
+        myChart.setOption(option);
+    </script>
 </body>
 </html>
 

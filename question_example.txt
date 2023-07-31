@@ -42,7 +42,7 @@ Title:q1_6
 Description:Regarding string formatting in Python, which of the following option(s) is correct?
 Difficulty:0
 Type:1
-Options:A.String formatting can be done using the % operator. B.String formatting can be done using the str.format() function. C.String formatting can be done using f-strings. D.All versions of Python support formatted strings.
+Options:A.String formatting can be done using the % operator. B.String formatting can be done using the str.format() function. C.String formatting can be done using f-strings. D.all versions of Python support formatted strings.
 Answer:ABCD
 Tags:Grammar String Python
 
@@ -166,7 +166,7 @@ Tags:Grammar Function Python
 
 Title:q2_3
 Description:Which Python built-in function is used to add an element to a list?
-Difficulty:1
+Difficulty:2
 Type:0
 Options:A.append() B.remove() C.pop() D.sort()
 Answer:A
@@ -197,7 +197,7 @@ Answer:A
 Tags:Grammar Variable Python
 
 Title:q2_7
-Description:The following is a piece of code that sums up all the values in a dictionary and prints the result:\nd = {"a": 1,  "b": 2,  "c": 3}\ntotal = ___\nprint(total)\nPlease fill in the blanks in the code.
+Description:The following is a piece of code that sums up all the values in a dictionary and prints the result：\nd = {"a"： 1,  "b"： 2,  "c"： 3}\ntotal = ___\nprint(total)\nPlease fill in the blanks in the code.
 Difficulty:1
 Type:0
 Options:A.sum(d) B.sum(d.values()) C.sum(d.keys()) D.sum(d.items())
@@ -205,7 +205,7 @@ Answer:B
 Tags:Grammar Math Function
 
 Title:q2_8
-Description:The following is a piece of code that adds 1 to all even numbers and subtracts 1 from all odd numbers in a list, then the code prints a new list:\nlst = [1,  2,  3,  4,  5,  6,  7]\nnew_lst = [___ if ___ % ___ == ___ else ___ for x in lst]\nprint(new_lst)\nPlease fill in the blanks in the code.
+Description:The following is a piece of code that adds 1 to all even numbers and subtracts 1 from all odd numbers in a list, then the code prints a new list：\nlst = [1,  2,  3,  4,  5,  6,  7]\nnew_lst = [___ if ___ % ___ == ___ else ___ for x in lst]\nprint(new_lst)\nPlease fill in the blanks in the code.
 Difficulty:1
 Type:0
 Options:A.x,  x,  2,  0,  x + 1 B.x + 1,  x,  2,  0,  x - 1 C.x - 1,  lst,  2,  1,  x + 1 D.x + 1,  lst,  2,  1,  x - 1
@@ -237,7 +237,7 @@ Answer:True
 Tags:Grammar Math Python
 
 Title:q2_12
-Description:For the string s = 'abcdefg', the value of s[3:5] is ______.
+Description:For the string s = 'abcdefg', the value of s[3：5] is ______.
 Difficulty:1
 Type:2
 Answer:de
@@ -258,7 +258,7 @@ Answer:__repr__
 Tags:Grammar String Function
 
 Title:q2_15
-Description:The output of "{0:.2f}".format(12345.67890) + 'a' is ______.
+Description:The output of "{0：.2f}".format(12345.67890) + 'a' is ______.
 Difficulty:1
 Type:2
 Answer:12345.68a
@@ -293,7 +293,7 @@ Answer:continue
 Tags:Grammar Python Basic
 
 Title:q2_20
-Description:The output of the following piece of code is ______.\nfor i in "CHINA":\n    for k in range(2):        print(i, end="")        if i == "N":            break
+Description:The output of the following piece of code is ______.\nfor i in "CHINA"：\n    for k in range(2)：        print(i, end="")        if i == "N"：            break
 Difficulty:1
 Type:2
 Answer:CCHHIINNAA
@@ -308,7 +308,7 @@ Answer:C
 Tags:Grammar Python Basic
 
 Title:q3_2
-Description:The output result of the code below is:\na = 4\na ^= 3\nb = a ^ 2\nprint(a,end=",")\nprint(b)
+Description:The output result of the code below is：\na = 4\na ^= 3\nb = a ^ 2\nprint(a,end=",")\nprint(b)
 Difficulty:2
 Type:0
 Options:A.64,4096 B.4,3 C.5,7 D.7,5
@@ -316,7 +316,7 @@ Answer:D
 Tags:Grammar Math Python
 
 Title:q3_3
-Description:The execution result of the following code is\na = "Python等级考试"\nb = "="\nc = ">"\nprint("{0:{1}{3}{2}}".format(a, b, 25, c))
+Description:The execution result of the following code is\na = "Python等级考试"\nb = "="\nc = ">"\nprint("{0：{1}{3}{2}}".format(a, b, 25, c))
 Difficulty:2
 Type:0
 Options:A.Python等级考试=============== B.===============Python等级考试 C.>>>>>>>>>>>>>>Python等级考试 D.Python等级考试===============
@@ -340,10 +340,10 @@ Answer:D
 Tags:Python Basic Programming
 
 Title:q3_6
-Description:Regarding the eval function, which of the following options describes incorrectly:
+Description:Regarding the eval function, which of the following options describes incorrectly：
 Difficulty:2
 Type:0
-Options:A. The execution of eval(“Hello”) and eval(" ‘Hello’ ") yields the same result. B. The definition of the eval function is: eval(source, globals=None, locals=None, /) C. If a user wants to input a number and perform calculations on it using a program, they can use the combination eval(input(<输入提示字符串>)) D. The purpose of the eval function is to convert the input string into a Python statement and execute that statement.
+Options:A. The execution of eval(“Hello”) and eval(" ‘Hello’ ") yields the same result. B. The definition of the eval function is： eval(source, globals=None, locals=None, /) C. If a user wants to input a number and perform calculations on it using a program, they can use the combination eval(input(<输入提示字符串>)) D. The purpose of the eval function is to convert the input string into a Python statement and execute that statement.
 Answer:A
 Tags:String Python Basic
 
@@ -359,12 +359,12 @@ Title:q3_8
 Description:Given a dictionary d, which of the following options correctly describes d.values()?
 Difficulty:2
 Type:0
-Options:A. Returns the value in dictionary d with key x, if it exists; otherwise, returns y. B. Returns the value in dictionary d with value y, if it exists; otherwise, returns x. C. Returns the value in dictionary d with key x, if it exists; otherwise, returns x. D. Returns the value in dictionary d with key-value pair x:y.
+Options:A. Returns the value in dictionary d with key x, if it exists; otherwise, returns y. B. Returns the value in dictionary d with value y, if it exists; otherwise, returns x. C. Returns the value in dictionary d with key x, if it exists; otherwise, returns x. D. Returns the value in dictionary d with key-value pair x：y.
 Answer:A
 Tags:Variable Function Python
 
 Title:q3_9
-Description:The output result of the code below is:\nstr1 = "mysqlsqlserverPostgresQL"\nstr2 = "sql"\nncount = str1.count(str2,10)\nprint(ncount)
+Description:The output result of the code below is：\nstr1 = "mysqlsqlserverPostgresQL"\nstr2 = "sql"\nncount = str1.count(str2,10)\nprint(ncount)
 Difficulty:2
 Type:0
 Options:A.0 B.3 C.4 D.2
@@ -380,7 +380,7 @@ Answer:CD
 Tags:Variable Function Python
 
 Title:q3_11
-Description:The value of the expression list(range(6))[::2] is ______.(With [] and commas)
+Description:The value of the expression list(range(6))[：：2] is ______.(With [] and commas)
 Difficulty:2
 Type:2
 Answer:[0, 2, 4]
@@ -394,21 +394,21 @@ Answer:'hello world!'
 Tags:String Python Basic
 
 Title:q3_13
-Description:Given x = {'a': 'b', 'c': 'd'}, the value of the expression 'a' in x is ______.
+Description:Given x = {'a'： 'b', 'c'： 'd'}, the value of the expression 'a' in x is ______.
 Difficulty:2
 Type:2
 Answer:True
 Tags:Variable Function Python
 
 Title:q3_14
-Description:Given x = {'a': 'b', 'c': 'd'}, the value of the expression 'b' in x is ______.
+Description:Given x = {'a'： 'b', 'c'： 'd'}, the value of the expression 'b' in x is ______.
 Difficulty:2
 Type:2
 Answer:False
 Tags:Variable Function Python
 
 Title:q3_15
-Description:Given x = {'a': 'b', 'c': 'd'}, the value of the expression 'b' in x.values() is ______.
+Description:Given x = {'a'： 'b', 'c'： 'd'}, the value of the expression 'b' in x.values() is ______.
 Difficulty:2
 Type:2
 Answer:True
@@ -450,7 +450,7 @@ Answer:set is not subscriptable
 Tags:Grammar Variable Python
 
 Title:q4_1
-Description:The output result of the following code is\nMA = lambda x,y :  (x > y) * x + (x < y) * y\nMI = lambda x,y :  (x > y) * y + (x < y) * x\na = 10\nb = 20\nprint(MA(a,b),MI(a,b))
+Description:The output result of the following code is\nMA = lambda x,y ：  (x > y) * x + (x < y) * y\nMI = lambda x,y ：  (x > y) * y + (x < y) * x\na = 10\nb = 20\nprint(MA(a,b),MI(a,b))
 Difficulty:3
 Type:0
 Options:A.20 10 B.10 20 C.10 10 D.20 20
@@ -474,7 +474,7 @@ Answer:A
 Tags:Grammar String Python
 
 Title:q4_4
-Description:The output result of the following code is\ndef func(num):\n    num += 1\na =10\nfunc(a)\nprint(a)
+Description:The output result of the following code is\ndef func(num)：\n    num += 1\na =10\nfunc(a)\nprint(a)
 Difficulty:3
 Type:0
 Options:A.11 B.int C.(error) D.10
@@ -482,7 +482,7 @@ Answer:D
 Tags:Grammar Math Function
 
 Title:q4_5
-Description:The output result of the following code is\nfor s in "abc":\n   for i in range(3):\n      print (s,end="")\n      if s=="c":\n          break
+Description:The output result of the following code is\nfor s in "abc"：\n   for i in range(3)：\n      print (s,end="")\n      if s=="c"：\n          break
 Difficulty:3
 Type:0
 Options:A.abbbccc B.aaabbbccc C.aaabbbc D.aaabccc
@@ -498,15 +498,15 @@ Answer:B
 Tags:String Function Python
 
 Title:q4_7
-Description:The option among the following that allows access to the third character from the right to left in the string s is:
+Description:The option among the following that allows access to the third character from the right to left in the string s is：
 Difficulty:3
 Type:0
-Options:A.s[:-3] B.s[3] C.s[0:-3] D.s[-3]
+Options:A.s[：-3] B.s[3] C.s[0：-3] D.s[-3]
 Answer:D
 Tags:Variable Python Basic
 
 Title:q4_8
-Description:s = list("x\\nx\\nx")\nThe option(s) among the following that can output the frequency of the character "x" is:
+Description:s = list("x\\nx\\nx")\nThe option(s) among the following that can output the frequency of the character "x" is：
 Difficulty:3
 Type:0
 Options:A.print(s.index("x"),6,len(s)) B.print(s.count("x")) C.print(s.index("x"),6) D.print(s.index("x"))

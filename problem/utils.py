@@ -165,6 +165,7 @@ def parse_file(file):
                 problem = {}
                 line = source.readline()
                 line_cnt += 1
+                status = 0
 
             line = source.readline()
             line_cnt += 1

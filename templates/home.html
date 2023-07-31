@@ -94,8 +94,8 @@
                     <p><a class="btn" style="color:black;" href="./edit">Edit Profile</a></p>
                 </div>
                 
-                <div class="border--top pt1"></div>
-                <div id="chart1" style="width: 600px;height:300px;"></div>
+                {% comment %} <div class="border--top pt1"></div>
+                <div id="chart1" style="width: 600px;height:300px;"></div> {% endcomment %}
                 <div class="border--top pt1"></div>
                 <div id="chart2" style="width: 600px;height:400px;"></div>
 
@@ -226,7 +226,7 @@
         </div> {% endcomment %}
     </div>
     <script type="text/javascript">
-        var chartDom1 = document.getElementById('chart1');
+        {% comment %} var chartDom1 = document.getElementById('chart1');
         var myChart1 = echarts.init(chartDom1);
         var option1;
 
@@ -249,7 +249,7 @@
         ]
         };
 
-        myChart1.setOption(option1);
+        myChart1.setOption(option1); {% endcomment %}
 
 
         var chartDom = document.getElementById('chart2');

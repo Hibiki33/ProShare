@@ -8,6 +8,7 @@ from problem.models import Question
 from .models import Punlum, PunlumNote
 import uuid
 import logging
+from problem.utils import list_msg
 
 User = get_user_model()
 
@@ -198,13 +199,31 @@ def home_page(request):
         else:
             return HttpResponseRedirect('/account/login/')
     elif request.method == 'POST':
-        if request.user.is_authenticated:
-            group_name = request.POST.get('exit')
-            group = Group.objects.get(name=group_name)
-            group.user_set.remove(request.user)
-            return HttpResponseRedirect('/account/')
+        if 'logout' in request.POST.keys():
+            if request.user.is_authenticated:
+                group_name = request.POST.get('exit')
+                group = Group.objects.get(name=group_name)
+                group.user_set.remove(request.user)
+                return HttpResponseRedirect('/account/')
+            else:
+                return HttpResponseRedirect('/account/login/')
+        elif 'generate' in request.POST.keys():
+            msg = list_msg(request, questions=request.user.get_recommended_questions())
+            number = request.POST.get('question_num')
+            tag_name = request.POST.get('tag')
+
+            # delete the questions that dont have tag_name
+            if tag_name != 'all':
+                for i in range(len(msg) - 1, -1, -1):
+                    if msg[i]['Tag1'] != tag_name and msg[i]['Tag2'] != tag_name and msg[i]['Tag3'] != tag_name:
+                        del msg[i]
+            if len(msg) > int(number):
+                msg = msg[:int(number)]
+            return render(request, 'home.html', {'problem_info_list': msg})
         else:
-            return HttpResponseRedirect('/account/login/')
+            return HttpResponseRedirect('/account/')
+
+        
 
 
 def group_detail_page(request, group_name):

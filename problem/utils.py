@@ -27,7 +27,7 @@ def list_msg(request,
     elif order == 'diff':
         questions = questions.order_by('difficulty')
 
-    questions = questions[(page - 1) * 10: page * 10]
+    questions = questions[(page - 1) * 100: page * 100]
 
     msg = []
     for question in questions:

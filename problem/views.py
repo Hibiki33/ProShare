@@ -250,16 +250,28 @@ def problem_create_page(request):
                 '2': 'fill-blank',
             }
             for question in upload_questions:
-                q = Question.objects.create(
-                    description=question['description'],
-                    title=question['title'],
-                    difficulty=diff_table[question['difficulty']],
-                    created_by=request.user,
-                    type=type_table[question['type']],
-                    options=question['options'],
-                    answer=question['answer'],
-                    correct_options=question['answer'].split(),
-                )
+                if 'options' in question.keys():
+                    q = Question.objects.create(
+                        description=question['description'],
+                        title=question['title'],
+                        difficulty=diff_table[question['difficulty']],
+                        created_by=request.user,
+                        type=type_table[question['type']],
+                        options=question['options'],
+                        answer=question['answer'],
+                        correct_options=question['answer'].split(),
+                    )
+                else:
+                    q = Question.objects.create(
+                        description=question['description'],
+                        title=question['title'],
+                        difficulty=diff_table[question['difficulty']],
+                        created_by=request.user,
+                        type=type_table[question['type']],
+                        options="",
+                        answer=question['answer'],
+                        correct_options=[],
+                    )
                 for tag in question['tags']:
                     if QuestionTag.objects.filter(name=tag).exists():
                         q.add_tag(tag)

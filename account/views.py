@@ -104,6 +104,17 @@ def register_page(request):
 
         Punlum.objects.create(user=user)
 
+        user = authenticate(request, username=username, password=password)
+
+        if user:
+            login(request, user)
+            request.session['username'] = username
+            request.session.set_expiry(0)
+            return HttpResponseRedirect('/')
+        else:
+            messages.error(request, 'Username or Password is wrong!')
+            return HttpResponseRedirect('/account/login/')
+
         return HttpResponseRedirect('/account/')
 
     return render(request, '404.html')

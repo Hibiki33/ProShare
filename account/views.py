@@ -193,6 +193,7 @@ def home_page(request):
             user_ability = gen_ability_map(request.user, lack=True)
             for i in range(6):
                 user_ability[i] = 0.2 if user_ability[i] < 0.2 else user_ability[i]
+                user_ability[i] = {'val': user_ability[i]}
 
             average_ability = [0, 0, 0, 0, 0, 0]
             for user in User.objects.all():
@@ -202,6 +203,7 @@ def home_page(request):
             average_ability = [i / len(User.objects.all()) for i in average_ability]
             for i in range(6):
                 average_ability[i] = 0.2 if average_ability[i] < 0.2 else average_ability[i]
+                average_ability[i] = {'val': average_ability[i]}
 
             return render(request, 'home.html', {
                 'username': request.user.username,

@@ -276,16 +276,16 @@
             data: [
                 {
                 value: [
-                {% for val in user_ability %}
-                val,
+                {% for ua in user_ability %}
+                    {{ ua.val }},
                 {% endfor %}
                 ],
                 name: 'Yours'
                 },
                 {
                 value: [
-                {% for val in average_ability %}
-                val,
+                {% for aa in average_ability %}
+                    {{ aa.val }},
                 {% endfor %}
                 ],
                 name: 'Average'
